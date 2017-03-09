@@ -1,0 +1,98 @@
+{
+  "name": "webapp",
+  "description": "book shopping",
+  "main": "index.js",
+  "authors": [
+    "niuwanpeng"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "book"
+  ],
+  "homepage": "https://github.com/WonpangNew/CIHome",
+  "dependencies": {
+    "jquery": "^1.9.0",
+    "jquery-ui": "^1.11.4",
+    "angular": "=1.4.7",
+    "angular-animate": "=1.4.7",
+    "angular-bindonce": "~0.3.3",
+    "angular-bootstrap": "^0.14.0",
+    "angular-cookies": "=1.4.7",
+    "angular-local-storage": "~0.2.3",
+    "angular-resource": "=1.4.7",
+    "angular-sanitize": "=1.4.7",
+    "angular-ui-router": "~0.2.15",
+    "angular-ui-sortable": "^0.14.0",
+    "angular-ui-tree": "~2.15.0",
+    "ng-tags-input": "#3.0.0",
+    "bootstrap": "^3.3.2",
+    "font-awesome": "^4.2.0",
+    "requirejs": "^2.1.0",
+    "require-css": "^0.1.8"
+  },
+  "exportsOverride": {
+    "bootstrap": {
+      "css": "dist/css/bootstrap.min.css",
+      "js": "dist/js/bootstrap.min.js",
+      "fonts": "dist/fonts/*"
+    },
+    "font-awesome": {
+      "css": "css/font-awesome.min.css",
+      "fonts": "fonts/*"
+    },
+    "requirejs": {
+      "js": "require.js"
+    },
+    "jquery": {
+      "js": "dist/jquery.min.js"
+    },
+    "jquery-ui": {
+      "js": "jquery-ui.min.js"
+    },
+    "angular": {
+      "js": "angular.min.js"
+    },
+    "angular-ui-router": {
+      "js": "release/angular-ui-router.js"
+    },
+    "angular-bindonce": {
+      "js": "bindonce.js"
+    },
+    "angular-animate": {
+      "js": "angular-animate.min.js"
+    },
+    "angular-cookies": {
+      "js": "angular-cookies.min.js"
+    },
+    "angular-sanitize": {
+      "js": "angular-sanitize.min.js"
+    },
+    "angular-resource": {
+      "js": "angular-resource.min.js"
+    },
+    "angular-bootstrap": {
+      "js": "ui-bootstrap-tpls.js"
+    },
+    "ng-tags-input": {
+      "js": "ng-tags-input.js",
+      "css": [
+        "ng-tags-input.bootstrap.css",
+        "ng-tags-input.css"
+      ]
+    },
+    "angular-ui-sortable": {
+      "js": "sortable.min.js"
+    },
+    "angular-ui-tree": {
+      "js": "dist/angular-ui-tree.js",
+      "css": "dist/angular-ui-tree.css"
+    }
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

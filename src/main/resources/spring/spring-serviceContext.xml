@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+          http://www.springframework.org/schema/tx  http://www.springframework.org/schema/tx/spring-tx.xsd"
+       default-autowire="byName">
+
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="driverClass">
+            <value>${top.app.jdbc.driver}</value>
+        </property>
+        <property name="jdbcUrl">
+            <value>${top.app.jdbc.url}</value>
+        </property>
+        <property name="user">
+            <value>${top.app.jdbc.username}</value>
+        </property>
+        <property name="password">
+            <value>${top.app.jdbc.password}</value>
+        </property>
+        <!--连接池中保留的最小连接数-->
+        <property name="minPoolSize">
+            <value>${top.app.db.minPoolSize}</value>
+        </property>
+        <!--连接池中保留的最大连接数。Default: 15 -->
+        <property name="maxPoolSize">
+            <value>${top.app.db.maxPoolSize}</value>
+        </property>
+        <!--初始化时获取的连接数，取值应在minPoolSize与maxPoolSize之间。Default: 3 -->
+        <property name="initialPoolSize">
+            <value>${top.app.db.initialPoolSize}</value>
+        </property>
+        <!--连接空闲时间,25000秒内未使用则连接被丢弃，比8小时略微小一些。若为0则永不丢弃，Default: 0 -->
+        <property name="maxIdleTime">
+            <value>${top.app.db.maxIdleTime}</value>
+        </property>
+        <!--当连接池中的连接耗尽的时候c3p0连接同时获取的连接数。Default: 3 -->
+        <property name="acquireIncrement">
+            <value>${top.app.db.acquireIncrement}</value>
+        </property>
+        <!--
+			JDBC的标准参数，用以控制数据源内加载的PreparedStatements数量。但由于预缓存的statements
+			属于单个connection而不是整个连接池。所以设置这个参数需要考虑到多方面的因素。
+			如果maxStatements与maxStatementsPerConnection均为0，则缓存被关闭。Default: 0
+		-->
+        <property name="maxStatements">
+            <value>0</value>
+        </property>
+        <!--600秒检查所有连接池中的空闲连接。Default: 0 -->
+        <property name="idleConnectionTestPeriod">
+            <value>120</value>
+        </property>
+        <!--
+            定义所有连接测试都执行的测试语句。在使用连接测试的情况下这个一显著提高测试速度。
+            在配置了AutomaticTestTable属性后，此配置失效，Default: null
+        -->
+        <property name="preferredTestQuery">
+            <value>select 1 from dual</value>
+        </property>
+        <!--如果设为true那么在取得连接的同时将校验连接的有效性。Default: false -->
+        <property name="testConnectionOnCheckin">
+            <value>true</value>
+        </property>
+
+        <!--定义在从数据库获取新连接失败后重复尝试的次数。Default: 30 -->
+        <property name="acquireRetryAttempts">
+            <value>30</value>
+        </property>
+        <!--
+            获取连接失败将会引起所有等待连接池来获取连接的线程抛出异常。但是数据源仍有效
+            保留，并在下次调用getConnection()的时候继续尝试获取连接。如果设为true，那么在尝试
+            获取连接失败后该数据源将申明已断开并永久关闭。Default: false
+        -->
+        <property name="breakAfterAcquireFailure">
+            <value>false</value>
+        </property>
+    </bean>
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
+                <prop key="hibernate.jdbc.batch_size">20</prop>
+                <prop key="hibernate.show_sql">${top.hibernate.showsql}</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">${top.hibernate.hbm2ddl.auto}</prop>
+            </props>
+        </property>
+        <property name="packagesToScan">
+            <list>
+                <value>com.jlu.*.model</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="hibernateTemplate" class="org.springframework.orm.hibernate4.HibernateTemplate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+        <property name="velocityProperties">
+            <props>
+                <prop key="resource.loader">class</prop>
+                <prop key="class.resource.loader.path">/WEB-INF/classes/vm</prop>
+                <prop key="class.resource.loader.modificationCheckInterval">300</prop>
+                <prop key="class.resource.loader.class">
+                    org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+                </prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- 事务管理-->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <aop:config>
+        <aop:pointcut id="ServiceOperation"
+                      expression="(execution(* com.jlu..*ServiceImpl.*(..)))"/>
+        <aop:advisor pointcut-ref="ServiceOperation" advice-ref="txAdvice" />
+    </aop:config>
+
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="*WithoutTransaction" read-only="false" propagation="NOT_SUPPORTED"/>
+            <tx:method name="*" read-only="false" propagation="REQUIRED"
+                       rollback-for="com.jlu.common.IBusinessException"/>
+        </tx:attributes>
+    </tx:advice>
+
+</beans>
