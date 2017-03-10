@@ -7,6 +7,8 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
     <context:component-scan base-package="com.jlu.**.web"></context:component-scan>
 
+    <!-- 该配置文件暂时无用 -->
+
     <!-- Configures Handler Interceptors -->
     <mvc:interceptors>
         <!-- Changes the locale when a 'locale' request parameter is sent; e.g.
