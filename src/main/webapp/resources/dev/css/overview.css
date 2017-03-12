@@ -1,3 +1,67 @@
-.testOverview {
-    background: #5cb85c;
+.background-index {
+    width: 100%;
+    height: 100%;
+    background-image: url("../img/backgroud/bg-index.jpg");
+}
+
+.cihome-logo-index {
+    width: 295px;
+    height: 84px;
+    margin: auto;
+    background: url("../img/logo/cihome-logo.png");
+}
+
+.login {
+    width: 25%;
+    margin: 25px auto;
+}
+
+/*.login .form-group > input {*/
+    /*border: 0px;*/
+    /*background: rgba(0, 0, 0, 0);*/
+/*}*/
+
+.input-group-btn > button > i {
+    height: 20px;
+    padding-top: 3px;
+    color: #777;
+}
+
+/* 渐变分割线 start */
+.cut-line {
+    margin: auto;
+    width: 23%;
+}
+
+.cut-line-right{
+    height: 1px;
+    width: 50%;
+    float: left;
+    margin-bottom: 15px !important;
+    background: -webkit-linear-gradient(left, rgba(255,0,0,0), rgb(205, 205, 205)); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(right, rgba(255,0,0,0), rgb(205, 205, 205)); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(right, rgba(255,0,0,0), rgb(205, 205, 205)); /* Firefox 3.6 - 15 */
+    background: linear-gradient(to right, rgba(255,0,0,0), rgb(205, 205, 205)); /* 标准的语法（必须放在最后） */
+}
+
+.cut-line-left{
+    height: 1px;
+    width: 50%;
+    float: right;
+    margin-bottom: 15px !important;
+    background: -webkit-linear-gradient(left, rgba(255,0,0,0), rgb(205, 205, 205)); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(right, rgba(255,0,0,0), rgb(205, 205, 205)); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(right, rgba(255,0,0,0), rgb(205, 205, 205)); /* Firefox 3.6 - 15 */
+    background: linear-gradient(to left, rgba(255,0,0,0), rgb(205, 205, 205)); /* 标准的语法（必须放在最后） */
+}
+/* 渐变分割线 end */
+
+.element-center {
+    text-align: center;
+}
+
+.element-center > a {
+    color: #fefff3 !important;
+    font-family: "PingFang HK";
+    font-weight: lighter;
 }

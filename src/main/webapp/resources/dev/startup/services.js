@@ -6,7 +6,7 @@
 
 define(
     [
-    'js/shopping/services/book-service'
+    'js/pipeline/services/book-service'
     ], function () {
     }
 );

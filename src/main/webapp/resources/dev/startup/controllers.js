@@ -6,6 +6,6 @@
 
 define(
     [
-        'js/shopping/controllers/index-controller'
+        'js/pipeline/controllers/index-controller'
     ], function () {
     });

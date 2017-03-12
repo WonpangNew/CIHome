@@ -1,6 +1,14 @@
-.testCommon {
-    background: brown;
-    width: 100px;
-    font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial;
-    padding-top: 100px;
+.index-footer {
+    color: white;
+    font-weight: lighter;
+    float: right;
+    margin-bottom: 15px;
+    position: fixed;
+    bottom: 0;
+    width: 98%;
+}
+
+/* 右浮动 */
+.float-right {
+    float: right;
 }

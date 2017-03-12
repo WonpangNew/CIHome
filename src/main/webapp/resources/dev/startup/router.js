@@ -8,9 +8,10 @@ define(
     [
         'app',
         'angular',
+        'constants',
         'angular-ui-router',
         'ctrls'
-    ], function (app) {
+    ], function (app, constants) {
         'use strict';
         
         function config($stateProvider, $urlRouterProvider) {
@@ -18,7 +19,8 @@ define(
             
             $stateProvider
                 .state ('default', {
-                    url: '/'
+                    url: '/',
+                    controller: 'IndexController'
                 })
         }
 
