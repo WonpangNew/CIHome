@@ -6,7 +6,7 @@
 
 define(
     [
-        'js/pipeline/services/book-service',
+        'js/pipeline/services/local-storage-service',
         'js/permission/services/permission-service'
     ], function () {
     }

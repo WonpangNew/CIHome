@@ -3,6 +3,7 @@ package com.jlu.user.web;
 import com.jlu.common.cookies.CookiesUtiles;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginController {
 
     @RequestMapping("/loginSystem")
+    @ResponseBody
     public void loginSystem(HttpServletResponse response, String username, String password) {
         CookiesUtiles.addCookies(response, username, password);
     }

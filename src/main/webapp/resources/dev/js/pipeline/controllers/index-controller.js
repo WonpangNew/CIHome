@@ -6,14 +6,13 @@ define(['app'], function (app) {
     'use strict';
     
     app.controller('IndexController', [
-        'bookService',
         '$scope',
         '$location',
         '$state',
         IndexController
     ]);
     
-    function IndexController(bookService, $scope, $location, $state) {
+    function IndexController($scope, $location, $state) {
         var self = this;
     }
 });

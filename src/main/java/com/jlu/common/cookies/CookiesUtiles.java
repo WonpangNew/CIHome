@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class CookiesUtiles {
 
-    private static int AUTO_LOGIN_TIMEOUT = 60;
+    private static int AUTO_LOGIN_TIMEOUT = 60*60;
 
     /**
      * 添加cookies
@@ -18,11 +18,11 @@ public class CookiesUtiles {
      */
     public static void addCookies(HttpServletResponse response, String username, String password) {
         Cookie usernameCookie = new Cookie("loginUsername", username);
-        Cookie passwordCookie = new Cookie(username, password);
+        Cookie passwordCookie = new Cookie("loginPassword", password);
         usernameCookie.setMaxAge(AUTO_LOGIN_TIMEOUT);
         passwordCookie.setMaxAge(AUTO_LOGIN_TIMEOUT);
-        usernameCookie.setPath("/cookies/username");
-        passwordCookie.setPath("/cookies/password");
+        usernameCookie.setPath("/");
+        passwordCookie.setPath("/");
         response.addCookie(usernameCookie);
         response.addCookie(passwordCookie);
     }
@@ -30,11 +30,11 @@ public class CookiesUtiles {
     public static void deleteCookies(HttpServletResponse response, String username, String password) {
         Cookie usernameCookie = new Cookie("loginUsername", username);
         usernameCookie.setMaxAge(0);
-        usernameCookie.setPath("/cookies/username");
-        Cookie passwordCookies = new Cookie(username, password);
-        passwordCookies.setMaxAge(0);
-        passwordCookies.setPath("/cookies/username");
+        Cookie passwordCookie = new Cookie("loginPassword", password);
+        passwordCookie.setMaxAge(0);
+        usernameCookie.setPath("/");
+        passwordCookie.setPath("/");
         response.addCookie(usernameCookie);
-        response.addCookie(passwordCookies);
+        response.addCookie(passwordCookie);
     }
 }

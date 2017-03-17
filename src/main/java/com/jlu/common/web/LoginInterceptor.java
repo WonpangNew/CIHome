@@ -2,7 +2,6 @@ package com.jlu.common.web;
 
 import com.jlu.user.model.CiHomeUser;
 import com.jlu.user.service.IUserService;
-import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -23,29 +22,34 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
                              Object handle) throws Exception {
+
         CiHomeUser loginUser = (CiHomeUser) httpServletRequest.getSession().getAttribute("loginUser");
 
-        if(loginUser == null){
+        if (loginUser == null) {
             String loginCookieUserName = "";
             String loginCookiePassword = "";
 
             Cookie[] cookies = httpServletRequest.getCookies();
-            if(null!=cookies){
-                for(Cookie cookie : cookies){
-                    //if("/".equals(cookie.getPath())){ //getPath为null
-                    if("loginUserName".equals(cookie.getName())){
+            if (null != cookies) {
+                for (Cookie cookie : cookies) {
+                    if ("loginUsername".equals(cookie.getName())) {
                         loginCookieUserName = cookie.getValue();
-                    }else if("loginPassword".equals(cookie.getName())){
+                    } else if ("loginPassword".equals(cookie.getName())) {
                         loginCookiePassword = cookie.getValue();
                     }
-                    //}
                 }
-                if(!"".equals(loginCookieUserName) && !"".equals(loginCookiePassword)){
+                if (!"".equals(loginCookieUserName) && !"".equals(loginCookiePassword)) {
                     CiHomeUser user = userService.getUserByName(loginCookieUserName);
-                    if(loginCookiePassword.equals(user.getPassword())){
+                    if (loginCookiePassword.equals(user.getPassword())) {
                         httpServletRequest.getSession().setAttribute("loginUser", user);
                     }
+                } else {
+                    httpServletRequest.getRequestDispatcher("/WEB-INF/pages/login.jsp")
+                            .forward(httpServletRequest, httpServletResponse);
                 }
+            } else {
+                httpServletRequest.getRequestDispatcher("/WEB-INF/pages/login.jsp")
+                        .forward(httpServletRequest, httpServletResponse);
             }
         }
         return true;
