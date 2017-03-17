@@ -22,4 +22,5 @@
     <mvc:resources mapping="/resources/**" location="/resources/" />
 
     <import resource="spring-serviceContext.xml"/>
+    <import resource="spring-servlet.xml"/>
 </beans>

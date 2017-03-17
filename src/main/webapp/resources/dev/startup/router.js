@@ -7,20 +7,26 @@
 define(
     [
         'app',
-        'angular',
         'constants',
+        'angular',
         'angular-ui-router',
         'ctrls'
     ], function (app, constants) {
         'use strict';
         
         function config($stateProvider, $urlRouterProvider) {
-            $urlRouterProvider.otherwise('/');
+            $urlRouterProvider.when('', '/');
             
             $stateProvider
-                .state ('default', {
+                .state('default', {
                     url: '/',
-                    controller: 'IndexController'
+                    controller: 'DefaultController'
+                })
+                .state('login', {
+                    url: '/login',
+                    templateUrl: constants.resource('login/login.html'),
+                    controller: 'PermissionController',
+                    controllerAs: 'permissionCtrl'
                 })
         }
 

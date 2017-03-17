@@ -8,4 +8,11 @@ import com.jlu.user.model.CiHomeUser;
 public interface IUserService {
 
     void saveUser(CiHomeUser ciHomeUser);
+
+    /**
+     * 通过用户民获得密码
+     * @param username
+     * @return
+     */
+    CiHomeUser getUserByName(String username);
 }

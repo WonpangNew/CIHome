@@ -184,6 +184,18 @@
       <version>2.4</version>
       <classifier>jdk15</classifier>
     </dependency>
+
+    <!-- springmvc默认是没有对象转换成json的转换器的，需要手动添加jackson依赖 -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-core</artifactId>
+      <version>2.5.4</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>2.5.4</version>
+    </dependency>
   </dependencies>
 
   <build>

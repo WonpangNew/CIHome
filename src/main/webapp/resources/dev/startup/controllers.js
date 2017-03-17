@@ -6,6 +6,8 @@
 
 define(
     [
-        'js/pipeline/controllers/index-controller'
+        'js/pipeline/controllers/index-controller',
+        'js/pipeline/controllers/default-controller',
+        'js/permission/controllers/permission-controller'
     ], function () {
     });

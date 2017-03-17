@@ -9,11 +9,11 @@ define(['app'], function (app) {
         'bookService',
         '$scope',
         '$location',
+        '$state',
         IndexController
     ]);
     
-    function IndexController(bookService, $scope, $location) {
+    function IndexController(bookService, $scope, $location, $state) {
         var self = this;
-
     }
 });

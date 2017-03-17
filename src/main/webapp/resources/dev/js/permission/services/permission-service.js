@@ -1,29 +1,28 @@
 /**
  * Created by Wonpang New on 2016/9/10.
- * 
+ *
  * app service
  */
 
 define(['app', 'constants'], function (app, constants) {
     app.service (
-        'bookService',
+        'permissionService',
         [
             '$http',
             '$q',
-            BookService
+            PermissionService
         ]
     );
-    
-    function BookService($http, $q) {
+
+    function PermissionService($http, $q) {
         var self = this;
 
-        self.getName = function (name) {
-            console.log(2222);
-            return $http
-                .get(constants.api('/test?username=' + name))
+        self.loginSystem = function (username, password) {
+            return $http.get(constants.api('cihome/login/loginSystem?username='
+                + username + '&password=' + password))
                 .then(function (data) {
                     return data.data;
-                });
+            });
         };
     }
 })

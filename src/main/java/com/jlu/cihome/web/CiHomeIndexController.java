@@ -13,6 +13,6 @@ public class CiHomeIndexController {
 
     @RequestMapping(value = "/")
     public String hello() {
-        return "top";
+        return "index";
     }
 }
