@@ -1,5 +1,6 @@
 package com.jlu.common.web;
 
+import com.jlu.common.cookies.EncryUtil;
 import com.jlu.user.model.CiHomeUser;
 import com.jlu.user.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,8 @@ public class LoginInterceptor implements HandlerInterceptor {
                     }
                 }
                 if (!"".equals(loginCookieUserName) && !"".equals(loginCookiePassword)) {
+                    loginCookieUserName = EncryUtil.decrypt(loginCookieUserName);
+                    loginCookiePassword = EncryUtil.decrypt(loginCookiePassword);
                     CiHomeUser user = userService.getUserByName(loginCookieUserName);
                     if (loginCookiePassword.equals(user.getPassword())) {
                         httpServletRequest.getSession().setAttribute("loginUser", user);

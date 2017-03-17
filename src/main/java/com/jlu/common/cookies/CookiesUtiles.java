@@ -17,8 +17,8 @@ public class CookiesUtiles {
      * @param password
      */
     public static void addCookies(HttpServletResponse response, String username, String password) {
-        Cookie usernameCookie = new Cookie("loginUsername", username);
-        Cookie passwordCookie = new Cookie("loginPassword", password);
+        Cookie usernameCookie = new Cookie("loginUsername", EncryUtil.encrypt(username));
+        Cookie passwordCookie = new Cookie("loginPassword", EncryUtil.encrypt(password));
         usernameCookie.setMaxAge(AUTO_LOGIN_TIMEOUT);
         passwordCookie.setMaxAge(AUTO_LOGIN_TIMEOUT);
         usernameCookie.setPath("/");
@@ -28,9 +28,9 @@ public class CookiesUtiles {
     }
 
     public static void deleteCookies(HttpServletResponse response, String username, String password) {
-        Cookie usernameCookie = new Cookie("loginUsername", username);
+        Cookie usernameCookie = new Cookie("loginUsername", EncryUtil.encrypt(username));
         usernameCookie.setMaxAge(0);
-        Cookie passwordCookie = new Cookie("loginPassword", password);
+        Cookie passwordCookie = new Cookie("loginPassword", EncryUtil.encrypt(password));
         passwordCookie.setMaxAge(0);
         usernameCookie.setPath("/");
         passwordCookie.setPath("/");
