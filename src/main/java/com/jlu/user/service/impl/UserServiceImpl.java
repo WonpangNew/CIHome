@@ -18,7 +18,6 @@ public class UserServiceImpl implements IUserService {
     @Autowired
     IUserDao userDao;
 
-    @Override
     public void saveUser(CiHomeUser ciHomeUser) {
         userDao.save(ciHomeUser);
     }
@@ -32,7 +31,7 @@ public class UserServiceImpl implements IUserService {
         ConditionAndSet conditionAndSet = new ConditionAndSet();
         conditionAndSet.put("username", username);
         List<CiHomeUser> users = userDao.findByProperties(conditionAndSet);
-        if (users != null) {
+        if (users != null && users.size() != 0) {
             return users.get(0);
         }
         return null;

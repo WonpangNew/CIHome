@@ -33,6 +33,9 @@
                 </span>
             </div>
         </div>
+        <div ng-if="permissionCtrl.loginStatus === 'FAIL'" >
+            {{permissionCtrl.loginMessage}}
+        </div>
         <!-- 登录 end-->
         <div class="cut-line">
             <div class="cut-line-right"></div>

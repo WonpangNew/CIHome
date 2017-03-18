@@ -8,6 +8,10 @@ define(
     [
         'js/pipeline/controllers/index-controller',
         'js/pipeline/controllers/default-controller',
+        'js/pipeline/controllers/trunk-controller',
+        'js/pipeline/controllers/branches-controller',
+        'js/pipeline/controllers/branch-controller',
+        'js/pipeline/controllers/builds-controller',
         'js/permission/controllers/permission-controller'
     ], function () {
     });

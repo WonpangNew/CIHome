@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class CookiesUtiles {
 
-    private static int AUTO_LOGIN_TIMEOUT = 60*60;
+    private final static int AUTO_LOGIN_TIMEOUT = 60*60;
 
     /**
      * 添加cookies

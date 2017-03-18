@@ -8,7 +8,10 @@ define(['app', 'constants'], function (app, constants) {
     app.controller('DefaultController', [
         '$state',
         function ($state) {
-
+            var lastParams = {
+                module: 'bebe\/ee'
+            };
+            $state.go('builds.trunk', lastParams);
         }
     ]);
 });
