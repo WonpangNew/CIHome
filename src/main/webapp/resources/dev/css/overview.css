@@ -65,3 +65,13 @@
     font-family: "PingFang HK";
     font-weight: lighter;
 }
+
+/*  登录提示 */
+.notice-error {
+    font-family: "PingFang HK";
+    font-weight: lighter;
+    color: red;
+    margin-top: -15px;
+    margin-bottom: 7px;
+    font-size: 12px;
+}

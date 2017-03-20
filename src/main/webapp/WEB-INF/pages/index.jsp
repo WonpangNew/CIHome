@@ -16,7 +16,7 @@
 
     <body ng-controller="IndexController as ctrl">
         <%@include file="common/top.jsp" %>
-        <div ui-view></div>
+        <div ui-view class="pipeline-body"></div>
         <%@include file="common/footer.jsp" %>
         <script src="<%=basePath%>common/lib/requirejs/js/require.js" data-main="<%=basePath%>dev/main.js"></script>
     </body>

@@ -19,11 +19,12 @@ define(['app'], function (app) {
         self.loginStatus = 'INIT';
         self.loginMessage = '';
 
-        $scope.username = '';
-        $scope.password = '';
+        self.username = '';
+        self.password = '';
+        self.allowClickLogin = false;
 
         self.loginSystem = function () {
-            permissionService.loginSystem($scope.username, $scope.password)
+            permissionService.loginSystem(self.username, self.password)
                 .then(function (result) {
                     var result = angular.fromJson(result);
                     self.loginStatus = result.LOGIN_STATUS;
@@ -33,5 +34,11 @@ define(['app'], function (app) {
                     }
             });
         };
+
+        $scope.$watch(function () {
+            return self.username !== '' && self.password !== '';
+        }, function (result) {
+            self.allowClickLogin = result;
+        })
     }
 });

@@ -43,7 +43,7 @@ public class LoginController {
                     result.put(MESSAGE, "密码输入错误！");
                 }
             } else {
-                result.put(MESSAGE, "用户不存在，先注册一个？");
+                result.put(MESSAGE, "用户不存在,先创建一个？");
             }
         }
         return new Gson().toJson(result);

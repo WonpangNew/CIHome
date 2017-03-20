@@ -18,7 +18,7 @@ define([
                 'pasvaz.bindonce',
                 'ui.bootstrap',
                 'ngTagsInput'
-            ]).factory('topFresh', ['$q', function ($q) {
+            ]).factory('cihome', ['$q', function ($q) {
             return {
                 responseError: function (rejection) {
                     if (rejection.status === 403) {
@@ -30,7 +30,7 @@ define([
                 }
             };
         }]).config(['$httpProvider', function ($httpProvider) {
-            $httpProvider.interceptors.push('topFresh');
+            $httpProvider.interceptors.push('cihome');
         }]);
 
         return angular.module('app');
