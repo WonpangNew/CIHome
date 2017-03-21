@@ -6,12 +6,21 @@ define(['app', 'constants'], function (app, constants) {
     'use strict';
 
     app.controller('DefaultController', [
+        'localStorageService',
         '$state',
-        function ($state) {
+        function (localStorageService, $state) {
+            var lastVisitModule = localStorageService.getRecentModule();
+            var lastState = 'builds.trunk';
+            if (typeof lastVisitModule !== 'string' && lastVisitModule === '') {
+                lastVisitModule = 'notStorage';
+            } else {
+                localStorageService.addRecentModule(lastVisitModule);
+            }
             var lastParams = {
-                module: 'bebe\/ee'
+                module: lastVisitModule
             };
-            $state.go('builds.trunk', lastParams);
+
+            $state.go(lastState, lastParams);
         }
     ]);
 });

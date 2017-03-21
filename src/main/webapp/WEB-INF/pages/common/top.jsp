@@ -16,12 +16,20 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <form class="navbar-form navbar-left">
                     <div class="form-group">
-                        <input type="text" class="form-control" style="width: 300px;"placeholder="请输入模块名">
+                        <input class="form-control" style="width: 300px;" type="text"
+                               ng-model="contextCtrl.searchModule"
+                               placeholder="请输入模块名"
+                               uib-typeahead="module.path for module in ctrl.getSearchModules($viewValue)"
+                               typeahead-loading="loadingLocations"
+                               typeahead-no-results="noResults"
+                               typeahead-on-select="ctrl.moduleSelected($item,$model,$label)"
+                               autocomplete="off"
+                               role="search"
+                               uib-dropdown-toggle ng-click="ctrl.pullRecentModules()">
                     </div>
-                    <button type="submit" class="btn btn-default">Search</button>
                 </form>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">WonpangNew</a></li>
+                    <li><a href="#"><%=user.getUsername()%></a></li>
                     <li class="btn-group" uib-dropdown="">
                         <a href="#" role="button" class="dropdown-toggle" uib-dropdown-toggle=""
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -29,7 +37,7 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="uib-dropdown-menu" role="menu">
-                            <li><a href="#">退出登录</a></li>
+                            <li><a href="" ng-click="ctrl.exitLogin('<%=user.getUsername()%>')">退出登录</a></li>
                         </ul>
                     </li>
                 </ul>

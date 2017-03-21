@@ -1,7 +1,7 @@
 /**
  * Created by niuwanpeng on 17/3/17.
  *
- * 本地存储服务
+ * cihome本地存储服务
  */
 
 define(['app', 'angular'], function (app, angular) {
@@ -10,7 +10,7 @@ define(['app', 'angular'], function (app, angular) {
     app.factory('localStorageService', ['$window', '$log', LocalStorageService]);
 
 
-    var MAX_RECENT_MODULE = 10;
+    var MAX_RECENT_MODULE = 5;
 
     function LocalStorageService($window) {
 

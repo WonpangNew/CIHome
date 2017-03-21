@@ -7,6 +7,7 @@
 define(
     [
         'js/pipeline/services/local-storage-service',
+        'js/pipeline/services/pipeline-service',
         'js/permission/services/permission-service'
     ], function () {
     }

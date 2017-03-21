@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.jlu.user.model.CiHomeUser" %><%--
   Created by IntelliJ IDEA.
   User: Wonpang New
   Date: 2016/9/10
@@ -11,4 +11,5 @@
         path += "/";
     }
     String basePath = path + "resources/";
+    CiHomeUser user = (CiHomeUser) request.getSession().getAttribute("loginUser");
 %>

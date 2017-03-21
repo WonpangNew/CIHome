@@ -1,6 +1,7 @@
 package com.jlu.common.cookies;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -27,14 +28,11 @@ public class CookiesUtiles {
         response.addCookie(passwordCookie);
     }
 
-    public static void deleteCookies(HttpServletResponse response, String username, String password) {
+    public static void deleteCookies(HttpServletResponse response, HttpServletRequest request, String username) {
         Cookie usernameCookie = new Cookie("loginUsername", EncryUtil.encrypt(username));
         usernameCookie.setMaxAge(0);
-        Cookie passwordCookie = new Cookie("loginPassword", EncryUtil.encrypt(password));
-        passwordCookie.setMaxAge(0);
         usernameCookie.setPath("/");
-        passwordCookie.setPath("/");
         response.addCookie(usernameCookie);
-        response.addCookie(passwordCookie);
+        request.getSession().setAttribute("loginUser", null);
     }
 }
