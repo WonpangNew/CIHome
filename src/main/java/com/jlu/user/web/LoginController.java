@@ -56,4 +56,14 @@ public class LoginController {
         CookiesUtiles.deleteCookies(response, request, username);
         return true;
     }
+
+    @RequestMapping("/register")
+    public String registerToJsp() {
+        return "register";
+    }
+
+    @RequestMapping("/loginTo")
+    public String loginToJsp() {
+        return "login";
+    }
 }

@@ -44,7 +44,7 @@
                 </div>
                 <div class="element-center">
                     <a href="#">忘记了密码？</a><br><br>
-                    <a href="#">有账户吗？创建一个。</a>
+                    <a href="cihome/login/register">有账户吗？创建一个。</a>
                 </div>
 
                 <div class="index-footer">

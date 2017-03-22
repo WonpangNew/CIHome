@@ -23,8 +23,36 @@
     color: #4a4a4a;
 }
 
-
 .pipeline-body {
     min-height: calc(100% - 132px);
     margin-bottom: 10px;
+}
+
+.register-panel {
+    width: 50%;
+    height: 50%;
+    margin: auto;
+}
+
+/* 本系统标准字体 */
+.font-light {
+    font-family: "PingFang HK";
+    font-weight: lighter;
+}
+
+.panel-body > ul {
+    list-style: none;
+    padding-right: 40px;
+}
+
+.panel-body > ul > li {
+    list-style: none;
+    margin-top: 25px;
+}
+
+/* 竖线分隔符 */
+.separator {
+    color: #9d9d9d;
+    margin-left: 5px;
+    margin-right: 5px;
 }

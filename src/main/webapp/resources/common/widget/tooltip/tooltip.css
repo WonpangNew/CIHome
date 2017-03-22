@@ -1,0 +1,409 @@
+/**
+ * 纯css tooltip
+ * 参考 Hint.css
+ * 示例
+ * <span class="tooltip-top tooltip-rounded" tooltip-data="test tooltip">tooltip</span>
+ */
+.tooltip,
+[tooltip-data] {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip:before,
+.tooltip:after,
+[tooltip-data]:before,
+[tooltip-data]:after {
+    position: absolute;
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    visibility: hidden;
+    opacity: 0;
+    z-index: 1000000;
+    pointer-events: none;
+    -webkit-transition: .3s ease;
+    -moz-transition: .3s ease;
+    transition: .3s ease;
+    -webkit-transition-delay: 0ms;
+    -moz-transition-delay: 0ms;
+    transition-delay: 0ms;
+}
+
+.tooltip:hover:before,
+.tooltip:hover:after,
+.tooltip:focus:before,
+.tooltip:focus:after,
+[tooltip-data]:hover:before,
+[tooltip-data]:hover:after {
+    visibility: visible;
+    filter: alpha(opacity=80); /*IE滤镜，透明度50%*/
+    -moz-opacity: .8; /*Firefox私有，透明度50%*/
+    opacity: .8; /*其他，透明度50%*/
+}
+
+.tooltip:hover:before,
+.tooltip:hover:after,
+[tooltip-data]:hover:before,
+[tooltip-data]:hover:after {
+    -webkit-transition-delay: 100ms;
+    -moz-transition-delay: 100ms;
+    transition-delay: 100ms;
+}
+
+.tooltip:before,
+[tooltip-data]:before {
+    content: "";
+    position: absolute;
+    background: transparent;
+    border: 6px solid transparent;
+    z-index: 1000001;
+}
+
+.tooltip:after,
+[tooltip-data]:after {
+    content: attr(tooltip-data);
+    background: #383838;
+    color: #FFF;
+    padding: 8px 10px;
+    max-width: 600px;
+    font-size: 12px;
+    line-height: 12px;
+    z-index: 100000;
+    white-space: nowrap;
+
+}
+
+[tooltip-data=""]:before,
+[tooltip-data=""]:after {
+    display: none !important;
+}
+
+/**
+ *
+ * tooltip 位置
+
+ * 1 tooltip-top
+ * 2 tooltip-bottom
+ * 3 tooltip-left
+ * 4 tooltip-right
+ */
+
+/**
+ * 设置默认的tooltip箭头颜色
+ */
+.tooltip-top:before {
+    border-top-color: #383838;
+}
+
+.tooltip-bottom:before {
+    border-bottom-color: #383838;
+}
+
+.tooltip-left:before {
+    border-left-color: #383838;
+}
+
+.tooltip-right:before {
+    border-right-color: #383838;
+}
+
+/**
+ * top tooltip
+ */
+.tooltip-top:before {
+    margin-bottom: -12px;
+}
+
+.tooltip-top:after {
+    margin-left: -18px;
+}
+
+.tooltip-top:before,
+.tooltip-top:after {
+    bottom: 100%;
+    left: 50%;
+}
+
+.tooltip-top:hover:after,
+.tooltip-top:hover:before,
+.tooltip-top:focus:after,
+.tooltip-top:focus:before {
+    -webkit-transform: translateY(-8px);
+    -moz-transform: translateY(-8px);
+    transform: translateY(-8px);
+}
+
+/**
+ * bottom tooltip
+ */
+.tooltip-bottom:before {
+    margin-top: -12px;
+}
+
+.tooltip-bottom:after {
+    margin-left: -18px;
+}
+
+.tooltip-bottom:before,
+.tooltip-bottom:after {
+    top: 100%;
+    left: 50%;
+}
+
+.tooltip-bottom:hover:after,
+.tooltip-bottom:hover:before,
+.tooltip-bottom:focus:after,
+.tooltip-bottom:focus:before {
+    -webkit-transform: translateY(8px);
+    -moz-transform: translateY(8px);
+    transform: translateY(8px);
+}
+
+/**
+ * right tooltip
+ */
+.tooltip-right:before {
+    margin-left: -12px;
+    margin-bottom: -6px;
+}
+
+.tooltip-right:after {
+    margin-bottom: -14px;
+}
+
+.tooltip-right:before,
+.tooltip-right:after {
+    left: 100%;
+    bottom: 50%;
+}
+
+.tooltip-right:hover:after,
+.tooltip-right:hover:before,
+.tooltip-right:focus:after,
+.tooltip-right:focus:before {
+    -webkit-transform: translateX(8px);
+    -moz-transform: translateX(8px);
+    transform: translateX(8px);
+}
+
+/**
+ * left tooltip
+ */
+.tooltip-left:before {
+    margin-right: -12px;
+    margin-bottom: -6px;
+}
+
+.tooltip-left:after {
+    margin-bottom: -14px;
+}
+
+.tooltip-left:before,
+.tooltip-left:after {
+    right: 100%;
+    bottom: 50%;
+}
+
+.tooltip-left:hover:after,
+.tooltip-left:hover:before,
+.tooltip-left:focus:after,
+.tooltip-left:focus:before {
+    -webkit-transform: translateX(-8px);
+    -moz-transform: translateX(-8px);
+    transform: translateX(-8px);
+}
+
+/**
+ *
+ * tooltip 主题.
+ *
+ */
+.tooltip,
+[tooltip-data] {
+}
+
+.tooltip:after,
+[tooltip-data]:after {
+    text-shadow: none;
+    /* box-shadow: 4px 4px 8px rgba(0, 0, 0, .3);*/
+}
+
+/**
+ *
+ * Classes added:
+ * 1 tooltip--error
+ * 2 tooltip--warning
+ * 3 tooltip--info
+ * 4 tooltip--success
+ *
+ */
+/**
+ * Error
+ */
+.tooltip-error:after {
+    background-color: #f3565d;
+    text-shadow: none;
+}
+
+.tooltip-error.tooltip-top:before {
+    border-top-color: #f3565d;
+}
+
+.tooltip-error.tooltip-bottom:before {
+    border-bottom-color: #f3565d;
+}
+
+.tooltip-error.tooltip-left:before {
+    border-left-color: #f3565d;
+}
+
+.tooltip-error.tooltip-right:before {
+    border-right-color: #f3565d;
+}
+
+/**
+ * Warning
+ */
+.tooltip-warning:after {
+    background-color: #f9cc73;
+    text-shadow: none;
+}
+
+.tooltip-warning.tooltip-top:before {
+    border-top-color: #f9cc73;
+}
+
+.tooltip-warning.tooltip-bottom:before {
+    border-bottom-color: #f9cc73;
+}
+
+.tooltip-warning.tooltip-left:before {
+    border-left-color: #f9cc73;
+}
+
+.tooltip-warning.tooltip-right:before {
+    border-right-color: #f9cc73;
+}
+
+/**
+ * Info
+ */
+.tooltip-info:after {
+    background-color: #2a8ee6;
+    text-shadow: none;
+}
+
+.tooltip-info.tooltip-top:before {
+    border-top-color: #2a8ee6;
+}
+
+.tooltip-info.tooltip-bottom:before {
+    border-bottom-color: #2a8ee6;
+}
+
+.tooltip-info.tooltip-left:before {
+    border-left-color: #2a8ee6;
+}
+
+.tooltip-info.tooltip-right:before {
+    border-right-color: #2a8ee6;
+}
+
+/**
+ * Success
+ */
+.tooltip-success:after {
+    background-color: #6fbe72;
+    text-shadow: none;
+}
+
+.tooltip-success.tooltip-top:before {
+    border-top-color: #6fbe72;
+}
+
+.tooltip-success.tooltip-bottom:before {
+    border-bottom-color: #6fbe72;
+}
+
+.tooltip-success.tooltip-left:before {
+    border-left-color: #6fbe72;
+}
+
+.tooltip-success.tooltip-right:before {
+    border-right-color: #6fbe72;
+}
+
+/**
+ *
+ * 持久展示的tooltip
+ *
+ * 1 tooltip-always
+ *
+ */
+.tooltip-always:after,
+.tooltip-always:before {
+    opacity: 1;
+    visibility: visible;
+}
+
+.tooltip-always.tooltip-top:after,
+.tooltip-always.tooltip-top:before {
+    -webkit-transform: translateY(-8px);
+    -moz-transform: translateY(-8px);
+    transform: translateY(-8px);
+}
+
+.tooltip-always.tooltip-bottom:after,
+.tooltip-always.tooltip-bottom:before {
+    -webkit-transform: translateY(8px);
+    -moz-transform: translateY(8px);
+    transform: translateY(8px);
+}
+
+.tooltip-always.tooltip-left:after,
+.tooltip-always.tooltip-left:before {
+    -webkit-transform: translateX(-8px);
+    -moz-transform: translateX(-8px);
+    transform: translateX(-8px);
+}
+
+.tooltip-always.tooltip-right:after,
+.tooltip-always.tooltip-right:before {
+    -webkit-transform: translateX(8px);
+    -moz-transform: translateX(8px);
+    transform: translateX(8px);
+}
+
+/**
+ *
+ * 圆角tooltip
+ *
+ * 1 tooltip-rounded
+ *
+ */
+.tooltip-rounded:after {
+    border-radius: 2px;
+}
+
+/**
+ *
+ * tooltip动画
+ *
+ * 1 tooltip-no-animate
+ * 2 tooltip-bounce
+ *
+ */
+.tooltip-no-animate:before,
+.tooltip-no-animate:after {
+    -webkit-transition-duration: 0ms;
+    -moz-transition-duration: 0ms;
+    transition-duration: 0ms;
+}
+
+.tooltip-bounce:before,
+.tooltip-bounce:after {
+    -webkit-transition: opacity .3s ease, visibility .3s ease, -webkit-transform .3s cubic-bezier(.71, 1.7, .77, 1.24);
+    -moz-transition: opacity .3s ease, visibility .3s ease, -moz-transform .3s cubic-bezier(.71, 1.7, .77, 1.24);
+    transition: opacity .3s ease, visibility .3s ease, transform .3s cubic-bezier(.71, 1.7, .77, 1.24);
+}

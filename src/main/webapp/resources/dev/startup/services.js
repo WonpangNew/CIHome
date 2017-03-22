@@ -9,7 +9,8 @@ define(
         'js/pipeline/services/local-storage-service',
         'js/pipeline/services/pipeline-service',
         'js/pipeline/services/context-service',
-        'js/permission/services/permission-service'
+        'js/permission/services/permission-service',
+        'js/permission/services/register-service'
     ], function () {
     }
 );
