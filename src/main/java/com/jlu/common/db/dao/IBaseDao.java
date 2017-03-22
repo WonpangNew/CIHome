@@ -1,11 +1,13 @@
 package com.jlu.common.db.dao;
 
+import com.jlu.common.db.bean.PageBean;
 import com.jlu.common.db.sqlcondition.ConditionSet;
 import com.jlu.common.db.sqlcondition.OrderCondition;
 
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Wonpang New on 2016/9/6.
@@ -97,4 +99,18 @@ public interface IBaseDao<C> {
      * @return
      */
     List<C> findHeadByProperties(final ConditionSet properties, final List<OrderCondition> orderByProperties, final int offset, final int limit);
+
+    /**
+     * 跟与hql和参数查询,如果不带totalCountHql，本方法不计算总记录数
+     *
+     * @author zhaolei
+     *
+     * Jan 7, 2009
+     *
+     * @param hql
+     * @param queryParam
+     * @param pageParam
+     * @return
+     */
+    List queryByHQL(final String hql, final Map<String, Object> queryParam, String totalCountHql, final PageBean... pageParam);
 }

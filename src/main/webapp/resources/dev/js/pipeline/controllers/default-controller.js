@@ -7,14 +7,16 @@ define(['app', 'constants'], function (app, constants) {
 
     app.controller('DefaultController', [
         'localStorageService',
+        'pipelineContextService',
         '$state',
-        function (localStorageService, $state) {
+        function (localStorageService, pipelineContextService, $state) {
             var lastVisitModule = localStorageService.getRecentModule();
             var lastState = 'builds.trunk';
             if (typeof lastVisitModule !== 'string' && lastVisitModule === '') {
                 lastVisitModule = 'notStorage';
             } else {
                 localStorageService.addRecentModule(lastVisitModule);
+                pipelineContextService.setModule(lastVisitModule);
             }
             var lastParams = {
                 module: lastVisitModule

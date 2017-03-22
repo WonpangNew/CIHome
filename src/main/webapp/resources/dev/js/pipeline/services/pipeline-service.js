@@ -18,9 +18,8 @@ define(['app', 'constants'], function (app, constants) {
         var self = this;
 
         // 搜索模块名
-        self.getSearchModules = function (username, password) {
-            return $http.get(constants.api('cihome/login/loginSystem?username='
-                + username + '&password=' + password))
+        self.getSearchModules = function (searchVal, username) {
+            return $http.get(constants.api('ajax/module/query?limit=70&q=' + searchVal + '&username=' + username))
                 .then(function (data) {
                     return data.data;
                 });

@@ -1,8 +1,11 @@
 package com.jlu.common.db.dao;
 
+import com.jlu.common.db.bean.PageBean;
 import com.jlu.common.db.sqlcondition.*;
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
@@ -14,10 +17,8 @@ import org.springframework.orm.hibernate4.HibernateTemplate;
 import javax.annotation.Resource;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+import java.sql.SQLException;
+import java.util.*;
 
 /**
  * Created by Wonpang New on 2016/9/6.
@@ -307,5 +308,55 @@ public abstract class AbstractBaseDao<C> implements IBaseDao<C>{
         } else
             crit = Restrictions.eq(propertyName, propValue);
         return crit;
+    }
+
+    public List queryByHQL(final String hql, final Map<String, Object> queryParam, final String totalCountHql,
+                           final PageBean... pageParam) {
+        return (List) hibernateTemplate.execute(new org.springframework.orm.hibernate4.HibernateCallback() {
+            public Object doInHibernate(Session session) throws HibernateException {
+                Query query = session.createQuery(hql);
+                if (queryParam != null)
+                    query = setParams(query, queryParam);
+                if (pageParam.length == 1 && pageParam[0] != null) {
+                    if (totalCountHql != null)// 如果带了需要查询总数的HQL，查询总数设置到pagebean中
+                    {
+                        Query countQuery = session.createQuery(totalCountHql);
+                        if (queryParam != null)
+                            countQuery = setParams(countQuery, queryParam);
+                        Integer count = Integer.parseInt(countQuery.uniqueResult() + "");
+                        pageParam[0].setRecordsCount(count);
+                    }
+                    int start = pageParam[0].getCurrentPage() - 1;
+                    start = start >= 0 ? start : 0;
+                    query.setFirstResult(start * pageParam[0].getMaxRecords()).setMaxResults(
+                            pageParam[0].getMaxRecords());
+                }
+                return query.list();
+            }
+        });
+    }
+
+    private Query setParams(Query resultQuery, Map queryParam) {
+        // 设置查询参数
+        for (Map.Entry<String, Object> entry : (Set<Map.Entry<String, Object>>) queryParam.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+
+            if (value instanceof Collection) {
+                Collection collection = (Collection) value;
+                if (collection.size() < MAX_PARAM_COLLECTION_SIZE) {
+                    resultQuery.setParameterList(key, (Collection) value);
+                } else {
+                    String collectionStr = "'" + StringUtils.join(collection, "','") + "'";
+                    resultQuery.setParameter(key, collectionStr);
+                }
+            }else if(value instanceof Object[]){
+                resultQuery.setParameterList(key, (Object[])value);
+            } else {
+                resultQuery.setParameter(key, value);
+            }
+
+        }
+        return resultQuery;
     }
 }

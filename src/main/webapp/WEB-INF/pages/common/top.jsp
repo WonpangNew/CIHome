@@ -16,13 +16,13 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <form class="navbar-form navbar-left">
                     <div class="form-group">
-                        <input class="form-control" style="width: 300px;" type="text"
-                               ng-model="contextCtrl.searchModule"
+                        <input class="form-control" style="width: 350px;" type="text"
+                               ng-model="ctrl.searchModule"
                                placeholder="请输入模块名"
-                               uib-typeahead="module.path for module in ctrl.getSearchModules($viewValue)"
+                               uib-typeahead="module.module for module in ctrl.getSearchModules($viewValue, '<%=user.getUsername()%>')"
                                typeahead-loading="loadingLocations"
                                typeahead-no-results="noResults"
-                               typeahead-on-select="ctrl.moduleSelected($item,$model,$label)"
+                               typeahead-on-select="ctrl.moduleSelected($model)"
                                autocomplete="off"
                                role="search"
                                uib-dropdown-toggle ng-click="ctrl.pullRecentModules()">
