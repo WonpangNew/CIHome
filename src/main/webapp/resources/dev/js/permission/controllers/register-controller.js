@@ -30,6 +30,10 @@ define(['app'], function (app) {
             }
         }, function (result) {
             self.checkPasswordPass = result;
-        })
+        });
+
+        $scope.$watch(function () {
+            self.checkEmailPass = self.email ? true : false;
+        });
     }
 });

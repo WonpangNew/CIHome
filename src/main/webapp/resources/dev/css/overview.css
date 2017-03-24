@@ -27,6 +27,11 @@
     color: #777;
 }
 
+.input-group-btn > button > span > i {
+    height: 20px;
+    padding-top: 3px;
+}
+
 /* 渐变分割线 start */
 .cut-line {
     margin: auto;

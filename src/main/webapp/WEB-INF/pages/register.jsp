@@ -42,17 +42,35 @@
                             </div>
                         </li>
                         <li>
-                            <div class="form-group">
+                            <div class="input-group">
                                 <input type="password" class="form-control" ng-model="registerCtrl.checkPassword" placeholder="确认密码">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button">
+                                         <span ng-hide="registerCtrl.checkPassword === ''">
+                                            <i ng-show="registerCtrl.checkPasswordPass" class="fa fa-check check-right" aria-hidden="true"></i>
+                                            <i ng-show="!registerCtrl.checkPasswordPass" class="fa fa-times check-fault" aria-hidden="true"></i>
+                                        </span>
+                                        <span ng-hide="registerCtrl.checkPassword !== ''">
+                                            <i class="fa fa-spinner" aria-hidden="true"></i>
+                                        </span>
+                                    </button>
+                                </span>
                             </div>
                         </li>
                         <li>
                             <div class="input-group">
-                                <input type="email" class="form-control" ng-model="registerCtrl.email" placeholder="邮箱">
+                                <input type="email"
+                                       class="form-control"
+                                       ng-model="registerCtrl.email"
+                                       placeholder="邮箱">
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default tooltip-top tooltip-rounded" type="button"
+                                    <button ng-show="registerCtrl.email === ''" class="btn btn-default tooltip-top tooltip-rounded" type="button"
                                             tooltip-data="用于找回密码">
                                        <i class="fa fa-question-circle" style="color: #177ff7;" aria-hidden="true"></i>
+                                    </button>
+                                     <button ng-show="registerCtrl.email !== ''" class="btn btn-default" type="button">
+                                         <i ng-show="registerCtrl.checkEmailPass" class="fa fa-check check-right" aria-hidden="true"></i>
+                                         <i ng-show="!registerCtrl.checkEmailPass" class="fa fa-times check-fault" aria-hidden="true"></i>
                                     </button>
                                 </span>
                             </div>

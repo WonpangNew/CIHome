@@ -2,14 +2,17 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
-         http://www.springframework.org/schema/context
-          http://www.springframework.org/schema/context/spring-context.xsd
-          http://www.springframework.org/schema/mvc
-          http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+          http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
     <mvc:annotation-driven />
+
+    <util:properties id="cihomeproperties" location="classpath:cihome.properties" />
+    <util:properties id="jdbcproperties" location="classpath:db_config.properties" />
 
     <context:component-scan base-package="com.jlu.*"/>
     <context:property-placeholder location="classpath:*.properties" />
@@ -17,6 +20,15 @@
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/pages/" />
         <property name="suffix" value=".jsp" />
+    </bean>
+
+    <bean id="ciHomeConfig" class="com.jlu.common.utils.CiHomeReadConfig" lazy-init="false" scope="singleton">
+        <property name="props">
+            <list>
+                <ref bean="cihomeproperties"/>
+                <ref bean="jdbcproperties"/>
+            </list>
+        </property>
     </bean>
 
     <mvc:resources mapping="/resources/**" location="/resources/" />

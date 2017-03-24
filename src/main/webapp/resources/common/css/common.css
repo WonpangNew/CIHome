@@ -56,3 +56,13 @@
     margin-left: 5px;
     margin-right: 5px;
 }
+
+/* 对勾颜色 */
+.check-right {
+    color: #4cae4c !important;
+}
+
+/* 错号颜色 */
+.check-fault {
+    color: red !important;
+}
