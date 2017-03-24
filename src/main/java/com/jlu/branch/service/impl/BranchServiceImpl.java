@@ -6,6 +6,8 @@ import com.jlu.branch.service.IBranchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by niuwanpeng on 17/3/10.
  */
@@ -21,6 +23,16 @@ public class BranchServiceImpl implements IBranchService {
      */
     @Override
     public void saveBranch(CiHomeBranch ciHomeBranch) {
-
+        branchDao.save(ciHomeBranch);
     }
+
+    /**
+     * 批量保存模块信息
+     * @param ciHomeBranches
+     */
+    @Override
+    public void saveBranches(List<CiHomeBranch> ciHomeBranches) {
+        branchDao.saveOrUpdateAll(ciHomeBranches);
+    }
+
 }

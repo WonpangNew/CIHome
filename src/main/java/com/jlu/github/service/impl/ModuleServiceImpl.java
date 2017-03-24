@@ -24,8 +24,17 @@ public class ModuleServiceImpl implements IModuleService{
      * @param ciHomeModule
      */
     @Override
-    public void saveModule(CiHomeModule ciHomeModule)  {
+    public void saveModule(CiHomeModule ciHomeModule) {
+        moduleDao.save(ciHomeModule);
+    }
 
+    /**
+     * 批量保存模块信息
+     * @param list
+     */
+    @Override
+    public void saveModules(List<CiHomeModule> list) {
+        moduleDao.saveOrUpdateAll(list);
     }
 
     /**
@@ -39,5 +48,17 @@ public class ModuleServiceImpl implements IModuleService{
     public List<CiHomeModule> getSuggestProductModules(String q, String username, int limit) {
         PageBean page = new PageBean(limit);
         return moduleDao.getSuggestProductModules(q, username, page);
+    }
+
+    /**
+     * 通过用户名获得该名下所有模块信息
+     * @param username
+     * @return
+     */
+    @Override
+    public List<CiHomeModule> getModulesByUsername(String username) {
+        ConditionAndSet conditionAndSet = new ConditionAndSet();
+        conditionAndSet.put("username", username);
+        return moduleDao.findByProperties(conditionAndSet);
     }
 }

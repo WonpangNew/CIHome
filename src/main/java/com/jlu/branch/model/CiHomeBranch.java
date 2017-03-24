@@ -29,7 +29,16 @@ public class CiHomeBranch {
     private BranchType branchType;
 
     @Column(name = "CREATE_NAME")
-    private Date createTime;
+    private String createTime;
+
+    public CiHomeBranch(int moduleId, String branchName, BranchType branchType, String createTime) {
+        this.moduleId = moduleId;
+        this.branchName = branchName;
+        this.branchType = branchType;
+        this.createTime = createTime;
+    }
+
+    public CiHomeBranch() {}
 
     public int getId() {
         return id;
@@ -63,11 +72,11 @@ public class CiHomeBranch {
         this.branchType = branchType;
     }
 
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 }

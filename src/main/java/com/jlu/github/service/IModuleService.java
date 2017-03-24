@@ -16,6 +16,12 @@ public interface IModuleService {
     void saveModule(CiHomeModule ciHomeModule);
 
     /**
+     * 批量保存模块信息
+     * @param list
+     */
+    void saveModules(List<CiHomeModule> list);
+
+    /**
      * 搜索模块
      * @param q
      * @param username
@@ -23,4 +29,11 @@ public interface IModuleService {
      * @return
      */
     List<CiHomeModule> getSuggestProductModules(String q, String username, int limit);
+
+    /**
+     * 通过用户名获得该名下所有模块信息
+     * @param username
+     * @return
+     */
+    List<CiHomeModule> getModulesByUsername(String username);
 }
