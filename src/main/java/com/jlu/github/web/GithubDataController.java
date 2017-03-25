@@ -32,7 +32,7 @@ public class GithubDataController {
 
     @RequestMapping(value = "/test", method = RequestMethod.POST)
     @ResponseBody
-    public String test(String usr) {
+    public String test() {
         return "ok";
     }
 }
