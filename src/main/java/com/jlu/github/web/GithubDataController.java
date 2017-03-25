@@ -37,9 +37,14 @@ public class GithubDataController {
         return githubDataService.syncReposByUser(userame);
     }
 
-    @RequestMapping(value = "/test", method = RequestMethod.POST)
+    /**
+     * 监听代码提交事件（push），触法ci
+     * @param request
+     * @param response
+     */
+    @RequestMapping(value = "/webHooks", method = RequestMethod.POST)
     @ResponseBody
-    public String test(HttpServletRequest request, HttpServletResponse response) {
+    public void monitorWebHooks(HttpServletRequest request, HttpServletResponse response) {
         JSONObject paramJson = new JSONObject();
         try {
             InputStream in = request.getInputStream();
@@ -56,6 +61,5 @@ public class GithubDataController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "ok";
     }
 }
