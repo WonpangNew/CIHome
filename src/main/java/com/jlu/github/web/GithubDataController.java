@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * Created by niuwanpeng on 17/3/24.
  */
@@ -32,7 +35,7 @@ public class GithubDataController {
 
     @RequestMapping(value = "/test", method = RequestMethod.POST)
     @ResponseBody
-    public String test() {
+    public String test(HttpServletRequest request, HttpServletResponse response) {
         return "ok";
     }
 }
