@@ -1,5 +1,7 @@
 package com.jlu.github.web;
 
+import com.jlu.common.utils.CiHomeReadConfig;
+import com.jlu.common.utils.HttpClientAuth;
 import com.jlu.github.service.IGithubDataService;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,5 +63,14 @@ public class GithubDataController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @RequestMapping("/test")
+    @ResponseBody
+    public String test() {
+        String url = String.format(CiHomeReadConfig.getConfigValueByKey("github.all.hooks"),
+                "WonpangNew", "CIHome");
+        String result = HttpClientAuth.curlCreatHook("WonpangNew", "a1s2d3f4", url);
+        return result;
     }
 }
