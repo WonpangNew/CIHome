@@ -19,7 +19,7 @@ define(['app'], function (app) {
         self.username = '';
         self.password = '';
         self.checkPassword = '';
-        self.email = 'email';
+        self.email = '';
         self.githubPassword = '';
         self.isSyncGithub = false;
 
