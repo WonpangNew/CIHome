@@ -17,8 +17,8 @@ define(['app', 'constants'], function (app, constants) {
     function RegisterService($http, $q) {
         var self = this;
 
-        self.register = function (username, password) {
-            return $http.get(constants.api(''))
+        self.register = function (userbean) {
+            return $http.post(constants.api('/github/initUser'), userbean)
                 .then(function (data) {
                     return data.data;
                 });

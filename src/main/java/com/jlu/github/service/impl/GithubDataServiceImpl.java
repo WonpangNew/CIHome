@@ -7,17 +7,25 @@ import com.jlu.branch.model.CiHomeBranch;
 import com.jlu.branch.service.IBranchService;
 import com.jlu.common.utils.CiHomeReadConfig;
 import com.jlu.common.utils.DateUtil;
+import com.jlu.common.utils.HttpClientAuth;
 import com.jlu.common.utils.HttpClientUtil;
 import com.jlu.github.bean.GithubBranchBean;
 import com.jlu.github.bean.GithubRepoBean;
 import com.jlu.github.model.CiHomeModule;
 import com.jlu.github.service.IGithubDataService;
 import com.jlu.github.service.IModuleService;
+import com.jlu.user.bean.UserBean;
+import com.jlu.user.model.CiHomeUser;
+import com.jlu.user.service.IUserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by niuwanpeng on 17/3/24.
@@ -31,13 +39,46 @@ public class GithubDataServiceImpl implements IGithubDataService {
     @Autowired
     private IBranchService branchService;
 
+    @Autowired
+    private IUserService userService;
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(GithubDataServiceImpl.class);
     private static final Gson GSON = new Gson();
+    private final static String REGISTER_STATUS = "REGISTER_STATUS";
+    private final static String MESSAGE = "MESSAGE";
+
+    /**
+     * 根据用户注册信息初始化用户
+     * @param userBean
+     * @return
+     */
+    @Override
+    public Map<String, Object> initUser(UserBean userBean) {
+        Map<String, Object> result = new HashMap<>();
+        result.put(REGISTER_STATUS, false);
+        if (userBean == null) {
+            result.put(MESSAGE, "输入信息有误，请重新注册！");
+            LOGGER.error("注册失败！The message is userbean:{}", userBean);
+        } else {
+            if (userBean.isSyncGithub()) {
+                this.syncReposByUser(userBean.getUsername());
+                List<CiHomeModule> ciHomeModules = moduleService.getModulesByUsername(userBean.getUsername());
+                for (CiHomeModule ciHomeModule : ciHomeModules) {
+                    this.creatHooks(userBean.getUsername(), ciHomeModule.getModule(), userBean.getGithubPassword());
+                }
+            }
+            CiHomeUser ciHomeUser = this.assembleCiHomeUser(userBean);
+            userService.saveUser(ciHomeUser);
+        }
+        return result;
+    }
 
     /**
      * 根据用户名获得GitHub代码仓库信息并保存
      * @param username
      * @return
      */
+    @Override
     public boolean syncReposByUser(String username) {
         String requestRepoUrl = String.format(CiHomeReadConfig.getConfigValueByKey("github.repos"), username);
         String result = HttpClientUtil.get(requestRepoUrl, null);
@@ -52,6 +93,22 @@ public class GithubDataServiceImpl implements IGithubDataService {
             this.saveCiHomeBranchByBean(branchBeans, ciHomeModule);
         }
         return true;
+    }
+
+    /**
+     * 为代码仓库创建hook
+     * @param username
+     * @param repo
+     * @param githubPassword
+     * @return
+     */
+    @Override
+    public Map<String, Object> creatHooks(String username, String repo, String githubPassword) {
+        Map<String, Object> result = new HashMap<>();
+        String repoUrl
+                = String.format(CiHomeReadConfig.getConfigValueByKey("github.all.hooks"), username, repo);
+        String resultHook = HttpClientAuth.curlCreatHook(username, githubPassword, repoUrl);
+        return result;
     }
 
     /**
@@ -83,5 +140,19 @@ public class GithubDataServiceImpl implements IGithubDataService {
             ciHomeBranches.add(ciHomeBranch);
         }
         branchService.saveBranches(ciHomeBranches);
+    }
+
+    /**
+     * 根据Userbean装配CiHomeUser
+     * @param userBean
+     * @return
+     */
+    private CiHomeUser assembleCiHomeUser(UserBean userBean) {
+        CiHomeUser ciHomeUser = new CiHomeUser();
+        ciHomeUser.setUsername(userBean.getUsername());
+        ciHomeUser.setPassword(userBean.getPassword());
+        ciHomeUser.setUserEmail(userBean.getEmail());
+        ciHomeUser.setCreateTime(DateUtil.getNowDateFormat());
+        return ciHomeUser;
     }
 }

@@ -18,7 +18,7 @@
 <div>
     <div class="background-index">
         <div class="register-panel">
-            <div class="panel panel-default" style="margin-top: 100px;position: fixed;width: 50%;">
+            <div class="panel panel-default" style="margin-top: 50px;position: fixed;width: 50%;">
                 <div class="panel-heading element-center">
                     <h3 class="font-light">创建您的 CiHome ID</h3>
                 </div>
@@ -75,13 +75,30 @@
                                 </span>
                             </div>
                         </li>
+                        <li>
+                            <div class="switch switch-mini">
+                                <input type="checkbox" ng-true-value="true" ng-false-value="false" ng-model="registerCtrl.isSyncGithub" checked/>
+                                您希望同步GitHub吗？（推荐同步，否则需要单独配置各个仓库）
+                            </div>
+                        </li>
+                        <li>
+                            <div ng-show="registerCtrl.isSyncGithub" class="input-group">
+                                <input type="password" class="form-control" ng-model="registerCtrl.githubPassword" placeholder="Github密码">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default tooltip-top tooltip-rounded" type="button"
+                                            tooltip-data="系统不会保留该密码，只在此时与GitHub同步信息使用">
+                                        <i class="fa fa-question-circle" style="color: #177ff7;" aria-hidden="true"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </li>
                     </ul>
                 </div>
                 <div class="panel-footer" style="margin-top: 35px;">
                     <div class="text-right">
                         <a href="loginTo">取消</a>
                         <a class="separator">|</a>
-                        <a href="#">继续</a>
+                        <a href="#" ng-click="registerCtrl.register()">继续</a>
                     </div>
                 </div>
             </div>

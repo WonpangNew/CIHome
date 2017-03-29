@@ -1,21 +1,18 @@
 package com.jlu.github.web;
 
-import com.jlu.common.utils.CiHomeReadConfig;
-import com.jlu.common.utils.HttpClientAuth;
 import com.jlu.github.service.IGithubDataService;
+import com.jlu.user.bean.UserBean;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Map;
 
 /**
  * Created by niuwanpeng on 17/3/24.
@@ -65,12 +62,14 @@ public class GithubDataController {
         }
     }
 
-    @RequestMapping("/test")
+    /**
+     * 根据用户注册信息初始化用户
+     * @param userBean
+     * @return
+     */
+    @RequestMapping(value = "/initUser", method = RequestMethod.POST)
     @ResponseBody
-    public String test() {
-        String url = String.format(CiHomeReadConfig.getConfigValueByKey("github.all.hooks"),
-                "WonpangNew", "CIHome");
-        String result = HttpClientAuth.curlCreatHook("WonpangNew", "a1s2d3f4", url);
-        return result;
+    public Map<String, Object> initUser(@RequestBody UserBean userBean) {
+       return githubDataService.initUser(userBean);
     }
 }

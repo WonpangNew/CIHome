@@ -19,8 +19,27 @@ define(['app'], function (app) {
         self.username = '';
         self.password = '';
         self.checkPassword = '';
-        self.email = '';
-        self.password = '';
+        self.email = 'email';
+        self.githubPassword = '';
+        self.isSyncGithub = false;
+
+        self.getInitParams = function () {
+            return {
+                username: self.username,
+                password: self.password,
+                githubPassword: self.githubPassword,
+                email: self.email,
+                syncGithub: self.isSyncGithub
+            }
+        };
+
+        self.register = function () {
+            var params = self.getInitParams();
+            self.initResult = registerService.register(params)
+                .then(function (result) {
+                    var result = angular.fromJson(result);
+                });
+        };
 
         $scope.$watch(function () {
             if (self.checkPassword !== '') {

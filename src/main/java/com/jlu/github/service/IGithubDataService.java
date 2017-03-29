@@ -1,5 +1,9 @@
 package com.jlu.github.service;
 
+import com.jlu.user.bean.UserBean;
+
+import java.util.Map;
+
 /**
  * Created by niuwanpeng on 17/3/24.
  *
@@ -13,4 +17,20 @@ public interface IGithubDataService {
      * @return
      */
     boolean syncReposByUser(String username);
+
+    /**
+     * 根据用户注册信息初始化用户
+     * @param userBean
+     * @return
+     */
+    Map<String, Object> initUser(UserBean userBean);
+
+    /**
+     * 为代码仓库创建hook
+     * @param username
+     * @param repo
+     * @param githubPassword
+     * @return
+     */
+    Map<String, Object> creatHooks(String username, String repo, String githubPassword);
 }
