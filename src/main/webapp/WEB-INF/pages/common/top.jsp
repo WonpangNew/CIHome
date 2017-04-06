@@ -25,7 +25,7 @@
                                typeahead-on-select="ctrl.moduleSelected($model)"
                                autocomplete="off"
                                role="search"
-                               uib-dropdown-toggle ng-click="ctrl.pullRecentModules()">
+                               uib-dropdown-toggle>
                     </div>
                 </form>
                 <ul class="nav navbar-nav navbar-right">

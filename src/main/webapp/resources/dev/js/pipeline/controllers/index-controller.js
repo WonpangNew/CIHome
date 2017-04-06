@@ -13,14 +13,13 @@ define(['app'], function (app) {
         'pipelineDataService',
         'pipelineContextService',
         'permissionService',
+        'localStorageService',
         IndexController
     ]);
     
     function IndexController($scope, $location, $state, $window, pipelineDataService,
-                             pipelineContextService, permissionService) {
+                             pipelineContextService, permissionService, localStorageService) {
         var self = this;
-
-        self.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
 
         self.context = pipelineContextService.context;
         self.searchModule = undefined;
@@ -34,10 +33,11 @@ define(['app'], function (app) {
         };
 
         self.exitLogin = function () {
+            localStorageService.remove('recentModules');
             permissionService.exitLogin(self.context.username)
                 .then(function (result) {
                     if (result) {
-                        $window.location.reload();
+                        $window.location.href = "http://localhost:8080/";
                     }
                 });
         };

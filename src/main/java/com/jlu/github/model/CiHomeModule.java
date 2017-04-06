@@ -23,8 +23,12 @@ public class CiHomeModule {
     @Column(name = "USERNAME")
     private String username;
 
-    @Column(name = "CREATE_NAME")
+    @Column(name = "CREATE_TIME")
     private String createTime;
+
+    @Column(name = "VERSION")
+    private String version;
+
 
     public CiHomeModule(String module, String username, String createTime) {
         this.module = module;
@@ -65,5 +69,13 @@ public class CiHomeModule {
 
     public void setCreateTime(String createTime) {
         this.createTime = createTime;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
     }
 }

@@ -60,15 +60,21 @@ public class GithubDataServiceImpl implements IGithubDataService {
             result.put(MESSAGE, "输入信息有误，请重新注册！");
             LOGGER.error("注册失败！The message is userbean:{}", userBean);
         } else {
-            if (userBean.isSyncGithub()) {
-                this.syncReposByUser(userBean.getUsername());
-                List<CiHomeModule> ciHomeModules = moduleService.getModulesByUsername(userBean.getUsername());
-                for (CiHomeModule ciHomeModule : ciHomeModules) {
-                    this.creatHooks(userBean.getUsername(), ciHomeModule.getModule(), userBean.getGithubPassword());
+            try {
+                if (userBean.isSyncGithub()) {
+                    this.syncReposByUser(userBean.getUsername());
+                    List<CiHomeModule> ciHomeModules = moduleService.getModulesByUsername(userBean.getUsername());
+                    for (CiHomeModule ciHomeModule : ciHomeModules) {
+                        this.creatHooks(userBean.getUsername(), ciHomeModule.getModule(), userBean.getGitHubToken());
+                    }
                 }
+                result.put(REGISTER_STATUS, true);
+                CiHomeUser ciHomeUser = this.assembleCiHomeUser(userBean);
+                userService.saveUser(ciHomeUser);
+            } catch (Exception e) {
+                LOGGER.error("注册失败！The message is userbean:{}", userBean);
+                result.put(MESSAGE, "不可预知错误，请重新注册！");
             }
-            CiHomeUser ciHomeUser = this.assembleCiHomeUser(userBean);
-            userService.saveUser(ciHomeUser);
         }
         return result;
     }
@@ -99,15 +105,15 @@ public class GithubDataServiceImpl implements IGithubDataService {
      * 为代码仓库创建hook
      * @param username
      * @param repo
-     * @param githubPassword
+     * @param githubToken
      * @return
      */
     @Override
-    public Map<String, Object> creatHooks(String username, String repo, String githubPassword) {
+    public Map<String, Object> creatHooks(String username, String repo, String githubToken) {
         Map<String, Object> result = new HashMap<>();
         String repoUrl
                 = String.format(CiHomeReadConfig.getConfigValueByKey("github.all.hooks"), username, repo);
-        String resultHook = HttpClientAuth.curlCreatHook(username, githubPassword, repoUrl);
+        String resultHook = HttpClientAuth.postForCreateHook(repoUrl, githubToken);
         return result;
     }
 
@@ -120,6 +126,7 @@ public class GithubDataServiceImpl implements IGithubDataService {
         List<CiHomeModule> ciHomeModules = new ArrayList<>();
         for (GithubRepoBean githubRepoBean : repoList) {
             CiHomeModule ciHomeModule = new CiHomeModule(githubRepoBean.getName(), username, DateUtil.getNowDateFormat());
+            ciHomeModule.setVersion("1.0.0");
             ciHomeModules.add(ciHomeModule);
         }
         moduleService.saveModules(ciHomeModules);
@@ -133,10 +140,12 @@ public class GithubDataServiceImpl implements IGithubDataService {
      */
     private void saveCiHomeBranchByBean(List<GithubBranchBean> branchBeans, CiHomeModule ciHomeModule) {
         List<CiHomeBranch> ciHomeBranches = new ArrayList<>();
+        String version = "1.0.0";
         for (GithubBranchBean branchBean : branchBeans) {
             BranchType branchType = branchBean.getName().equals("master") ? BranchType.TRUNK : BranchType.BRANCH;
             CiHomeBranch ciHomeBranch
-                    = new CiHomeBranch(ciHomeModule.getId(), branchBean.getName(), branchType, DateUtil.getNowDateFormat());
+                    = new CiHomeBranch(ciHomeModule.getId(), branchBean.getName(), branchType,
+                    this.getThreeVersion(branchType, version), DateUtil.getNowDateFormat());
             ciHomeBranches.add(ciHomeBranch);
         }
         branchService.saveBranches(ciHomeBranches);
@@ -153,6 +162,22 @@ public class GithubDataServiceImpl implements IGithubDataService {
         ciHomeUser.setPassword(userBean.getPassword());
         ciHomeUser.setUserEmail(userBean.getEmail());
         ciHomeUser.setCreateTime(DateUtil.getNowDateFormat());
+        ciHomeUser.setGitHubToken(userBean.getGitHubToken());
         return ciHomeUser;
+    }
+
+    /**
+     * 获得三位版本号
+     * @param branchType
+     * @param version
+     * @return
+     */
+    private String getThreeVersion(BranchType branchType, String version) {
+        if (branchType.equals(BranchType.TRUNK)) {
+            return version;
+        } else {
+            String[] numbers = version.split("\\.");
+            return (Integer.parseInt(numbers[0]) + 1) + ".0.0";
+        }
     }
 }

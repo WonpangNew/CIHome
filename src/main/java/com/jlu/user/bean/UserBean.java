@@ -12,7 +12,7 @@ public class UserBean {
 
     private String password;
 
-    private String githubPassword;
+    private String gitHubToken;
 
     private String email;
 
@@ -34,12 +34,12 @@ public class UserBean {
         this.password = password;
     }
 
-    public String getGithubPassword() {
-        return githubPassword;
+    public String getGitHubToken() {
+        return gitHubToken;
     }
 
-    public void setGithubPassword(String githubPassword) {
-        this.githubPassword = githubPassword;
+    public void setGitHubToken(String gitHubToken) {
+        this.gitHubToken = gitHubToken;
     }
 
     public String getEmail() {

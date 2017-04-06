@@ -1,15 +1,11 @@
 package com.jlu.common.utils;
 
 import org.apache.http.HttpEntity;
-import org.apache.http.NameValuePair;
-import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.CredentialsProvider;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
@@ -19,8 +15,6 @@ import org.slf4j.LoggerFactory;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by niuwanpeng on 17/3/25.
@@ -31,33 +25,53 @@ public class HttpClientAuth {
 
     /**
      * 输入用户名、密码，返回一个httpClient对象
-     * @param username
-     * @param password
      * @return
      */
-    public static CloseableHttpClient getHttpClient(String username, String password) {
-        CredentialsProvider provider = new BasicCredentialsProvider();
-        UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(username, password);
-        provider.setCredentials(AuthScope.ANY, credentials);
-        return  HttpClients.custom().setDefaultCredentialsProvider(provider).build();
+    public static CloseableHttpClient getHttpClient() {
+        CloseableHttpClient httpClient = HttpClients.custom().build();
+        return httpClient;
     }
 
     /**
      * 带权限的post请求
      * @param url
-     * @param username
-     * @param password
      * @return
      */
-    public static String post(String url, String username, String password) {
-        CloseableHttpClient httpClient = getHttpClient(username, password);
+    public static String postForCreateHook(String url, String token) {
+        CloseableHttpClient httpClient = getHttpClient();
         HttpPost httpPost = new HttpPost(url);
-        httpPost.setHeader("Content-Type", "application/json");
+        httpPost.addHeader("Authorization", "token " + token);
         String result = "";
         try {
-            List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
-            httpPost.setEntity(new UrlEncodedFormEntity(urlParameters));
+            String params = "{\"name\": \"web\",\"active\": true,\"events\": [\"push\"],\"config\": {\"url\": \"" + CiHomeReadConfig.getConfigValueByKey("cihome.receive.hook") + "\", \"content_type\": \"json\"}}";
+            StringEntity entityParams = new StringEntity(params,"utf-8");
+            entityParams.setContentEncoding("UTF-8");
+            entityParams.setContentType("application/json");
+            httpPost.setEntity(entityParams);
             CloseableHttpResponse response = httpClient.execute(httpPost);
+            HttpEntity entity = response.getEntity();
+            result = EntityUtils.toString(entity);
+            httpClient.close();
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    /**
+     * 带权限的get请求
+     * @param url
+     * @return
+     */
+    public static String get(String url, String token) {
+        CloseableHttpClient httpClient = getHttpClient();
+        HttpGet httpGet = new HttpGet(url);
+        httpGet.addHeader("Authorization", "token " + token);
+        String result = "";
+        try {
+            CloseableHttpResponse response = httpClient.execute(httpGet);
             HttpEntity entity = response.getEntity();
             result = EntityUtils.toString(entity);
             httpClient.close();

@@ -28,13 +28,20 @@ public class CiHomeBranch {
     @Column(name = "BRANCH_TYPE")
     private BranchType branchType;
 
-    @Column(name = "CREATE_NAME")
+    @Column(name = "CREATE_TIME")
     private String createTime;
 
-    public CiHomeBranch(int moduleId, String branchName, BranchType branchType, String createTime) {
+    @Column(name = "VERSION")
+    private String version;
+
+    @Column(name = "REMARKS")
+    private String remarks;
+
+    public CiHomeBranch(int moduleId, String branchName, BranchType branchType, String version, String createTime) {
         this.moduleId = moduleId;
         this.branchName = branchName;
         this.branchType = branchType;
+        this.version = version;
         this.createTime = createTime;
     }
 
@@ -78,5 +85,21 @@ public class CiHomeBranch {
 
     public void setCreateTime(String createTime) {
         this.createTime = createTime;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
     }
 }

@@ -23,5 +23,17 @@ define(['app', 'constants'], function (app, constants) {
                     return data.data;
                 });
         };
+
+        /**
+         * 判断用户名是否重复
+         * @param username
+         * @returns {*}
+         */
+        self.judgeUsernameRepeat = function (username) {
+            return $http.get(constants.api('/user/judgeUsernameRepeat?username=' + username))
+                .then(function (data) {
+                    return data.data;
+                });
+        };
     }
 })

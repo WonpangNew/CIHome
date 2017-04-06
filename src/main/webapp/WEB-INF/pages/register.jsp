@@ -22,17 +22,27 @@
                 <div class="panel-heading element-center">
                     <h3 class="font-light">创建您的 CiHome ID</h3>
                 </div>
-                <div class="panel-body">
+                <div class="panel-body" ng-show="!registerCtrl.showLoading">
                     <ul>
                         <li class="text-center" style="margin-bottom: 35px;">只需一个 CiHome ID，您即可访问 CiHome 所有内容。</li>
                         <li>
                             <div class="input-group">
-                                <input type="text" class="form-control" ng-model="registerCtrl.username" placeholder="用户名">
+                                <input type="text" class="form-control" ng-model="registerCtrl.username" ng-change="registerCtrl.judgeUsernameRepeat()" placeholder="用户名">
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default tooltip-top tooltip-rounded" type="button"
+                                    <button ng-show="registerCtrl.username === ''" class="btn btn-default tooltip-top tooltip-rounded" type="button"
                                             tooltip-data="该用户名应与GitHub用户名保持一致">
                                         <i class="fa fa-question-circle" style="color: #177ff7;" aria-hidden="true"></i>
                                     </button>
+                                     <button ng-show="registerCtrl.username !== ''" class="btn btn-default" type="button">
+                                         <i ng-show="!registerCtrl.usernameRepeat" class="fa fa-check check-right" aria-hidden="true"></i>
+                                         <i ng-show="registerCtrl.usernameRepeat" class="fa fa-times check-fault" aria-hidden="true"></i>
+                                    </button>
+                                </span>
+                            </div>
+                            <div ng-show="registerCtrl.username !== '' && registerCtrl.usernameRepeat">
+                                <span class="error-font-size check-fault">
+                                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                    改用户名已存在，请更改
                                 </span>
                             </div>
                         </li>
@@ -68,7 +78,7 @@
                                             tooltip-data="用于找回密码">
                                        <i class="fa fa-question-circle" style="color: #177ff7;" aria-hidden="true"></i>
                                     </button>
-                                     <button ng-show="registerCtrl.email !== ''" class="btn btn-default" type="button">
+                                    <button ng-show="registerCtrl.email !== ''" class="btn btn-default" type="button">
                                          <i ng-show="registerCtrl.checkEmailPass" class="fa fa-check check-right" aria-hidden="true"></i>
                                          <i ng-show="!registerCtrl.checkEmailPass" class="fa fa-times check-fault" aria-hidden="true"></i>
                                     </button>
@@ -78,27 +88,52 @@
                         <li>
                             <div class="switch switch-mini">
                                 <input type="checkbox" ng-true-value="true" ng-false-value="false" ng-model="registerCtrl.isSyncGithub" checked/>
-                                您希望同步GitHub吗？（推荐同步，否则需要单独配置各个仓库）
+                                您希望同步GitHub吗？(推荐同步,否则需要单独配置各个仓库,这需要
+                                <a href="http://www.cnblogs.com/peteremperor/p/6135984.html" target="_blank">获得token</a>)
                             </div>
                         </li>
                         <li>
-                            <div ng-show="registerCtrl.isSyncGithub" class="input-group">
-                                <input type="password" class="form-control" ng-model="registerCtrl.githubPassword" placeholder="Github密码">
-                                <span class="input-group-btn">
+                            <div ng-show="registerCtrl.isSyncGithub" >
+                                <div class="input-group">
+                                    <input type="password" class="form-control" ng-model="registerCtrl.githubPassword" placeholder="Github token">
+                                    <span class="input-group-btn">
                                     <button class="btn btn-default tooltip-top tooltip-rounded" type="button"
-                                            tooltip-data="系统不会保留该密码，只在此时与GitHub同步信息使用">
+                                            tooltip-data="该token作为您信任本站的凭据，以期从GitHub获得相关数据">
                                         <i class="fa fa-question-circle" style="color: #177ff7;" aria-hidden="true"></i>
                                     </button>
                                 </span>
+                                </div>
                             </div>
                         </li>
                     </ul>
                 </div>
-                <div class="panel-footer" style="margin-top: 35px;">
+                <div class="panel-body" ng-show="registerCtrl.showLoading"><br>
+                    <div style="text-align: center;">
+                        <span>正在为您创建账户，</span>
+                        <span ng-show="registerCtrl.isSyncGithub">并同步GitHub数据，</span>
+                        <span>这需要一点时间，请稍等</span>
+                    </div><br><br><br>
+                    <div class="agile-loading-circle">
+                        <div class="ag-ld-circle1 ag-ld-circle"></div>
+                        <div class="ag-ld-circle2 ag-ld-circle"></div>
+                        <div class="ag-ld-circle3 ag-ld-circle"></div>
+                        <div class="ag-ld-circle4 ag-ld-circle"></div>
+                        <div class="ag-ld-circle5 ag-ld-circle"></div>
+                        <div class="ag-ld-circle6 ag-ld-circle"></div>
+                        <div class="ag-ld-circle7 ag-ld-circle"></div>
+                        <div class="ag-ld-circle8 ag-ld-circle"></div>
+                        <div class="ag-ld-circle9 ag-ld-circle"></div>
+                        <div class="ag-ld-circle10 ag-ld-circle"></div>
+                        <div class="ag-ld-circle11 ag-ld-circle"></div>
+                        <div class="ag-ld-circle12 ag-ld-circle"></div>
+                    </div><br><br><br>
+                </div>
+                <div class="panel-footer" ng-show="!registerCtrl.showLoading" style="margin-top: 35px;">
                     <div class="text-right">
-                        <a href="loginTo">取消</a>
-                        <a class="separator">|</a>
-                        <a href="#" ng-click="registerCtrl.register()">继续</a>
+                        <div class="btn-group btn-group-sm" role="group" aria-label="...">
+                            <button type="button" class="btn btn-default" ng-click="registerCtrl.cancel()">取消</button>
+                            <button type="button" class="btn btn-default" ng-disabled="!registerCtrl.canGoOn" ng-click="registerCtrl.register()">继续</button>
+                        </div>
                     </div>
                 </div>
             </div>

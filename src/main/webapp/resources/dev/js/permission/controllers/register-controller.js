@@ -22,23 +22,43 @@ define(['app'], function (app) {
         self.email = '';
         self.githubPassword = '';
         self.isSyncGithub = false;
+        self.showLoading = false;
+        self.usernameRepeat = true;
+        self.checkEmailPass = false;
 
         self.getInitParams = function () {
             return {
                 username: self.username,
                 password: self.password,
-                githubPassword: self.githubPassword,
+                gitHubToken: self.githubPassword,
                 email: self.email,
                 syncGithub: self.isSyncGithub
             }
         };
 
         self.register = function () {
+            self.showLoading = true;
             var params = self.getInitParams();
             self.initResult = registerService.register(params)
                 .then(function (result) {
                     var result = angular.fromJson(result);
+                    if (result.REGISTER_STATUS === true) {
+                        $window.location.href = "http://localhost:8080/";
+                    } else {
+                        $window.location.reload();
+                    }
                 });
+        };
+
+        self.judgeUsernameRepeat = function () {
+            registerService.judgeUsernameRepeat(self.username)
+                .then(function (result) {
+                    self.usernameRepeat = result;
+                });
+        }
+
+        self.cancel = function () {
+            $window.location.href = "http://localhost:8080/";
         };
 
         $scope.$watch(function () {
@@ -53,6 +73,10 @@ define(['app'], function (app) {
 
         $scope.$watch(function () {
             self.checkEmailPass = self.email ? true : false;
+        });
+
+        $scope.$watch(function () {
+            self.canGoOn = self.checkPassword && self.checkEmailPass && !self.usernameRepeat;
         });
     }
 });

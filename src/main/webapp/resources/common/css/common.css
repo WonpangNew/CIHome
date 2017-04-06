@@ -66,3 +66,8 @@
 .check-fault {
     color: red !important;
 }
+
+/* 错误字体 */
+.error-font-size {
+    font-size: 11px !important;
+}

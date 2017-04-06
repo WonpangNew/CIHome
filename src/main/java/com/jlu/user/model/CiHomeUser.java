@@ -26,6 +26,9 @@ public class CiHomeUser {
     @Column(name = "USER_EMAIL")
     private String userEmail;
 
+    @Column(name = "GITHUB_TOKEN")
+    private String gitHubToken;
+
     @Column(name = "CREATE_TIME")
     private String createTime;
 
@@ -67,5 +70,13 @@ public class CiHomeUser {
 
     public void setCreateTime(String createTime) {
         this.createTime = createTime;
+    }
+
+    public String getGitHubToken() {
+        return gitHubToken;
+    }
+
+    public void setGitHubToken(String gitHubToken) {
+        this.gitHubToken = gitHubToken;
     }
 }

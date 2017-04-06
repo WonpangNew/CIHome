@@ -124,7 +124,7 @@ define(['app', 'angular'], function (app, angular) {
 
 
         this.remove = function (key) {
-            $window.localStorage.removeItem(storageKeyPrefix + key);
+            $window.localStorage.removeItem(key);
         };
 
 
