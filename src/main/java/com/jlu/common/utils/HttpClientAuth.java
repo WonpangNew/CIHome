@@ -24,7 +24,7 @@ public class HttpClientAuth {
     private static final Logger LOGGER = LoggerFactory.getLogger(HttpClientAuth.class);
 
     /**
-     * 输入用户名、密码，返回一个httpClient对象
+     * 返回一个httpClient对象
      * @return
      */
     public static CloseableHttpClient getHttpClient() {
