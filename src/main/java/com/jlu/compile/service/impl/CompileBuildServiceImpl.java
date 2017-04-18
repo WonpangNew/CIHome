@@ -20,7 +20,7 @@ public class CompileBuildServiceImpl implements ICompileBuildService {
     public String hookTriggerCompile() {
         // TODO: 17/4/15 初始化compile信息
         // 开始编译
-        JenkinsStartCompileBean jenkinsStartCompileBean = JenkinsUtils.triggerCompile("", 9);
+        JenkinsStartCompileBean jenkinsStartCompileBean = JenkinsUtils.triggerCompile("", "", 9);
         // TODO: 17/4/15 填充编译开始信息
         return "";
     }

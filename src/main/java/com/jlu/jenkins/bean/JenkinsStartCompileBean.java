@@ -7,7 +7,7 @@ package com.jlu.jenkins.bean;
  */
 public class JenkinsStartCompileBean {
 
-    private int buildNumber;
+    private Integer buildNumber;
 
     private boolean requestStatus;
 

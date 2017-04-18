@@ -53,7 +53,7 @@ public class JenkinsUtils {
      * 触发编译
      * @param repoUrl 代码仓库地址
      */
-    public static JenkinsStartCompileBean triggerCompile(String repoUrl, int compileBuildId) {
+    public static JenkinsStartCompileBean triggerCompile(String repoUrl, String repoName, int compileBuildId) {
         JenkinsServer jenkinsServer = initJenkinsService();
         JenkinsStartCompileBean jenkinsStartCompileBean = new JenkinsStartCompileBean();
         try {
@@ -61,8 +61,9 @@ public class JenkinsUtils {
             JobWithDetails jobWithDetails = job.details();
             jenkinsStartCompileBean.setBuildNumber(jobWithDetails.getNextBuildNumber());
             Map<String, String> params = new HashMap<>();
-            params.put("gitHubUrl", repoUrl);
-            job.build(params);
+            params.put("GITHUB_URL", repoUrl);
+            params.put("GITHUB_REPO_NAME", repoName);
+            params.put("COMPILE_BUILD_ID", String.valueOf(compileBuildId));
             jenkinsStartCompileBean.setRequestStatus(true);
             LOGGER.error("Requesting jenkins'api is successful! Start compiling! GitHub url:{}, compileBuildId:{}",
                     repoUrl, compileBuildId);
