@@ -36,4 +36,12 @@ public interface IModuleService {
      * @return
      */
     List<CiHomeModule> getModulesByUsername(String username);
+
+    /**
+     * 通过用户名和模块名获得模块信息
+     * @param username
+     * @param module
+     * @return
+     */
+    CiHomeModule getModuleByUserAndModule(String username, String module);
 }

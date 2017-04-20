@@ -1,7 +1,8 @@
 package com.jlu.common.utils;
 
-import com.jlu.github.bean.GithubRepoBean;
-import net.sf.json.JSONArray;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.jlu.github.bean.GitHubCommitBean;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -13,15 +14,14 @@ import org.codehaus.jettison.json.JSONObject;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 /**
  * Created by niuwanpeng on 17/3/24.
  */
 public class JsonUtils {
+
+    private static final Gson GSON = new Gson();
 
     public static ObjectMapper getMapper(){
         ObjectMapper mapper = new ObjectMapper();
@@ -57,7 +57,7 @@ public class JsonUtils {
             return null;
         }
         try{
-            T obj = getMapper().<T>readValue(jsonString, clazz);
+            T obj = GSON.fromJson(jsonString, new TypeToken<T>(){}.getType());
             return obj;
         }catch(Exception e){
             throw new RuntimeException("解析json数据时发生异常:");

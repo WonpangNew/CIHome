@@ -1,5 +1,6 @@
 package com.jlu.github.web;
 
+import com.jlu.github.service.IGitHubHookService;
 import com.jlu.github.service.IGithubDataService;
 import com.jlu.user.bean.UserBean;
 import net.sf.json.JSONObject;
@@ -23,6 +24,9 @@ public class GithubDataController {
 
     @Autowired
     private IGithubDataService githubDataService;
+
+    @Autowired
+    private IGitHubHookService gitHubHookService;
 
     /**
      * 根据用户名获得GitHub代码仓库信息并保存
@@ -56,6 +60,7 @@ public class GithubDataController {
             }
             if (info != null) {
                 paramJson = JSONObject.fromObject(info.toString());
+                gitHubHookService.dealHookMessage(paramJson);
             }
         } catch (IOException e) {
             e.printStackTrace();

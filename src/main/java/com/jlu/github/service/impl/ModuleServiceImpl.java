@@ -61,4 +61,22 @@ public class ModuleServiceImpl implements IModuleService{
         conditionAndSet.put("username", username);
         return moduleDao.findByProperties(conditionAndSet);
     }
+
+    /**
+     * 通过用户名和模块名获得模块信息
+     * @param username
+     * @param module
+     * @return
+     */
+    @Override
+    public CiHomeModule getModuleByUserAndModule(String username, String module) {
+        ConditionAndSet conditionAndSet = new ConditionAndSet();
+        conditionAndSet.put("username", username);
+        conditionAndSet.put("module", module);
+        List<CiHomeModule> modules = moduleDao.findByProperties(conditionAndSet);
+        if (modules != null && modules.size() != 0) {
+            return modules.get(0);
+        }
+        return null;
+    }
 }

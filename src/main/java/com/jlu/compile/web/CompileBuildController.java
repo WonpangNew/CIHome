@@ -1,10 +1,12 @@
 package com.jlu.compile.web;
 
 import com.jlu.compile.service.ICompileBuildService;
+import com.jlu.jenkins.bean.JenkinsEndCompileBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -21,10 +23,17 @@ public class CompileBuildController {
      * 供jenkins插件调用，接收编译结束消息
      * @return
      */
-    @RequestMapping(value = "/end", method = RequestMethod.POST)
+    @RequestMapping(value = "/end", method = RequestMethod.GET)
     @ResponseBody
-    public String receiveCompileEndMessage() {
-        compileBuildService.dealCompileEnd();
+    public String receiveCompileEndMessage(@RequestParam("BUILD_STATUS") String buildStatus,
+                                           @RequestParam("PRODUCT_PATH") String productPath,
+                                           @RequestParam("COMPILE_BUILD_ID") String compileBuildId,
+                                           @RequestParam("JENKINS_BUILD_ID") String jenkinsBuildId,
+                                           @RequestParam("ERR_MSG") String errMsg,
+                                           @RequestParam("BUILD_NUMBER") String buildNumber) {
+        JenkinsEndCompileBean jenkinsEndCompileBean = new JenkinsEndCompileBean(buildStatus, productPath,
+                compileBuildId, jenkinsBuildId, errMsg, buildNumber);
+        compileBuildService.dealCompileEnd(jenkinsEndCompileBean);
         return "OK";
     }
 }

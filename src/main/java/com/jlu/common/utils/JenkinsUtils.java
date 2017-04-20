@@ -2,6 +2,7 @@ package com.jlu.common.utils;
 
 import com.jlu.jenkins.bean.JenkinsStartCompileBean;
 import com.offbytwo.jenkins.JenkinsServer;
+import com.offbytwo.jenkins.model.BuildResult;
 import com.offbytwo.jenkins.model.Job;
 import com.offbytwo.jenkins.model.JobWithDetails;
 import org.slf4j.Logger;
@@ -72,5 +73,23 @@ public class JenkinsUtils {
             jenkinsStartCompileBean.setRequestStatus(false);
         }
         return jenkinsStartCompileBean;
+    }
+
+    /**
+     * 获得这个job某个构建的状态
+     * @param buildNumber
+     * @return
+     */
+    public static BuildResult getBuildStatusByNumber(int buildNumber) {
+        JenkinsServer jenkinsServer = initJenkinsService();
+        try {
+            Job job = jenkinsServer.getJob(COMPILE_JOB_NAME);
+            JobWithDetails jobWithDetails = job.details();
+            BuildResult buildResult = jobWithDetails.getBuildByNumber(buildNumber).details().getResult();
+            return buildResult != null ? buildResult : BuildResult.FAILURE;
+        } catch (IOException e) {
+
+        }
+        return BuildResult.FAILURE;
     }
 }
