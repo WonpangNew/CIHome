@@ -2,8 +2,11 @@ package com.jlu.github.web;
 
 import com.jlu.github.service.IGitHubHookService;
 import com.jlu.github.service.IGithubDataService;
+import com.jlu.github.service.impl.GithubDataServiceImpl;
 import com.jlu.user.bean.UserBean;
 import net.sf.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +31,8 @@ public class GithubDataController {
     @Autowired
     private IGitHubHookService gitHubHookService;
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(GithubDataController.class);
+
     /**
      * 根据用户名获得GitHub代码仓库信息并保存
      * 注册时调用
@@ -48,22 +53,26 @@ public class GithubDataController {
     @RequestMapping(value = "/webHooks", method = RequestMethod.POST)
     @ResponseBody
     public void monitorWebHooks(HttpServletRequest request, HttpServletResponse response) {
-        JSONObject paramJson = new JSONObject();
+        StringBuffer info = new StringBuffer();
         try {
             InputStream in = request.getInputStream();
             BufferedInputStream buf = new BufferedInputStream(in);
             byte[] buffer = new byte[1024];
             int iRead;
-            StringBuffer info = new StringBuffer();
             while ((iRead = buf.read(buffer)) != -1) {
                 info.append(new String(buffer,0,iRead,"gbk"));
             }
             if (info != null) {
-                paramJson = JSONObject.fromObject(info.toString());
-                gitHubHookService.dealHookMessage(paramJson);
+                final JSONObject paramJson = JSONObject.fromObject(info.toString());
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        gitHubHookService.dealHookMessage(paramJson);
+                    }
+                }).start();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("Resolving hook-message is fail! hook:{}", info.toString());
         }
     }
 

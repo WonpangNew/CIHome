@@ -65,6 +65,7 @@ public class JenkinsUtils {
             params.put("GITHUB_URL", repoUrl);
             params.put("GITHUB_REPO_NAME", repoName);
             params.put("COMPILE_BUILD_ID", String.valueOf(compileBuildId));
+            job.build(params);
             jenkinsStartCompileBean.setRequestStatus(true);
             LOGGER.error("Requesting jenkins'api is successful! Start compiling! GitHub url:{}, compileBuildId:{}",
                     repoUrl, compileBuildId);

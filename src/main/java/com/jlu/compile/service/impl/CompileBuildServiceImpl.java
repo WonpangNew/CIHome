@@ -1,6 +1,5 @@
 package com.jlu.compile.service.impl;
 
-import com.jlu.common.db.sqlcondition.ConditionAndSet;
 import com.jlu.common.utils.CiHomeReadConfig;
 import com.jlu.common.utils.DateUtil;
 import com.jlu.common.utils.JenkinsUtils;
@@ -58,7 +57,7 @@ public class CompileBuildServiceImpl implements ICompileBuildService {
      * @return
      */
     public void dealCompileEnd(JenkinsEndCompileBean jenkinsEndCompileBean) {
-        CompileBuild compileBuild = compileBuildDao.findById(jenkinsEndCompileBean.getCompileBuildId());
+        CompileBuild compileBuild = compileBuildDao.findById(Integer.valueOf(jenkinsEndCompileBean.getCompileBuildId()));
         if (compileBuild == null) {
             LOGGER.info("The compile is not exist! compileBuildId:{}", jenkinsEndCompileBean.getCompileBuildId());
             return;
