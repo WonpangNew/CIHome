@@ -1,6 +1,5 @@
 package com.jlu.github.service.impl;
 
-import com.fasterxml.jackson.databind.type.TypeBase;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jlu.branch.bean.BranchType;

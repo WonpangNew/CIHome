@@ -1,5 +1,8 @@
 package com.jlu.compile.service.impl;
 
+import com.jlu.common.db.sqlcondition.ConditionAndSet;
+import com.jlu.common.db.sqlcondition.DescOrder;
+import com.jlu.common.db.sqlcondition.OrderCondition;
 import com.jlu.common.utils.CiHomeReadConfig;
 import com.jlu.common.utils.DateUtil;
 import com.jlu.common.utils.JenkinsUtils;
@@ -9,6 +12,8 @@ import com.jlu.compile.model.CompileBuild;
 import com.jlu.compile.service.ICompileBuildService;
 import com.jlu.github.bean.GitHubCommitBean;
 import com.jlu.github.bean.HookRepositoryBean;
+import com.jlu.github.model.GitHubCommit;
+import com.jlu.github.service.IGitHubCommitService;
 import com.jlu.jenkins.bean.JenkinsEndCompileBean;
 import com.jlu.jenkins.bean.JenkinsStartCompileBean;
 import com.offbytwo.jenkins.model.BuildResult;
@@ -16,6 +21,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by niuwanpeng on 17/4/15.
@@ -28,13 +36,18 @@ public class CompileBuildServiceImpl implements ICompileBuildService {
     @Autowired
     private ICompileBuildDao compileBuildDao;
 
+    @Autowired
+    private IGitHubCommitService gitHubCommitService;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(CompileBuildServiceImpl.class);
 
     /**
      * 接收到hook信息触发编译
      * @return
      */
+    @Override
     public void hookTriggerCompile(GitHubCommitBean commitBean, HookRepositoryBean repositoryBean) {
+        assembleGitHubCommit(commitBean);
         CompileBuild compileBuild = assembleCompileBuild(commitBean);
         // 开始编译
         String repoUrl = String.format(CiHomeReadConfig.getConfigValueByKey("github.base.repo"),
@@ -56,6 +69,7 @@ public class CompileBuildServiceImpl implements ICompileBuildService {
      * 接收到编译结束消息，进行写库等操作
      * @return
      */
+    @Override
     public void dealCompileEnd(JenkinsEndCompileBean jenkinsEndCompileBean) {
         CompileBuild compileBuild = compileBuildDao.findById(Integer.valueOf(jenkinsEndCompileBean.getCompileBuildId()));
         if (compileBuild == null) {
@@ -67,7 +81,10 @@ public class CompileBuildServiceImpl implements ICompileBuildService {
         compileBuild.setJenkinsBuildNumber(Integer.valueOf(jenkinsEndCompileBean.getBuildNumber()));
         compileBuild.setProductPath(jenkinsEndCompileBean.getProductPath());
         compileBuild.setEndTime(DateUtil.getNowDateFormat());
-        compileBuild.setJeniknsBuildId(jenkinsEndCompileBean.getJenkinsBuildId());
+        compileBuild.setJenkinsBuildId(jenkinsEndCompileBean.getJenkinsBuildId());
+        String buildLogUrl = String.format(CiHomeReadConfig.getConfigValueByKey("jenkins.build.log"),
+                compileBuild.getJenkinsBuildNumber());
+        compileBuild.setBuildLogUrl(buildLogUrl);
         compileBuildDao.update(compileBuild);
         LOGGER.info("Compile is end! compileBuildId:{}", compileBuild.getId());
     }
@@ -85,12 +102,29 @@ public class CompileBuildServiceImpl implements ICompileBuildService {
         compileBuild.setBranchName(commitBean.getRef());
         compileBuild.setBuildStatus(BuildStatus.BUILDING);
         compileBuild.setCommits(commitBean.getMessage());
-        compileBuild.setCommitter(commitBean.getCommitter().getName());
-        compileBuild.setCommitterEmail(commitBean.getCommitter().getEmail());
+        compileBuild.setTrigger(commitBean.getCommitter().getName());
+        compileBuild.setTriggerEmail(commitBean.getCommitter().getEmail());
         compileBuild.setCreateTime(DateUtil.getNowDateFormat());
+        compileBuild.setRevision(commitBean.getId());
         compileBuildDao.save(compileBuild);
         LOGGER.info("Init CompileBuild is successful! compileBuild:{}", compileBuild.toString());
         return compileBuild;
+    }
+
+    /**
+     * 根据commit信息组装代码提交信息并写库
+     * @param commitBean
+     * @return
+     */
+    private GitHubCommit assembleGitHubCommit(GitHubCommitBean commitBean) {
+        GitHubCommit gitHubCommit
+                = new GitHubCommit(commitBean.getCommitter().getName(), commitBean.getCommitter().getEmail(),
+                commitBean.getMessage(), DateUtil.getNowDateFormat(), commitBean.getAdded().toString(),
+                commitBean.getRemoved().toString(), commitBean.getModified().toString(), commitBean.getId(),
+                commitBean.getUrl());
+        gitHubCommitService.save(gitHubCommit);
+        LOGGER.info("Init GitHubCommit is successful! compileBuild:{}", gitHubCommit.getId());
+        return gitHubCommit;
     }
 
     /**
@@ -112,6 +146,21 @@ public class CompileBuildServiceImpl implements ICompileBuildService {
                     buildResult.toString(), jenkinsEndCompileBean.toString());
             return BuildStatus.FAIL;
         }
+    }
+
+    /**
+     * 根据pipelineBuildId获得编译信息
+     * @param pipelineBuildId
+     * @return
+     */
+    @Override
+    public CompileBuild getCompileBuildByPipelineId(int pipelineBuildId) {
+        ConditionAndSet conditionAndSet = new ConditionAndSet();
+        conditionAndSet.put("pipelineBuildId", pipelineBuildId);
+        List<OrderCondition> orders = new ArrayList<OrderCondition>();
+        orders.add(new DescOrder("id"));
+        List<CompileBuild> compileBuilds = compileBuildDao.findByProperties(conditionAndSet, orders);
+        return  (null == compileBuilds || compileBuilds.size() == 0) ? null : compileBuilds.get(0);
     }
 
 }

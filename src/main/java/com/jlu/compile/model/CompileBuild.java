@@ -40,8 +40,8 @@ public class CompileBuild {
     @Column(name = "BUILD_LOG_URL")
     private String buildLogUrl;
 
-    @Column(name = "COMMIT_USER")
-    private String committer;
+    @Column(name = "TRIGGER_USER")
+    private String trigger;
 
     @Column(name = "COMMITS")
     private String commits;
@@ -52,14 +52,17 @@ public class CompileBuild {
     @Column(name = "END_TIME")
     private String endTime;
 
-    @Column(name = "COMMIT_EMAIL")
-    private String committerEmail;
+    @Column(name = "TRIGGER_EMAIL")
+    private String triggerEmail;
 
     @Column(name = "JENKINS_BUILD_NUMBER")
     private int jenkinsBuildNumber;
 
     @Column(name = "JENKINS_BUILD_ID")
     private String jenkinsBuildId;
+
+    @Column(name = "REVISION")
+    private String revision;
 
     public int getId() {
         return id;
@@ -125,14 +128,6 @@ public class CompileBuild {
         this.buildLogUrl = buildLogUrl;
     }
 
-    public String getCommitter() {
-        return committer;
-    }
-
-    public void setCommitter(String commiter) {
-        this.committer = commiter;
-    }
-
     public String getCommits() {
         return commits;
     }
@@ -157,12 +152,20 @@ public class CompileBuild {
         this.endTime = endTime;
     }
 
-    public String getCommitterEmail() {
-        return committerEmail;
+    public String getTrigger() {
+        return trigger;
     }
 
-    public void setCommitterEmail(String committerEmail) {
-        this.committerEmail = committerEmail;
+    public void setTrigger(String trigger) {
+        this.trigger = trigger;
+    }
+
+    public String getTriggerEmail() {
+        return triggerEmail;
+    }
+
+    public void setTriggerEmail(String triggerEmail) {
+        this.triggerEmail = triggerEmail;
     }
 
     public int getJenkinsBuildNumber() {
@@ -177,8 +180,16 @@ public class CompileBuild {
         return jenkinsBuildId;
     }
 
-    public void setJeniknsBuildId(String jenkinsBuildId) {
+    public void setJenkinsBuildId(String jenkinsBuildId) {
         this.jenkinsBuildId = jenkinsBuildId;
+    }
+
+    public String getRevision() {
+        return revision;
+    }
+
+    public void setRevision(String revision) {
+        this.revision = revision;
     }
 
     @Override
@@ -192,11 +203,11 @@ public class CompileBuild {
                 ", buildStatus=" + buildStatus +
                 ", productPath='" + productPath + '\'' +
                 ", buildLogUrl='" + buildLogUrl + '\'' +
-                ", committer='" + committer + '\'' +
+                ", committer='" + trigger + '\'' +
                 ", commits='" + commits + '\'' +
                 ", createTime='" + createTime + '\'' +
                 ", endTime='" + endTime + '\'' +
-                ", committerEmail='" + committerEmail + '\'' +
+                ", committerEmail='" + triggerEmail + '\'' +
                 '}';
     }
 }

@@ -17,6 +17,9 @@ public class GitHubCommitBean {
     private String message;
     private String timestamp;
     private String url;
+    private String[] added;
+    private String[] removed;
+    private String[] modified;
     private int moduleId;
     private int pipelineBuildId;
     private Committer committer;
@@ -107,6 +110,30 @@ public class GitHubCommitBean {
 
     public void setCommitter(Committer committer) {
         this.committer = committer;
+    }
+
+    public String[] getAdded() {
+        return added;
+    }
+
+    public void setAdded(String[] added) {
+        this.added = added;
+    }
+
+    public String[] getRemoved() {
+        return removed;
+    }
+
+    public void setRemoved(String[] removed) {
+        this.removed = removed;
+    }
+
+    public String[] getModified() {
+        return modified;
+    }
+
+    public void setModified(String[] modified) {
+        this.modified = modified;
     }
 
     @Override
