@@ -30,4 +30,11 @@ public interface ICompileBuildService {
      * @return
      */
     CompileBuild getCompileBuildByPipelineId(int pipelineBuildId);
+
+    /**
+     * 获得编译产出路径
+     * @param compileBuildId
+     * @return
+     */
+    String getProductPathFor(int compileBuildId);
 }

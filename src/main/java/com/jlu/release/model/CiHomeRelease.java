@@ -1,5 +1,6 @@
 package com.jlu.release.model;
 
+import com.jlu.branch.bean.BranchType;
 import com.jlu.release.bean.ReleaseStatus;
 
 import javax.persistence.*;
@@ -19,6 +20,9 @@ public class CiHomeRelease {
     @Column(name = "PIPELINE_BUILD_ID")
     private int pipelineBuildId;
 
+    @Column(name = "MODULE_ID")
+    private int moduleId;
+
     @Column(name = "RELEASE_STATUS")
     private ReleaseStatus releaseStatus;
 
@@ -28,11 +32,20 @@ public class CiHomeRelease {
     @Column(name = "TAG")
     private String tag;
 
+    @Column(name = "PRODUCT_PATH")
+    private String productPath;
+
     @Column(name = "RELEASE_USER")
     private String releaseUser;
 
     @Column(name = "RELEASE_TIME")
     private String releaseTime;
+
+    @Column(name = "BRANCH_NAME")
+    private String branchName;
+
+    @Column(name = "BRANCH_TYPE")
+    private BranchType branchType;
 
     public int getId() {
         return id;
@@ -88,5 +101,37 @@ public class CiHomeRelease {
 
     public void setReleaseTime(String releaseTime) {
         this.releaseTime = releaseTime;
+    }
+
+    public int getModuleId() {
+        return moduleId;
+    }
+
+    public void setModuleId(int moduleId) {
+        this.moduleId = moduleId;
+    }
+
+    public String getProductPath() {
+        return productPath;
+    }
+
+    public void setProductPath(String productPath) {
+        this.productPath = productPath;
+    }
+
+    public String getBranchName() {
+        return branchName;
+    }
+
+    public void setBranchName(String branchName) {
+        this.branchName = branchName;
+    }
+
+    public BranchType getBranchType() {
+        return branchType;
+    }
+
+    public void setBranchType(BranchType branchType) {
+        this.branchType = branchType;
     }
 }

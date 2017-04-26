@@ -1,5 +1,7 @@
 package com.jlu.release.service;
 
+import com.jlu.release.bean.ReleaseParams;
+import com.jlu.release.bean.ReleaseResponseBean;
 import com.jlu.release.model.CiHomeRelease;
 
 /**
@@ -19,4 +21,17 @@ public interface IReleaseService {
      * @return
      */
     CiHomeRelease getReleaseByPipelineId(int pipelineId);
+
+    /**
+     * 发布
+     * @param releaseParams
+     * @return
+     */
+    String doRelease(ReleaseParams releaseParams);
+
+    /**
+     * 对回调服务进行处理
+     * @param responseBean
+     */
+    void callbackRelease(ReleaseResponseBean responseBean);
 }

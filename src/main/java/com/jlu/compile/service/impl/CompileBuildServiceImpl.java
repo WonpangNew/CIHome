@@ -163,4 +163,15 @@ public class CompileBuildServiceImpl implements ICompileBuildService {
         return  (null == compileBuilds || compileBuilds.size() == 0) ? null : compileBuilds.get(0);
     }
 
+    /**
+     * 获得编译产出路径
+     * @param compileBuildId
+     * @return
+     */
+    @Override
+    public String getProductPathFor(int compileBuildId) {
+        CompileBuild compileBuild = compileBuildDao.findById(compileBuildId);
+        return compileBuild != null ? compileBuild.getProductPath() : null;
+    }
+
 }
