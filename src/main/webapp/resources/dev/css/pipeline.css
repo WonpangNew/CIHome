@@ -1,0 +1,185 @@
+.pipl-tab {
+    /*line-height: 47px;*/
+    border-bottom: 1px solid #E9E9E9;
+    padding-left: 15px;
+    height: 32px;
+    margin-left: -15px;
+    margin-right: -15px;
+}
+
+.pipl-tab .nav-tabs {
+    height: 32px;
+    border-bottom: 0 !important;
+}
+
+.pipl-tab .nav-tabs li {
+    width: 110px;
+    text-align: center;
+    height: 100%;
+}
+
+.pipl-tab .nav-tabs > li > a:hover,
+.pipl-tab .nav-tabs li:hover {
+    background-color: #FFF !important;
+}
+
+.pipl-tab .nav-tabs .active {
+    border-left: solid 1px #E9E9E9;
+    border-right: solid 1px #E9E9E9;
+    border-top: 1px solid #3b71df;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    background-color: #FFF;
+}
+
+.pipl-tab .nav-tabs .trunk-tab-icon {
+    display: inline-block;
+    width: 6px;
+    height: 13px;
+    position: relative;
+    top: 2px;
+    background: url(../img/pipeline/trunk-icon.png) no-repeat;
+    background-size: 6px 13px;
+}
+
+
+.pipl-tab .nav-tabs a:hover .trunk-tab-icon,
+.pipl-tab .nav-tabs .active .trunk-tab-icon {
+    display: inline-block;
+    width: 6px;
+    height: 13px;
+    position: relative;
+    top: 2px;
+    background: url(../img/pipeline/trunk-icon-hover.png) no-repeat;
+    background-size: 6px 13px;
+}
+
+.pipl-tab .nav-tabs a {
+    color: #4a4a4a;
+    padding-top: 7px;
+}
+
+.pipl-tab .nav-tabs .active a {
+    padding-top: 6px;
+    color: #3b71df !important;
+}
+
+.page-header a {
+    color: #4a4a4a;
+}
+
+.page-header .active a {
+    color: #3b71df !important;
+}
+
+.pipl-tab .nav-tabs .active a,
+.pipl-tab .nav-tabs .active a:hover {
+    background-color: #FFF;
+    border: 1px solid transparent !important;
+}
+
+.pipl-tab .navbar-nav li a {
+    background-color: #F8F8F8;
+}
+
+.pipl-tab .nav-tabs a {
+    height: 100%;
+    font-size: 14px;
+    line-height: 1;
+}
+
+.pipl-tab .nav-tabs li a:hover {
+    color: #3b71df;
+}
+
+.pipl-tab .nav-tabs .tab-tips i {
+    margin-right: 5px;
+}
+
+.pipl-tab .nav-tabs.tab-tips li {
+    width: auto;;
+    margin-right: 15px;
+    line-height: 35px;
+    font-size: 12px;
+    padding: 0;
+}
+
+/* 顶部右侧流水线标示 start*/
+.status-description-tips {
+    margin-top: -25px !important;
+    padding-right: 10px !important;
+    color: #929292 !important;
+    font-size: 12px !important;
+}
+
+.pipl-tab-status-icon {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.pipl-tab-status-icon.success {
+    background: url(../img/pipeline/success-desc.svg) no-repeat 0 0;
+}
+
+.pipl-tab-status-icon.fail {
+    background: url(../img/pipeline/fail-desc.svg) no-repeat 0 0;
+}
+
+.pipl-tab-status-icon.running {
+    background: url(../img/pipeline/running-desc.svg) no-repeat 0 0;
+}
+
+.pipl-tab-status-icon.waiting {
+    background: url(../img/pipeline/waiting-desc.svg) no-repeat 0 0;
+}
+/* 顶部右侧流水线标示 end*/
+
+.release-list-link {
+    padding-right: 20px;
+}
+
+.pipl-tab .nav-tabs .trunk-tab-icon {
+    display: inline-block;
+    width: 6px;
+    height: 13px;
+    position: relative;
+    top: 2px;
+    background: url(../img/pipeline/trunk-icon.png) no-repeat;
+    background-size: 6px 13px;
+}
+
+.pipl-tab .nav-tabs a:hover .trunk-tab-icon,
+.pipl-tab .nav-tabs .active .trunk-tab-icon {
+    display: inline-block;
+    width: 6px;
+    height: 13px;
+    position: relative;
+    top: 2px;
+    background: url(../img/pipeline/trunk-icon-hover.png) no-repeat;
+    background-size: 6px 13px;
+}
+
+/* 发布记录图标 */
+.release-history-icon {
+    display: inline-block;
+    width: 13px;
+    height: 13px;
+    position: relative;
+    top: 3px;
+    background: url(../img/pipeline/release-history-icon.svg) no-repeat;
+}
+
+/* 配置 */
+.module-settings-link {
+    margin-left: 20px;
+}
+
+.page-header-plus {
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+    padding-bottom: 0px !important;
+    border-bottom-width: 0px !important;
+}

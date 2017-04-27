@@ -20,7 +20,7 @@ define(['app'], function (app) {
     function IndexController($scope, $location, $state, $window, pipelineDataService,
                              pipelineContextService, permissionService, localStorageService) {
         var self = this;
-
+        pipelineContextService.initContext();
         self.context = pipelineContextService.context;
         self.searchModule = undefined;
 
@@ -29,11 +29,12 @@ define(['app'], function (app) {
         };
 
         self.moduleSelected = function (module) {
-            module && pipelineContextService.initContext(module);
+            module && pipelineContextService.selectModule(module);
         };
 
         self.exitLogin = function () {
             localStorageService.remove('recentModules');
+            localStorageService.removeLoginUser();
             permissionService.exitLogin(self.context.username)
                 .then(function (result) {
                     if (result) {

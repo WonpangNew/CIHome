@@ -11,11 +11,13 @@ define(['app'], function (app) {
         '$state',
         '$window',
         '$location',
+        'localStorageService',
         'pipelineContextService',
         PermissionController
     ]);
 
-    function PermissionController(permissionService, $scope, $state, $window, $location, pipelineContextService) {
+    function PermissionController(permissionService, $scope, $state, $window, $location,
+                                  localStorageService, pipelineContextService) {
         var self = this;
         self.loginStatus = 'INIT';
         self.loginMessage = '';
@@ -32,6 +34,7 @@ define(['app'], function (app) {
                     self.loginMessage = result.MESSAGE;
                     if ('SUCC' === self.loginStatus) {
                         pipelineContextService.setUsername(self.username);
+                        localStorageService.addLoginUser(self.username);
                         $window.location.reload();
                     }
             });

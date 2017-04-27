@@ -21,7 +21,7 @@ define(['app', 'constants'], function (app, constants) {
             var lastParams = {
                 module: lastVisitModule
             };
-
+            pipelineContextService.initContext(lastVisitModule);
             $state.go(lastState, lastParams);
         }
     ]);

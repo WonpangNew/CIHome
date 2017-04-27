@@ -11,10 +11,13 @@ define(['app'], function (app) {
         '$scope',
         '$location',
         '$state',
+        'pipelineContextService',
         BranchesController
     ]);
 
-    function BranchesController($scope, $location, $state) {
-
+    function BranchesController($scope, $location, $state, pipelineContextService) {
+        var self = this;
+        pipelineContextService.setBranchType('BRANCH');
+        self.context = pipelineContextService.context;
     }
 });

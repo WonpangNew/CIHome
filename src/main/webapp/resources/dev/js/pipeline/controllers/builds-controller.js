@@ -10,10 +10,14 @@ define(['app'], function (app) {
         '$scope',
         '$location',
         '$state',
+        'pipelineContextService',
         BuildsController
     ]);
 
-    function BuildsController($scope, $location, $state) {
+    function BuildsController($scope, $location, $state, pipelineContextService) {
+        var self = this;
+
+        self.context = pipelineContextService.context;
 
     }
 });

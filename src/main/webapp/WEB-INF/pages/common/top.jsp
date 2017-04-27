@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <header>
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default navbar-default-plus">
         <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -37,7 +37,7 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="uib-dropdown-menu" role="menu">
-                            <li><a href="" ng-click="ctrl.exitLogin('<%=user.getUsername()%>')">退出登录</a></li>
+                            <li><a href="" style="color: #4a4a4a !important;" ng-click="ctrl.exitLogin('<%=user.getUsername()%>')">退出登录</a></li>
                         </ul>
                     </li>
                 </ul>

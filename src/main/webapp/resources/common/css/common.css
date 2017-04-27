@@ -13,6 +13,10 @@
     float: right;
 }
 
+.text-float-right {
+    text-align: right !important;
+}
+
 /* homepage底部 */
 .homepage-footer {
     width: 100%;
@@ -25,7 +29,7 @@
 
 .pipeline-body {
     min-height: calc(100% - 132px);
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .register-panel {
@@ -70,4 +74,15 @@
 /* 错误字体 */
 .error-font-size {
     font-size: 11px !important;
+}
+
+.navbar-default-plus {
+    background-color: #464068 !important;
+    border-color: #464068 !important;
+    border-radius: 0 !important;
+    margin-bottom: 10px !important;
+}
+
+.navbar-default-plus .container-fluid a {
+    color: white !important;
 }

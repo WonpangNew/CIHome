@@ -24,5 +24,13 @@ define(['app', 'constants'], function (app, constants) {
                     return data.data;
                 });
         };
+
+        self.getTrunkPipelines = function (username, module, pipelineBuildId) {
+            return $http.get(constants.api('pipeline/v1/pipelineBuilds?username=' + username + '&module=' + module
+                + '&pipelineBuildId=' + pipelineBuildId))
+                .then(function (data) {
+                    return data.data;
+                });
+        }
     }
 })

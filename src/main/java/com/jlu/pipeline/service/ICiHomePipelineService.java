@@ -1,6 +1,6 @@
 package com.jlu.pipeline.service;
 
-import com.jlu.pipeline.bean.CihomePipelineBean;
+import com.jlu.pipeline.bean.CiHomePipelineBean;
 
 import java.util.List;
 
@@ -16,5 +16,5 @@ public interface ICiHomePipelineService {
      * @param pipelineBuildId
      * @return
      */
-    List<CihomePipelineBean> getTrunkPipeline(String username, String module, int pipelineBuildId);
+    List<CiHomePipelineBean> getTrunkPipeline(String username, String module, int pipelineBuildId);
 }

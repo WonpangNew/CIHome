@@ -27,6 +27,20 @@ define(['app', 'angular'], function (app, angular) {
             storageKeyPrefix = prefix;
         };
 
+        this.addLoginUser = function (username) {
+            this.setKeyPrefix('login_user');
+            this.put('', username);
+        };
+
+        this.removeLoginUser = function () {
+            this.remove('login_user');
+        };
+
+        this.getLoginUser = function () {
+            this.setKeyPrefix('login_user');
+            var username = this.get('');
+            return username ? username : ''
+        };
 
         this.addRecentModule = function (module) {
 

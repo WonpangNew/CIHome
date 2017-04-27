@@ -11,7 +11,7 @@ import com.jlu.release.bean.ReleaseBean;
  * 流水线bean
  * 包含一条流水线的基本信息
  */
-public class CihomePipelineBean {
+public class CiHomePipelineBean {
 
     private int pipelineBuildId;
 
@@ -20,6 +20,8 @@ public class CihomePipelineBean {
     private String revision;
 
     private String module;
+
+    private String branchName;
 
     private BranchType branchType;
 
@@ -59,6 +61,14 @@ public class CihomePipelineBean {
 
     public void setModule(String module) {
         this.module = module;
+    }
+
+    public String getBranchName() {
+        return branchName;
+    }
+
+    public void setBranchName(String branchName) {
+        this.branchName = branchName;
     }
 
     public BranchType getBranchType() {

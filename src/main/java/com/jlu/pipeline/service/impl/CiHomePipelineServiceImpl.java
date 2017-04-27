@@ -8,7 +8,7 @@ import com.jlu.github.model.CiHomeModule;
 import com.jlu.github.model.GitHubCommit;
 import com.jlu.github.service.IGitHubCommitService;
 import com.jlu.github.service.IModuleService;
-import com.jlu.pipeline.bean.CihomePipelineBean;
+import com.jlu.pipeline.bean.CiHomePipelineBean;
 import com.jlu.pipeline.model.PipelineBuild;
 import com.jlu.pipeline.service.ICiHomePipelineService;
 import com.jlu.pipeline.service.IPipelineBuildService;
@@ -57,7 +57,7 @@ public class CiHomePipelineServiceImpl implements ICiHomePipelineService {
      * @param pipelineBuildId
      * @return
      */
-    public List<CihomePipelineBean> getTrunkPipeline(String username, String module, int pipelineBuildId) {
+    public List<CiHomePipelineBean> getTrunkPipeline(String username, String module, int pipelineBuildId) {
         if (StringUtils.isEmpty(username) && StringUtils.isEmpty(module)) {
             return null;
         }
@@ -70,7 +70,7 @@ public class CiHomePipelineServiceImpl implements ICiHomePipelineService {
         Map<Integer, CompileBuildBean> compileBuildBeanMap = getCompileBuildBeans(pipelineBuilds);
         Map<Integer, GitHubCommit> gitHubCommitMap = getGitHubCommit(pipelineBuilds);
         Map<Integer, ReleaseBean> releaseBeanMap = getReleaseBeans(pipelineBuilds);
-        return assembleCihomePipeline(ciHomeModule, pipelineBuilds, compileBuildBeanMap, gitHubCommitMap, releaseBeanMap);
+        return assembleCiHomePipeline(ciHomeModule, pipelineBuilds, compileBuildBeanMap, gitHubCommitMap, releaseBeanMap);
     }
 
     /**
@@ -82,13 +82,27 @@ public class CiHomePipelineServiceImpl implements ICiHomePipelineService {
      * @param releaseBeanMap
      * @return
      */
-    private List<CihomePipelineBean> assembleCihomePipeline(CiHomeModule ciHomeModule, List<PipelineBuild> pipelineBuilds,
-                                              Map<Integer, CompileBuildBean> compileBuildBeanMap,
-                                              Map<Integer, GitHubCommit> gitHubCommitMap,
-                                              Map<Integer, ReleaseBean> releaseBeanMap) {
+    private List<CiHomePipelineBean> assembleCiHomePipeline(CiHomeModule ciHomeModule, List<PipelineBuild> pipelineBuilds,
+                                                            Map<Integer, CompileBuildBean> compileBuildBeanMap,
+                                                            Map<Integer, GitHubCommit> gitHubCommitMap,
+                                                            Map<Integer, ReleaseBean> releaseBeanMap) {
         // TODO: 17/4/26 组装信息
-        List<CihomePipelineBean> cihomePipelineBeanList = new ArrayList<>();
-        return cihomePipelineBeanList;
+        List<CiHomePipelineBean> ciHomePipelineBeanList = new ArrayList<>();
+        for (PipelineBuild pipelineBuild : pipelineBuilds) {
+            int pipelineBuildId = pipelineBuild.getId();
+            CiHomePipelineBean ciHomePipelineBean = new CiHomePipelineBean();
+            ciHomePipelineBean.setBranchType(pipelineBuild.getBranchType());
+            ciHomePipelineBean.setBranchName(pipelineBuild.getBranchName());
+            ciHomePipelineBean.setPipelineBuildId(pipelineBuildId);
+            ciHomePipelineBean.setModule(ciHomeModule.getModule());
+            ciHomePipelineBean.setModuleId(ciHomeModule.getId());
+            ciHomePipelineBean.setCompileBuildBean(compileBuildBeanMap.get(pipelineBuildId));
+            ciHomePipelineBean.setGitHubCommit(gitHubCommitMap.get(pipelineBuildId));
+            ciHomePipelineBean.setReleaseBean(releaseBeanMap.get(pipelineBuildId));
+            ciHomePipelineBean.setRevision(gitHubCommitMap.get(pipelineBuildId).getRevision());
+            ciHomePipelineBeanList.add(ciHomePipelineBean);
+        }
+        return ciHomePipelineBeanList;
     }
 
     /**

@@ -1,10 +1,47 @@
-<div>
+<div class="container-fluid">
+    <!-- 顶部提示信息以及展示模块和配置按钮行-->
+    <div class="page-header page-header-plus">
+        <div class="row">
+            <div class="col-md-8">
+                <span class="current-module">
+                    <i class="fa fa-home"></i>
+                    <a ui-sref="builds.trunk({module: buildsCtrl.context.module})">
+                        <span ng-bind="buildsCtrl.context.module"></span>
+                    </a>
+                </span>
+            </div>
+            <div class="col-md-4 text-float-right">
+                <a class="release-list-link" ui-sref="release({module: buildsCtrl.context.module})">
+                    <span class="release-history-icon"></span> 发布记录
+                </a>
+                <a ui-sref="config({module:buildsCtrl.context.module})" class="module-settings-link">
+                    <span class="fa fa-cog"></span> 配置
+                </a>
+            </div>
+        </div>
+    </div>
 
-    <h1>pipeline</h1>
-    <h1>pipeline</h1>
-    <h1>pipeline</h1>
-    <h1>pipeline</h1>
-    <h1>pipeline</h1>
+    <div class="tab pipl-tab">
+        <ul class="nav nav-tabs">
+            <li role="tab" ng-class="{active:buildsCtrl.context.branchType === 'TRUNK'}">
+                <a ui-sref=".trunk">
+                    <i class="trunk-tab-icon"></i>&nbsp;Master
+                </a>
+            </li>
+            <li role="tab" ng-class="{active:buildsCtrl.context.branchType === 'BRANCH'}">
+                <a ui-sref=".branches">
+                    <i class="fa fa-code-fork"></i>&nbsp;Branch
+                </a>
+            </li>
+        </ul>
+        <ul class="pull-right list-inline status-description-tips">
+            <li><i class="pipl-tab-status-icon success"></i>成功</li>
+            <li><i class="pipl-tab-status-icon fail"></i>失败</li>
+            <li><i class="pipl-tab-status-icon running"></i>运行</li>
+            <li><i class="pipl-tab-status-icon waiting"></i>未运行</li>
+        </ul>
+    </div>
 
     <ui-view></ui-view>
+
 </div>

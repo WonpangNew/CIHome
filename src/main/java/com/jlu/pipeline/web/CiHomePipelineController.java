@@ -1,6 +1,6 @@
 package com.jlu.pipeline.web;
 
-import com.jlu.pipeline.bean.CihomePipelineBean;
+import com.jlu.pipeline.bean.CiHomePipelineBean;
 import com.jlu.pipeline.service.ICiHomePipelineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,7 +22,7 @@ public class CiHomePipelineController {
 
     @RequestMapping("/v1/pipelineBuilds")
     @ResponseBody
-    public List<CihomePipelineBean> getTrunkPipeline(@RequestParam("username") String username,
+    public List<CiHomePipelineBean> getTrunkPipeline(@RequestParam("username") String username,
                                                      @RequestParam("module") String module,
                                                      @RequestParam("pipelineBuildId") int pipelineBuildId) {
         return ciHomePipelineService.getTrunkPipeline(username, module, pipelineBuildId);
