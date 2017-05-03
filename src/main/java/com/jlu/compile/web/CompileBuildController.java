@@ -1,5 +1,6 @@
 package com.jlu.compile.web;
 
+import com.jlu.compile.model.CompileBuild;
 import com.jlu.compile.service.ICompileBuildService;
 import com.jlu.jenkins.bean.JenkinsEndCompileBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,4 +37,19 @@ public class CompileBuildController {
         compileBuildService.dealCompileEnd(jenkinsEndCompileBean);
         return "OK";
     }
+
+    @RequestMapping(value = "/v1/detail", method = RequestMethod.GET)
+    @ResponseBody
+    public CompileBuild getCompileBuildByPipelineId(@RequestParam("pipelineBuildId") int pipelineBuildId) {
+        return compileBuildService.getCompileBuildByPipelineId(pipelineBuildId);
+    }
+
+    @RequestMapping(value = "/v1/rebuild", method = RequestMethod.GET)
+    @ResponseBody
+    public String rebuild(@RequestParam("compileBuildId") int compileBuildId,
+                          @RequestParam("module") String module,
+                          @RequestParam("username") String username) {
+        return compileBuildService.doRebuild(compileBuildId, module, username);
+    }
+
 }

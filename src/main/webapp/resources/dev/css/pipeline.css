@@ -183,3 +183,75 @@
     padding-bottom: 0px !important;
     border-bottom-width: 0px !important;
 }
+
+.pipeline-builds-top {
+    margin-top: 15px;
+}
+
+/*加载更多*/
+.load-more-row {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+.load-more-row > div {
+    text-align: center;
+}
+.load-more-row .load-more-loader {
+    margin-bottom: 10px;
+}
+
+.load-more-button > button {
+    width: 120px;
+    height: 36px;
+    font-size: 14px;
+}
+
+.pipeline-row {
+    height: 80px;
+}
+
+/*主体内容*/
+
+.pipeline-overview  {
+    width: 100%;
+}
+
+.pipeline-overview .pipeline-content {
+    height: 60px;
+    margin-top: 25px;
+}
+
+.pipeline-overview > div {
+    display: block;
+}
+
+.pipeline-overview .pipeline-content {
+    padding-left: 25px;
+    padding-right: 25px;
+    background-color: transparent;
+}
+
+/*撑开区域*/
+.pipeline-overview .expand-area {
+    width: calc(100% - 50px);
+    margin-left: 25px;
+    margin-top: -6px;
+    background-color: #F6F6F6;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    -webkit-box-shadow: 0 10px 10px -7px #CCC;
+    -moz-box-shadow: 0 10px 10px -7px #CCC;
+    box-shadow: 0 10px 10px -7px #CCC;
+    position: relative;
+    z-index: 99;
+}
+
+.pipeline-overview .expand-area button,
+.pipeline-overview .expand-area input[type="button"] {
+    background-color: #638EE6 !important;
+}
+
+.pipeline-overview .expand-area button:hover,
+.pipeline-overview .expand-area input[type="button"]:hover {
+    background-color: #3b71df !important;
+}

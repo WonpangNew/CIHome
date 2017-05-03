@@ -3,6 +3,7 @@ package com.jlu.release.web;
 import com.jlu.release.bean.ReleaseParams;
 import com.jlu.release.bean.ReleaseResponseBean;
 import com.jlu.release.bean.ReleaseStatus;
+import com.jlu.release.model.CiHomeRelease;
 import com.jlu.release.service.IReleaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -53,5 +54,11 @@ public class ReleaseController {
         ReleaseResponseBean releaseResponseBean = new ReleaseResponseBean(Integer.valueOf(releaseId), module, username,
                 releaseProductPath, releaseStatus1, errMsg);
         releaseService.callbackRelease(releaseResponseBean);
+    }
+
+    @RequestMapping(value = "/v1/detail", method = RequestMethod.GET)
+    @ResponseBody
+    public CiHomeRelease getReleaseByPipelineId(@RequestParam("pipelineBuildId") int pipelineBuildId) {
+        return releaseService.getReleaseByPipelineId(pipelineBuildId);
     }
 }

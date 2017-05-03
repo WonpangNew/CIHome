@@ -1,5 +1,6 @@
 package com.jlu.compile.service.impl;
 
+import com.google.gson.Gson;
 import com.jlu.common.db.sqlcondition.ConditionAndSet;
 import com.jlu.common.db.sqlcondition.DescOrder;
 import com.jlu.common.db.sqlcondition.OrderCondition;
@@ -16,6 +17,7 @@ import com.jlu.github.model.GitHubCommit;
 import com.jlu.github.service.IGitHubCommitService;
 import com.jlu.jenkins.bean.JenkinsEndCompileBean;
 import com.jlu.jenkins.bean.JenkinsStartCompileBean;
+import com.jlu.jenkins.service.IJenkinsService;
 import com.offbytwo.jenkins.model.BuildResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +41,12 @@ public class CompileBuildServiceImpl implements ICompileBuildService {
     @Autowired
     private IGitHubCommitService gitHubCommitService;
 
+    @Autowired
+    private IJenkinsService jenkinsService;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(CompileBuildServiceImpl.class);
+
+    private static final Gson GSON = new Gson();
 
     /**
      * 接收到hook信息触发编译
@@ -50,10 +57,9 @@ public class CompileBuildServiceImpl implements ICompileBuildService {
         assembleGitHubCommit(commitBean);
         CompileBuild compileBuild = assembleCompileBuild(commitBean);
         // 开始编译
-        String repoUrl = String.format(CiHomeReadConfig.getConfigValueByKey("github.base.repo"),
-                repositoryBean.getOwner().getName(), repositoryBean.getName());
         JenkinsStartCompileBean jenkinsStartCompileBean
-                = JenkinsUtils.triggerCompile(repoUrl, repositoryBean.getName(), compileBuild.getId());
+                = jenkinsService.triggerCompile(compileBuild.getId(), repositoryBean.getName(),
+                repositoryBean.getOwner().getName());
         if (!jenkinsStartCompileBean.isRequestStatus()) {
             compileBuild.setBuildStatus(BuildStatus.FAIL);
             compileBuild.setJenkinsBuildNumber(jenkinsStartCompileBean.getBuildNumber());
@@ -118,9 +124,9 @@ public class CompileBuildServiceImpl implements ICompileBuildService {
      */
     private GitHubCommit assembleGitHubCommit(GitHubCommitBean commitBean) {
         GitHubCommit gitHubCommit
-                = new GitHubCommit(commitBean.getCommitter().getName(), commitBean.getCommitter().getEmail(),
-                commitBean.getMessage(), DateUtil.getNowDateFormat(), commitBean.getAdded().toString(),
-                commitBean.getRemoved().toString(), commitBean.getModified().toString(), commitBean.getId(),
+                = new GitHubCommit(commitBean.getPipelineBuildId(), commitBean.getCommitter().getName(), commitBean.getCommitter().getEmail(),
+                commitBean.getMessage(), DateUtil.getNowDateFormat(), GSON.toJson(commitBean.getAdded()),
+                GSON.toJson(commitBean.getRemoved()), GSON.toJson(commitBean.getModified()), commitBean.getId(),
                 commitBean.getUrl());
         gitHubCommitService.save(gitHubCommit);
         LOGGER.info("Init GitHubCommit is successful! compileBuild:{}", gitHubCommit.getId());
@@ -172,6 +178,29 @@ public class CompileBuildServiceImpl implements ICompileBuildService {
     public String getProductPathFor(int compileBuildId) {
         CompileBuild compileBuild = compileBuildDao.findById(compileBuildId);
         return compileBuild != null ? compileBuild.getProductPath() : null;
+    }
+
+    /**
+     * 重新构建,不产生新的流水线
+     * @param compileBuildId
+     * @return
+     */
+    public String doRebuild(int compileBuildId, String module, String username) {
+        CompileBuild compileBuild = compileBuildDao.findById(compileBuildId);
+        if (compileBuild != null) {
+            JenkinsStartCompileBean jenkinsStartCompileBean
+                    = jenkinsService.triggerCompile(compileBuildId, module, username);
+            if (jenkinsStartCompileBean.isRequestStatus()) {
+                compileBuild.setBuildStatus(BuildStatus.BUILDING);
+                compileBuild.setJenkinsBuildNumber(jenkinsStartCompileBean.getBuildNumber());
+                compileBuildDao.update(compileBuild);
+                LOGGER.info("Rebuild Request is successful! Starting building! compileBuildId:{}", compileBuild.getId());
+                return "SUCC";
+            } else {
+                LOGGER.info("Rebuild Request is fail! compileBuildId:{}", compileBuild.getId());
+            }
+        }
+        return "FAIL";
     }
 
 }

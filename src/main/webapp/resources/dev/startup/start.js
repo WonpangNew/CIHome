@@ -17,8 +17,8 @@ define([
         'app',
         'router',
         'ctrls',
-        'dirs',
         'servs',
+        'dirs',
     ],
     function (angular) {
         'use strict';

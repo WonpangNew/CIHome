@@ -4,7 +4,8 @@
 
 define (
     [
-        'js/pipeline/directives/browes-store'
+        'js/pipeline/directives/pipeline-build',
+        'js/pipeline/directives/pipeline-builds'
     ], function () {
         
     }

@@ -1,3 +1,22 @@
-<div>
-    <h1>trunk</h1>
+<div class="pipeline-builds-top">
+    <div ng-show="trunkCtrl.pipelineBuilds && trunkCtrl.pipelineBuilds.length === 0">
+        <div class="alert alert-warning" role="alert">
+            该模块下还没有构建记录，请先提交代码!
+        </div>
+    </div>
+
+    <pipeline-builds app-pipeline-builds="trunkCtrl.pipelineBuilds" context="trunkCtrl.context"></pipeline-builds>
+
+    <div class="load-more-row" ng-show="trunkCtrl.initBuildsDone && trunkCtrl.pipelineBuilds.length >= 10">
+        <div class="load-more-button">
+            <button type="button" class="btn btn-default"
+                    ng-show="!trunkCtrl.showLoadMoreBuildsLoader"
+                    ng-disabled="trunkCtrl.noMoreBuildsToLoad"
+                    ng-click="trunkCtrl.loadMoreBuilds()">
+                <i class="fa fa-bars icon" ng-if="!trunkCtrl.noMoreBuildsToLoad"></i>&nbsp;
+                <span ng-if="trunkCtrl.noMoreBuildsToLoad">没有记录了</span>
+                <span ng-if="!trunkCtrl.noMoreBuildsToLoad">加载更多</span>
+            </button>
+        </div>
+    </div>
 </div>

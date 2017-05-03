@@ -9,7 +9,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">CIHOME</a>
+                <a class="navbar-brand" href="#" style="color: white !important;">CIHOME</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -29,10 +29,11 @@
                     </div>
                 </form>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#"><%=user.getUsername()%></a></li>
+                    <li><a href="#" style="color: white !important;"><%=user.getUsername()%></a></li>
                     <li class="btn-group" uib-dropdown="">
                         <a href="#" role="button" class="dropdown-toggle" uib-dropdown-toggle=""
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"
+                           style="color: white !important;">
                             设置
                             <span class="caret"></span>
                         </a>

@@ -46,15 +46,15 @@ public class PipelineBuildServiceImpl implements IPipelineBuildService{
     @Override
     public List<PipelineBuild> getTrunkPipelineBuilds(int moduleId, int pipelineBuildId, int limit) {
         ConditionAndSet conditionAndSet = new ConditionAndSet();
-        conditionAndSet.put("MODULE_ID", moduleId);
-        conditionAndSet.put("BRANCH_TYPE", BranchType.TRUNK);
+        conditionAndSet.put("moduleId", moduleId);
+        conditionAndSet.put("branchType", BranchType.TRUNK);
         if (pipelineBuildId != 0) {
             conditionAndSet.addCompareCondition(new LessThanCondition("id", pipelineBuildId));
         }
         List<OrderCondition> orders = new ArrayList<OrderCondition>();
         orders.add(new DescOrder("id"));
         List<PipelineBuild> pipelineBuilds =
-                pipelineBuildDao.findHeadByProperties(conditionAndSet, orders, 0, limit);
+                pipelineBuildDao.findHeadByProperties(conditionAndSet, orders, pipelineBuildId, limit);
         return null == pipelineBuilds ? new ArrayList<PipelineBuild>() : pipelineBuilds;
     }
 }

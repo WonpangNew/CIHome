@@ -46,9 +46,10 @@ public class GitHubCommit {
     @Column(name = "COMMIT_URL")
     private String commitUrl;
 
-    public GitHubCommit(String committer, String committerEmail, String commits, String commitTime,
+    public GitHubCommit(int pipelineBuildId, String committer, String committerEmail, String commits, String commitTime,
                         String addedFiles, String removedFiles, String modifiedFiles, String revision,
                         String commitUrl) {
+        this.pipelineBuildId = pipelineBuildId;
         this.committer = committer;
         this.committerEmail = committerEmail;
         this.commits = commits;

@@ -66,7 +66,7 @@ public class CiHomePipelineServiceImpl implements ICiHomePipelineService {
             LOGGER.error("Don't exist this module:{} on username:{}!", module, username);
         }
         List<PipelineBuild> pipelineBuilds =
-                getPipelineBuilds(ciHomeModule, BranchType.TRUNK, null, 0, 10);
+                getPipelineBuilds(ciHomeModule, BranchType.TRUNK, null, pipelineBuildId, 10);
         Map<Integer, CompileBuildBean> compileBuildBeanMap = getCompileBuildBeans(pipelineBuilds);
         Map<Integer, GitHubCommit> gitHubCommitMap = getGitHubCommit(pipelineBuilds);
         Map<Integer, ReleaseBean> releaseBeanMap = getReleaseBeans(pipelineBuilds);

@@ -37,4 +37,13 @@ public interface ICompileBuildService {
      * @return
      */
     String getProductPathFor(int compileBuildId);
+
+    /**
+     * 重新构建
+     * @param compileBuildId
+     * @param module
+     * @param username
+     * @return
+     */
+    String doRebuild(int compileBuildId, String module, String username);
 }
