@@ -1,0 +1,13 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="$dismiss()">&times;</button>
+    <h4 class="modal-title" ng-bind="title"></h4>
+</div>
+<div class="modal-body">
+    <div ng-if="content" app-bind-html="content">
+    </div>
+    <div ng-if="contentUrl" ng-include="contentUrl">
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="agile large blue button close-button" type="button" ng-click="$dismiss()">关闭</button>
+</div>

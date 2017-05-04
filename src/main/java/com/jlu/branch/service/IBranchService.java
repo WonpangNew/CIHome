@@ -1,6 +1,7 @@
 package com.jlu.branch.service;
 
 import com.jlu.branch.model.CiHomeBranch;
+import com.jlu.github.model.CiHomeModule;
 
 import java.util.List;
 
@@ -20,4 +21,11 @@ public interface IBranchService {
      * @param ciHomeBranches
      */
     void saveBranches(List<CiHomeBranch> ciHomeBranches);
+
+    /**
+     * 根据模块数据获得最新的三位版本号＋1
+     * @param ciHomeModule
+     * @return
+     */
+    String getLastThreeVersion(CiHomeModule ciHomeModule);
 }

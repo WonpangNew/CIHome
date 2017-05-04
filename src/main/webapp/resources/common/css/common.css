@@ -76,9 +76,91 @@
     font-size: 11px !important;
 }
 
+/*通用颜色设置*/
+
+.purple {
+    color: #464068;
+}
+
+.fail,
+.error {
+    color: #E64A1B !important;
+}
+
+.success {
+    color: #C6EC9B !important;
+
+}
+
+.running {
+    color: #FFAC30 !important;
+}
+
+.waiting {
+    color: #DCDDDE !important;
+}
+
+.bg-purple {
+    background-color: #464068 !important;
+}
+
+.bg-fail,
+.bg-error {
+    background-color: #E64A1B !important;
+}
+
+.bg-success {
+    background-color: #C6EC9B !important;
+
+}
+
+.bg-running {
+    background-color: #FFAC30 !important;
+}
+
+.bg-waiting {
+    background-color: #CACBCC !important;
+}
+
+.modified {
+    color: #FFAC30;
+}
+
+.added {
+    color: #7ab439;
+}
+
+.gray-color,
+.deleted {
+    color: #7d7d7d;
+}
+
+
 .navbar-default-plus {
     background-color: #464068 !important;
     border-color: #464068 !important;
     border-radius: 0 !important;
     margin-bottom: 10px !important;
+}
+
+.font-normal-color {
+    color: #929292 !important;
+}
+
+.padding-left-right-0 {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.label-message {
+    color: #888e90 !important;
+    font-family: serif !important;
+}
+
+.button-bubble {
+    background-color: white !important;
+    color: #0c47bf !important;
+    border-color: #0c47bf !important;
+    margin-left: 10px !important;
+    font-size: 12px !important;
 }

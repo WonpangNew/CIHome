@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="12px" height="12px" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.3 (12072) - http://www.bohemiancoding.com/sketch -->
+    <title>Mask + Path 170 Copy</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path id="path-1" d="M0.944885453,5.81521641 C0.944885453,3.05379266 3.18908065,0.815216409 5.94488545,0.815216409 L5.94488545,0.815216409 C8.7063092,0.815216409 10.9448855,3.0594116 10.9448855,5.81521641 L10.9448855,5.81521641 C10.9448855,8.57664016 8.70069026,10.8152164 5.94488545,10.8152164 L5.94488545,10.8152164 C3.1834617,10.8152164 0.944885453,8.57102122 0.944885453,5.81521641 L0.944885453,5.81521641 Z"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="agile-新主干优化-标注" sketch:type="MSArtboardGroup" transform="translate(-208.000000, -859.000000)">
+            <g id="Path-Copy-29-+-Path-Copy-27-+-Path-Copy-24" sketch:type="MSLayerGroup" transform="translate(54.000000, 809.000000)">
+                <g id="Mask-+-Path-170-Copy" transform="translate(154.000000, 50.000000)">
+                    <mask id="mask-2" sketch:name="Mask" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <use id="Mask" stroke="#FFAC00" fill="#FFFFFF" sketch:type="MSShapeGroup" xlink:href="#path-1"></use>
+                    <path d="M5.31199418,3.76598862 C4.85830903,3.45273604 4.49052454,3.6439147 4.49052454,4.19988528 L4.49052454,7.87031225 C4.49052454,8.42319934 4.85509448,8.61971861 5.31199418,8.30429361 L7.77719394,6.60241984 C8.2308791,6.28921404 8.23409365,5.7835887 7.77719394,5.46811659 L5.31199418,3.76598862 Z" id="Path-170" stroke="#F6A623" sketch:type="MSShapeGroup" mask="url(#mask-2)"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

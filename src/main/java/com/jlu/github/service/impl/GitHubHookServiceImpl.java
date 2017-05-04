@@ -3,6 +3,8 @@ package com.jlu.github.service.impl;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jlu.branch.bean.BranchType;
+import com.jlu.branch.model.CiHomeBranch;
+import com.jlu.branch.service.IBranchService;
 import com.jlu.common.utils.DateUtil;
 import com.jlu.compile.service.ICompileBuildService;
 import com.jlu.github.bean.GitHubCommitBean;
@@ -12,6 +14,7 @@ import com.jlu.github.service.IGitHubHookService;
 import com.jlu.github.service.IModuleService;
 import com.jlu.pipeline.model.PipelineBuild;
 import com.jlu.pipeline.service.IPipelineBuildService;
+import com.jlu.release.service.IReleaseService;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
@@ -33,6 +36,9 @@ public class GitHubHookServiceImpl implements IGitHubHookService{
     private IPipelineBuildService pipelineBuildService;
 
     @Autowired
+    private IBranchService branchService;
+
+    @Autowired
     private IModuleService moduleService;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GitHubHookServiceImpl.class);
@@ -47,6 +53,7 @@ public class GitHubHookServiceImpl implements IGitHubHookService{
     public void dealHookMessage(JSONObject hookMessage) {
         GitHubCommitBean commitBean = null;
         HookRepositoryBean repositoryBean = null;
+        boolean isTriggerCompile = true;
         try {
             String branchName = StringUtils.substringAfterLast(hookMessage.getString("ref"),"refs/heads/");
             BranchType branchType = branchName.equals("master") ? BranchType.TRUNK : BranchType.BRANCH;
@@ -58,13 +65,20 @@ public class GitHubHookServiceImpl implements IGitHubHookService{
                 LOGGER.info("This module is not exist and ignore compile!user:{}, module:{}",
                         repositoryBean.getOwner().getName(), repositoryBean.getName());
             }
-            PipelineBuild pipelineBuild = initPipelineBuild(ciHomeModule, branchName, branchType);
-            commitBean = getCommitByHook(hookMessage, pipelineBuild);
-            LOGGER.info("解析Json数据成功！commits:{}", commitBean.toString());
+            boolean checkResult = checkNewBranch(hookMessage, branchName, ciHomeModule);
+            if (!checkResult) {
+                PipelineBuild pipelineBuild = initPipelineBuild(ciHomeModule, branchName, branchType);
+                commitBean = getCommitByHook(hookMessage, pipelineBuild);
+                LOGGER.info("解析Json数据成功！commits:{}", commitBean.toString());
+            } else {
+                isTriggerCompile = false;
+            }
         } catch (Exception e) {
             LOGGER.error("解析Json数据失败！hookMessage:{}", hookMessage.toString());
         }
-        compileBuildService.hookTriggerCompile(commitBean, repositoryBean);
+        if (isTriggerCompile) {
+            compileBuildService.hookTriggerCompile(commitBean, repositoryBean);
+        }
     }
 
     /**
@@ -98,5 +112,31 @@ public class GitHubHookServiceImpl implements IGitHubHookService{
         pipelineBuild.setBranchType(branchType);
         pipelineBuildService.save(pipelineBuild);
         return pipelineBuild;
+    }
+
+    /**
+     * 检查本次提交是否为新的分支，如果是则将该分支写库
+     * @param hookMessage
+     */
+    private boolean checkNewBranch(JSONObject hookMessage, String branchName, CiHomeModule ciHomeModule) {
+        boolean result = false;
+        try {
+            String status = hookMessage.getString("created");
+            if (status.equals("true")) {
+                CiHomeBranch ciHomeBranch = new CiHomeBranch();
+                ciHomeBranch.setBranchType(BranchType.BRANCH);
+                ciHomeBranch.setBranchName(branchName);
+                ciHomeBranch.setCreateTime(DateUtil.getNowDateFormat());
+                ciHomeBranch.setModuleId(ciHomeModule.getId());
+                ciHomeBranch.setVersion(branchService.getLastThreeVersion(ciHomeModule));
+                branchService.saveBranch(ciHomeBranch);
+                LOGGER.info("Create branch:{} is successful!", branchName);
+                result = true;
+            }
+        } catch (Exception e) {
+            LOGGER.error("Create branch:{} is fail!", branchName);
+        } finally {
+            return result;
+        }
     }
 }

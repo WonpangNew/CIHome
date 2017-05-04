@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="18px" height="16px" viewBox="0 0 18 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.3 (12072) - http://www.bohemiancoding.com/sketch -->
+    <title>Path Copy 15 + 运行 copy</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="agile-新主干优化-标注" sketch:type="MSArtboardGroup" transform="translate(-98.000000, -921.000000)">
+            <g id="Path-Copy-29-+-Path-Copy-27-+-Path-Copy-24" sketch:type="MSLayerGroup" transform="translate(54.000000, 809.000000)">
+                <g id="Path-Copy-15-+-运行-copy" transform="translate(44.000000, 112.000000)" sketch:type="MSShapeGroup">
+                    <path d="M4.62805401,1.79021773 C5.34298745,0.711325784 6.56744303,1.0658141e-14 7.95826094,1.0658141e-14 L13.9720564,1.0658141e-14 C16.1773859,1.0658141e-14 17.9651587,1.78883037 17.9651587,3.99620271 L17.9651587,12.0037973 C17.9651587,14.2108391 16.1778288,16 13.9720564,16 L7.95826094,16 C6.569817,16 5.34688342,15.2909467 4.63140316,14.2148011 L0.852419541,10.1910001 C-0.284265873,8.98067578 -0.284013814,7.01928526 0.852419541,5.80951231 L4.62805401,1.79021773 Z" id="Path-Copy-15" fill="#ADD67D" transform="translate(8.982579, 8.000000) scale(-1, 1) translate(-8.982579, -8.000000) "></path>
+                    <path d="M4,8.16138425 L6.54525016,10.48586 L4,8.16138425 Z M6.5988082,10.5158833 L10.9844522,6.19323112 L6.5988082,10.5158833 Z" id="Line-Copy-18" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

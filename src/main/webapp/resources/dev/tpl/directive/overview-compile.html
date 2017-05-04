@@ -1,0 +1,20 @@
+<ul class="list-unstyled commit-info-ul">
+    <li class="row">
+        <span class="col-md-4">
+            <span ng-show="'SUCCESS' === compileBuildDetail.buildStatus" class="label label-success">编译成功</span>
+            <span ng-show="'BUILDING' === compileBuildDetail.buildStatus" class="label label-warning">正在编译</span>
+            <span ng-show="'FAIL' === compileBuildDetail.buildStatus" class="label label-danger">编译失败</span>
+        </span>
+        <span class="col-md-4">
+            <i class="fa fa-file-text-o" aria-hidden="true"></i>
+            <a ng-href="{{::compileBuildDetail.buildLogUrl}}"
+                target="_blank">查看编译日志</a>
+        </span>
+        <span class="col-md-4">
+            <span ng-show="'SUCCESS' === compileBuildDetail.buildStatus">
+                <i class="fa fa-cloud-download" aria-hidden="true"></i>
+                <a ng-href="{{::compileBuildDetail.productPath}}">下载编译产出</a>
+            </span>
+        </span>
+</ul>
+

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="17px" height="10px" viewBox="0 0 17 10" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.3 (12072) - http://www.bohemiancoding.com/sketch -->
+    <title>Path Copy 32</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path id="path-1" d="M0.996582031,1.9735167 C0.996582011,1.9735167 0.996582031,0 0.996582031,0 L16.9981079,0 L16.9981079,1.9735167 C15.7848186,1.9735167 15.0651684,3.00095129 15.0651684,3.00095129 L9.64907926,9.40089484 C9.29060268,9.82449013 8.71177206,9.822206 8.36047877,9.40089484 L3.02414441,3.00095129 C3.02414441,3.00095129 2.29828775,1.9735167 0.996582031,1.9735167 Z"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Desktop-HD" sketch:type="MSArtboardGroup" transform="translate(-13.000000, -334.000000)">
+            <g id="Path-Copy-32" sketch:type="MSLayerGroup" transform="translate(13.000000, 334.000000)">
+                <mask id="mask-2" sketch:name="Mask" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <use id="Mask" fill="#FFFFFF" sketch:type="MSShapeGroup" xlink:href="#path-1"></use>
+                <path d="M-136,0 L1.97986595,0 C2.53208515,0 3.26997894,0.336501401 3.63516935,0.759911712 L8.34172452,6.21680195 C8.70370414,6.6364896 9.29000301,6.64021226 9.65849604,6.21680195 L14.4076152,0.759911712 C14.7728684,0.340224062 15.5219975,0 16.0774447,0 L172.994293,0 L172.994293,2.98291826 L17.0727469,1.98930407 C16.5193115,1.98577728 15.7757289,2.32380754 15.4178828,2.73741064 L9.64992721,9.40408935 C9.28940644,9.82078399 8.70651325,9.81769246 8.35388597,9.40408935 L2.6700486,2.73741064 C2.31478556,2.32071601 1.58039095,1.9861524 1.03376266,1.9901127 L-136,2.98291826 L-136,0 Z" id="Path-Copy-28" fill="#929292" sketch:type="MSShapeGroup" mask="url(#mask-2)"></path>
+            </g>
+        </g>
+    </g>
+</svg>

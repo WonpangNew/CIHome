@@ -1,6 +1,7 @@
 package com.jlu.pipeline.service.impl;
 
 import com.jlu.branch.bean.BranchType;
+import com.jlu.compile.bean.BuildStatus;
 import com.jlu.compile.bean.CompileBuildBean;
 import com.jlu.compile.model.CompileBuild;
 import com.jlu.compile.service.ICompileBuildService;
@@ -100,9 +101,34 @@ public class CiHomePipelineServiceImpl implements ICiHomePipelineService {
             ciHomePipelineBean.setGitHubCommit(gitHubCommitMap.get(pipelineBuildId));
             ciHomePipelineBean.setReleaseBean(releaseBeanMap.get(pipelineBuildId));
             ciHomePipelineBean.setRevision(gitHubCommitMap.get(pipelineBuildId).getRevision());
+            ciHomePipelineBean.setBuildNumber(compileBuildBeanMap.get(pipelineBuildId).getBuildNumber());
+            ciHomePipelineBean.setPipelineStatus(getPipelineStatus(compileBuildBeanMap.get(pipelineBuildId).getBuildStatus(),
+                    releaseBeanMap.get(pipelineBuildId).getReleaseStatus()));
             ciHomePipelineBeanList.add(ciHomePipelineBean);
         }
         return ciHomePipelineBeanList;
+    }
+
+    /**
+     * 根据编译状态和发布状态获得流水线状态
+     * @param compileStatus
+     * @param releaseStatus
+     * @return
+     */
+    private BuildStatus getPipelineStatus(BuildStatus compileStatus, ReleaseStatus releaseStatus) {
+        if (!compileStatus.equals(BuildStatus.SUCCESS)) {
+            return compileStatus;
+        } else {
+            if (releaseStatus.equals(ReleaseStatus.WAIT) || releaseStatus.equals(ReleaseStatus.SUCCESS)) {
+                return compileStatus;
+            } else if (releaseStatus.equals(ReleaseStatus.RUNNING)) {
+                return BuildStatus.BUILDING;
+            } else  if (releaseStatus.equals(ReleaseStatus.FAIL)) {
+                return BuildStatus.FAIL;
+            } else {
+                return compileStatus;
+            }
+        }
     }
 
     /**
@@ -141,8 +167,12 @@ public class CiHomePipelineServiceImpl implements ICiHomePipelineService {
             if (compileBuild == null) {
                 continue;
             }
+            int runPercentage = compileBuild.getBuildStatus().equals(BuildStatus.BUILDING) ? 50 : 100;
             CompileBuildBean compileBuildBean =
-                    new CompileBuildBean(compileBuild.getCreateTime(), compileBuild.getBuildStatus());
+                    new CompileBuildBean(compileBuild.getId(), compileBuild.getCreateTime(), compileBuild.getJenkinsBuildNumber(),
+                            runPercentage, compileBuild.getBuildStatus());
+            compileBuildBean.setEndTime(compileBuild.getEndTime() == null ? "" : compileBuild.getEndTime());
+            compileBuildBean.setTriggerUser(compileBuild.getTrigger());
             compileBuildBeanMap.put(pipelineBuild.getId(), compileBuildBean);
         }
         return compileBuildBeanMap;

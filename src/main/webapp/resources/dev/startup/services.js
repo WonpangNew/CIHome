@@ -10,7 +10,8 @@ define(
         'js/pipeline/services/pipeline-service',
         'js/pipeline/services/context-service',
         'js/permission/services/permission-service',
-        'js/permission/services/register-service'
+        'js/permission/services/register-service',
+        'js/pipeline/services/modal-service'
     ], function () {
     }
 );

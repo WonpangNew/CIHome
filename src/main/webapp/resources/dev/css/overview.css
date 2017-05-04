@@ -81,3 +81,471 @@
     margin-bottom: 7px;
     font-size: 12px;
 }
+
+/* pipeline 状态*/
+.pipeline-global-info .global-status > span {
+    margin-top: 39px;
+    z-index: 70;
+}
+
+.pipeline-expand-action .expand-action > span,
+.pipeline-global-info .global-status > span {
+    text-align: center;
+    position: relative;
+}
+.pipeline-global-info .global-status .fa-refresh {
+    font-size: 12px;
+    line-height: 1;
+    width: 12px;
+    height: 12px;
+    color: #fff !important;
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    z-index: 80;
+}
+
+.pipeline-global-info .global-status .normal,
+.pipeline-global-info .global-status .expand {
+    display: block;
+    position: relative;
+    width: 20px;
+    height: 20px;
+}
+.pipeline-global-info .global-status .normal,
+.pipeline-global-info .global-status .expand {
+    top: 45px;
+    z-index: 101;
+}
+
+.pipeline-global-info .global-status .success .normal {
+    background: url(../img/pipeline/global-success.svg) no-repeat;
+}
+.pipeline-global-info .global-status .success .expand {
+    background: url(../img/pipeline/global-success-expand.svg) no-repeat;
+}
+.pipeline-global-info .global-status .fail .normal {
+    background: url(../img/pipeline/global-fail.svg) no-repeat;
+}
+.pipeline-global-info .global-status .fail .expand {
+    background: url(../img/pipeline/global-fail-expand.svg) no-repeat;
+}
+.pipeline-global-info .global-status .waiting .normal {
+    background: url(../img/pipeline/global-waiting.svg) no-repeat;
+}
+.pipeline-global-info .global-status .waiting .expand {
+    background: url(../img/pipeline/global-waiting-expand.svg) no-repeat;
+}
+.pipeline-global-info .global-status .running .normal {
+    background: url(../img/pipeline/global-running.svg) no-repeat;
+}
+.pipeline-global-info .global-status .running .expand {
+    background: url(../img/pipeline/global-running-expand.svg) no-repeat;
+}
+
+/* commitInfo template */
+.expand-contents  .list-unstyled > li {
+    padding-bottom: 5px;
+}
+.expand-contents  .list-unstyled > li {
+    line-height: 24px;
+    min-height: 24px;
+    border-bottom: 1px dotted #DCDDDE;
+    padding-left: 10px;
+}
+
+.expand-contents  .table-list-unstyled {
+    font-size: 12px;
+    margin-bottom: 10px;
+    width: 100%;
+}
+.expand-contents  .table-list-unstyled tr {
+    border-bottom: 1px dotted #DCDDDE;
+}
+.expand-contents  .table-list-unstyled tr td:first-child {
+    padding-left: 10px;
+}
+.expand-contents  .table-list-unstyled tr td {
+    padding-bottom: 3px;
+    white-space: nowrap;
+}
+.expand-contents  .table-list-unstyled .running {
+    font-size: 16px;
+}
+
+.expand-contents  .table-list-unstyled .col-pl-20 {
+    padding-left: 20px;
+}
+
+.expand-contents  .table-list-unstyled .col-pl-60 {
+    padding-left: 60px;
+}
+.expand-contents  .table-list-unstyled tr {
+    line-height: 24px;
+}
+
+.expand-contents  .table-list-unstyled .col-pl-80 {
+    padding-left: 80px;
+}
+.expand-contents  .table-list-unstyled tr td:last-child {
+    width: 100%;
+}
+
+.expand-contents  .table-list-unstyled .cost-time-val {
+    color: #929292 !important;
+}
+
+.expand-contents .commit-info-ul .code-url {
+    margin-right: 5px;
+    padding: 2px;
+    background-color: #EBF0FB;
+}
+
+.expand-contents .commit-info-ul .commit-changes-file-link > a {
+    padding: 2px 20px 5px 20px;
+    border: 1px solid transparent;
+    border-bottom: none;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+.expand-contents .commit-info-ul .commit-changes-file-link > .without-links {
+    padding-left: 0;
+}
+.expand-contents .commit-info-ul .commit-changes-file-link.expand {
+    position: relative;
+    top: 1px;
+}
+.expand-contents .commit-info-ul .commit-changes-file-link.expand .without-links {
+    padding-left: 20px;
+}
+
+.expand-contents .commit-info-ul .commit-changes-file-link.expand > a {
+    border-color: #DDD !important;
+    background-color: #FFF;
+}
+.expand-contents .commit-info-ul .changes-file-expand-container {
+    border: 1px solid #DDD;
+    background-color: #FFF;
+    border-radius: 3px;
+}
+.expand-contents .commit-info-ul .changes-file-expand-container > ul > li > span {
+    padding-right: 20px;
+    margin-left: -20px;
+}
+.expand-contents .commit-info-ul .changes-file-expand-container > .table > tbody > tr:first-child > td {
+    border-top: none;
+}
+.expand-contents .commit-info-ul .changes-file-expand-container > .table {
+    margin-bottom: 0;
+}
+
+.expand-area .expand-container .operation .pull-right {
+    margin-right: 70px;
+}
+.expand-area .expand-container .operation .pull-right > span {
+    padding-right: 30px;
+}
+
+.expand-area .expand-container .operation .pull-right > span > label {
+    display: inline-block;
+    color: #929292;
+    font-weight: 100;
+    margin-right: 5px;
+}
+
+.commit-info .build-number-and-revision .build-number-wrap {
+    padding: 2px 0 0 0;
+}
+
+.commit-info .build-number-and-revision .build-number {
+    color: #7ab439 !important;
+}
+.commit-info .build-number-and-revision .build-number:hover {
+    color: #53920D !important;
+}
+
+.commit-info .build-number-and-revision .revision {
+    padding: 3px 0 0 0;
+}
+.commit-info .build-number-and-revision .revision .octicon {
+    font-size: 13px !important;
+}
+.commit-info .author-and-start-time .trigger-user {
+    padding: 0 0 0 0;
+}
+.commit-info .author-and-start-time .commit-start-time {
+    padding: 4px 0 0 0;
+}
+
+.commit-info .author-and-start-time .trigger-user {
+    padding: 0 0 0 0;
+}
+.commit-info .author-and-start-time .commit-start-time {
+    padding: 4px 0 0 0;
+}
+
+.pipeline-global-info .commit-info .author-and-start-time {
+    padding-left: 20px;
+}
+
+.commit-info .author-and-start-time .trigger-user .commit-user-icon {
+    display: inline-block;
+    position: relative;
+    top: 7px;
+    left: 0;
+    width: 14px;
+    height: 14px;
+    background: url(../img/pipeline/commit-user.svg) no-repeat;
+}
+.commit-info .author-and-start-time .start-time {
+    display: inline-block;
+    position: relative;
+    top: 2px;
+    left: 1px;
+    width: 12px;
+    height: 12px;
+    background: url(../img/pipeline/commit-info-time.svg) no-repeat;
+}
+
+.commit-info .author-and-start-time .trigger-user .manual-build-icon {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background: url(../img/pipeline/manual-build-icon.svg) no-repeat;
+}
+
+.commit-info .author-and-start-time {
+    color: #929292 !important;
+}
+
+/* 进度条 start */
+
+/*当前stage箭头指示*/
+.waiting-stage-expand {
+    background: url(../img/pipeline/waiting-stage-expand.svg) no-repeat;
+}
+.success-stage-expand {
+    background: url(../img/pipeline/success-stage-expand.svg) no-repeat;
+}
+.fail-stage-expand {
+    background: url(../img/pipeline/fail-stage-expand.svg) no-repeat;
+}
+.running-stage-expand {
+    background: url(../img/pipeline/running-stage-expand.svg) no-repeat;
+}
+
+.pipeline-process-bar .expand-pointer {
+    position: absolute;
+    left: calc(50% - 10px);
+    top: 0;
+    width: 18px;
+    height: 10px !important;
+    z-index: 1002;
+}
+.pipeline-process-bar .running-stage-expand,
+.pipeline-process-bar .fail-stage-expand {
+    top: -1px;
+}
+
+.pipeline-process-bar {
+    width: 100%;
+    height: 2px;
+}
+.pipeline-global-info .commit-info .pipeline-process-bar {
+    position: relative;
+    width: 100%;
+    padding: 0 !important;
+    height: 2px;
+    margin-top: -2px;
+    z-index: 100;
+}
+
+
+.commit-info .pipeline-process-bar:after {
+    content: " ";
+    display: none !important;
+}
+.pipeline-global-info .commit-info .pipeline-process-bar,
+.pipeline-stage .pipeline-process-bar {
+    position: relative;
+    width: 100%;
+    height: 2px;
+    z-index: 100;
+    background-color: #f5f5f5;
+    -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1);
+}
+.pipeline-stage .pipeline-process-bar > span {
+    display: inline-block;
+    float: left;
+    height: 2px;
+}
+.pipeline-stage .pipeline-process-bar .bg-fail,
+.pipeline-stage .pipeline-process-bar .bg-running {
+    margin-top: -1px;
+    height: 4px;
+}
+
+
+
+/*触发方式*/
+.pipeline-stage .pipeline-process-bar .action-span {
+    width: 12px;
+    height: 12px;
+    float: left;
+    position: absolute;
+    left: -1px;
+    top: -3px;
+    z-index: 101;
+}
+.pipeline-stage .pipeline-process-bar .auto-trigger-waiting {
+    background: url(../img/pipeline/waiting-auto-trigger-icon.svg) no-repeat;
+}
+
+.pipeline-stage .pipeline-process-bar .auto-trigger-success {
+    background: url(../img/pipeline/success-auto-trigger-icon.svg) no-repeat;
+}
+
+.pipeline-stage .pipeline-process-bar .auto-trigger-fail {
+    position: absolute;
+    top: -5px;
+    background: url(../img/pipeline/fail-auto-trigger-icon.svg) no-repeat;
+}
+
+.pipeline-stage .pipeline-process-bar .auto-trigger-running {
+    top: -5px;
+    background: url(../img/pipeline/running-auto-trigger-icon.svg) no-repeat;
+}
+
+.pipeline-stage .pipeline-process-bar .manually-trigger-waiting {
+    top: -7px;
+    width: 46px;
+    height: 16px ;
+    background-image: url(../img/pipeline/manually-execute.png);
+    background-size: 46px 16px;
+    cursor: hand;
+}
+.pipeline-stage .pipeline-process-bar .manually-trigger-waiting:hover {
+    background-image: url(../img/pipeline/manually-execute-hover.png);
+}
+
+
+.pipeline-stage .pipeline-process-bar .manually-trigger-waiting[disabled="disabled"] {
+    top: -5px;
+    width: 12px !important;
+    height: 12px !important;
+    background: url(../img/pipeline/waiting-manual-trigger-icon.svg) no-repeat !important;
+    cursor: default;
+}
+
+.pipeline-stage .pipeline-process-bar .manually-trigger-success {
+    top: -5px;
+    width: 12px;
+    height: 12px !important;
+    background: url(../img/pipeline/success-manual-trigger-icon.svg) no-repeat;
+    cursor: default;
+}
+
+.pipeline-stage .pipeline-process-bar .manually-trigger-fail {
+    top: -5px;
+    width: 12px;
+    height: 12px !important;
+    background: url(../img/pipeline/fail-manual-trigger-icon.svg) no-repeat;
+    cursor: default;
+}
+
+.pipeline-stage .pipeline-process-bar .manually-trigger-running {
+    top: -5px;
+    width: 12px;
+    height: 12px !important;
+    background: url(../img/pipeline/running-manual-trigger-icon.svg) no-repeat;
+    cursor: wait !important;
+}
+
+.pipeline-stage .pipeline-process-bar .progress-bar-span {
+    position: relative;
+    float: left;
+    border-radius: 2px;
+}
+
+
+.pipeline-global-info:hover .pipeline-process-bar,
+.pipeline-process-bar.bg-success.active,
+.progress-bar-span.bg-success.active {
+    z-index: 100;
+    height: 3px !important;
+    background-color: #7ab439 !important;
+}
+.pipeline-global-info:hover,
+.pipeline-stage:hover {
+    cursor: pointer;
+}
+.pipeline-stage:hover .progress-bar-span {
+    z-index: 55;
+}
+
+.pipeline-stage:hover .bg-success,
+.progress-bar-span.bg-success.active {
+    height: 3px;
+    background-color: #7ab439 !important;
+}
+/* 进度条 end */
+
+.pipeline-expand-action .expand-action > span {
+    margin-top: 41px;
+    z-index: 70;
+}
+
+.pipeline-expand-action .expand-action .success .normal {
+    background: url(../img/pipeline/success-end-icon.svg) no-repeat;
+}
+.pipeline-expand-action .expand-action .fail .normal {
+    background: url(../img/pipeline/failed-end-icon.svg) no-repeat;
+}
+.pipeline-expand-action .expand-action .waiting .normal {
+    background: url(../img/pipeline/waiting-end-icon.svg) no-repeat;
+}
+.pipeline-expand-action .expand-action .running .normal {
+    background: url(../img/pipeline/running-end-icon.svg) no-repeat;
+}
+
+/*右侧展开标志*/
+.pipeline-expand-action {
+    width: 20px;
+    position: relative;
+    left: calc(100% - 18px);
+    top: -64px;
+}
+.pipeline-expand-action .expand-action {
+    position: relative;
+    float: left;
+    margin-top: 7px;
+    margin-left: 4px;
+    z-index: 101;
+}
+.pipeline-expand-action .expand-action > span {
+    margin-top: 42px;
+    margin-left: -2px;
+    float: right;
+}
+
+.pipeline-stage .stage-cost-time {
+    display: block;
+    font-size: 13px !important;
+    line-height: 1;
+    color: #929292 !important;
+    padding: 4px 0 12px 0;
+}
+.pipeline-stage .stage-cost-time.release-stage-cost-time {
+    padding-bottom: 13px;
+}
+
+.cost-time {
+    display: inline-block;
+    position: relative;
+    top: 2px;
+    height: 12px;
+    width: 12px;
+    background: url(../img/pipeline/stage-cost-time.svg);
+}
+

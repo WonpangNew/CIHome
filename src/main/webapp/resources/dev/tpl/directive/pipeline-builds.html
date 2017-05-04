@@ -1,4 +1,3 @@
-<div class="pipeline-row" ng-repeat="build in builds track by build.pipelineBuildId"
-     ng-show="$index === 0">
+<div class="pipeline-row" ng-repeat="build in builds track by build.pipelineBuildId">
     <pipeline-build current-build="build" app-context="$parent.context" index="$index"></pipeline-build>
 </div>

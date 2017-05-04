@@ -64,6 +64,13 @@ define(['app', 'constants'], function (app, constants) {
                 });
         };
 
+        /**
+         * 重新编译，不产生新的流水线
+         * @param username
+         * @param module
+         * @param compileBuildId
+         * @returns {*}
+         */
         self.doRebuild = function (username, module, compileBuildId) {
             return $http.get(constants.api('compileBuild/v1/rebuild?compileBuildId=' + compileBuildId
                 + '&username=' + username + '&module=' + module))

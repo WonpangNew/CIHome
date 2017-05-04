@@ -25,7 +25,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by niuwanpeng on 17/4/15.
@@ -187,20 +189,23 @@ public class CompileBuildServiceImpl implements ICompileBuildService {
      */
     public String doRebuild(int compileBuildId, String module, String username) {
         CompileBuild compileBuild = compileBuildDao.findById(compileBuildId);
+        Map<String, String> result = new HashMap<>();
+        result.put("RESULT", "NO");
         if (compileBuild != null) {
             JenkinsStartCompileBean jenkinsStartCompileBean
                     = jenkinsService.triggerCompile(compileBuildId, module, username);
             if (jenkinsStartCompileBean.isRequestStatus()) {
                 compileBuild.setBuildStatus(BuildStatus.BUILDING);
                 compileBuild.setJenkinsBuildNumber(jenkinsStartCompileBean.getBuildNumber());
+                compileBuild.setCreateTime(DateUtil.getNowDateFormat());
                 compileBuildDao.update(compileBuild);
                 LOGGER.info("Rebuild Request is successful! Starting building! compileBuildId:{}", compileBuild.getId());
-                return "SUCC";
+                result.put("RESULT", "OK");
             } else {
                 LOGGER.info("Rebuild Request is fail! compileBuildId:{}", compileBuild.getId());
             }
         }
-        return "FAIL";
+        return GSON.toJson(result);
     }
 
 }

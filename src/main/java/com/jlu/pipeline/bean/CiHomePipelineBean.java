@@ -1,6 +1,7 @@
 package com.jlu.pipeline.bean;
 
 import com.jlu.branch.bean.BranchType;
+import com.jlu.compile.bean.BuildStatus;
 import com.jlu.compile.bean.CompileBuildBean;
 import com.jlu.github.model.GitHubCommit;
 import com.jlu.release.bean.ReleaseBean;
@@ -17,6 +18,8 @@ public class CiHomePipelineBean {
 
     private int moduleId;
 
+    private int buildNumber;
+
     private String revision;
 
     private String module;
@@ -30,6 +33,8 @@ public class CiHomePipelineBean {
     private GitHubCommit gitHubCommit;
 
     private ReleaseBean releaseBean;
+
+    private BuildStatus pipelineStatus;
 
     public int getPipelineBuildId() {
         return pipelineBuildId;
@@ -45,6 +50,14 @@ public class CiHomePipelineBean {
 
     public void setModuleId(int moduleId) {
         this.moduleId = moduleId;
+    }
+
+    public int getBuildNumber() {
+        return buildNumber;
+    }
+
+    public void setBuildNumber(int buildNumber) {
+        this.buildNumber = buildNumber;
     }
 
     public String getRevision() {
@@ -101,5 +114,13 @@ public class CiHomePipelineBean {
 
     public void setReleaseBean(ReleaseBean releaseBean) {
         this.releaseBean = releaseBean;
+    }
+
+    public BuildStatus getPipelineStatus() {
+        return pipelineStatus;
+    }
+
+    public void setPipelineStatus(BuildStatus pipelineStatus) {
+        this.pipelineStatus = pipelineStatus;
     }
 }

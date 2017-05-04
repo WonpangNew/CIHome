@@ -1,6 +1,211 @@
 <div class="pipeline-overview">
-    <div class="pipeline-content">
-        <span>pipeline-build</span>
-    </div>
+    <div class="pipeline-content clearfix row">
+        <!-- start commitInfo -->
+        <div class="pipeline-global-info col-md-4">
+            <div class="row" style="font-size: 13px !important;">
+                <div class="global-status col-md-1">
+                    <span ng-class="pipelineStatusClass"
+                          ng-click="stageTabToggle(-1, 'pipeline-commit-info-tpl')">
+                        <span ng-class="expandClass" style="top: 43px;">
+                            <i ng-class="{'fa fa-refresh fa-spin': pipelineStatusClass === 'running'}"></i>
+                        </span>
+                    </span>
+                </div>
 
+                <div class="commit-info col-md-11 padding-left-right-0" ng-click="stageTabToggle(-1, 'pipeline-commit-info-tpl', $event)">
+                    <div class="row">
+                        <div class="build-number-and-revision col-md-4">
+                            <div class="build-number-wrap" ng-class="{success: currentBuild.compileBuildBean.buildStatus === 'SUCCESS',
+                                         fail: currentBuild.compileBuildBean.buildStatus === 'FAIL',
+                                         running: currentBuild.compileBuildBean.buildStatus === 'BUILDING'}">
+                                <span class="build-number">#{{::(currentBuild.buildNumber || '')}}</span>
+                            </div>
+                            <div class="revision font-normal-color">
+                                <i class="fa fa-paperclip" aria-hidden="true"></i>
+                                <span>
+                                    <span>{{::currentBuild.revision | limitTo:7}}</span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="author-and-start-time col-md-8">
+                            <div class="row">
+                                <div class="trigger-user">
+                                     <span class="commit-user-icon"></span>
+                                    &nbsp;{{::currentBuild.gitHubCommit.committer}}
+                                </div>
+                                <div class="commit-start-time">
+                                    <span class="start-time"></span>
+                                    &nbsp;{{currentBuild.gitHubCommit.commitTime}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pipeline-process-bar bg-success" style="margin-top: 9px;" ng-class="{active:currentStageExpandPointers[-1]}">
+                        <span class="expand-pointer success-stage-expand"
+                              ng-show="currentStageExpandPointers[-1]">
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end commitInfo -->
+
+
+        <div class="pipeline-stages col-md-8">
+            <div class="row">
+                <!-- start compileInfo -->
+                <div class="pipeline-stage col-md-6 padding-left-right-0"
+                     ng-class="stageWidthClass"
+                     ng-click="stageTabToggle(-2, 'pipeline-compile-info-tpl'); $event.stopPropagation();">
+                    <div class="font-normal-color">
+                        <span ng-class="{running:compileBriefInfo.buildStatus==='RUNNING',fail:compileBriefInfo.buildStatus==='FAIL'}">
+                            编译
+                        </span>
+                    </div>
+                    <div class="stage-cost-time font-normal-color">
+                        <span class="cost-time"></span>
+                        <span>&nbsp;<span ng-bind="compileBriefInfo.startTime != null ? compileBriefInfo.startTime : '--'"></span></span>
+                    </div>
+                    <div class="pipeline-process-bar">
+                        <span class="action-span"
+                              ng-class="{'auto-trigger-waiting': compileBriefInfo.buildStatus === 'WAITING',
+                                  'auto-trigger-success': compileBriefInfo.buildStatus === 'SUCCESS',
+                                  'auto-trigger-fail': compileBriefInfo.buildStatus === 'FAIL' ,
+                                   'auto-trigger-running': compileBriefInfo.buildStatus === 'BUILDING'}">
+                        </span>
+                        <span class="expand-pointer" ng-class="{'waiting-stage-expand': compileBriefInfo.buildStatus === 'WAITING',
+                                        'success-stage-expand': compileBriefInfo.buildStatus === 'SUCCESS',
+                                        'fail-stage-expand': compileBriefInfo.buildStatus === 'FAIL',
+                                        'running-stage-expand': compileBriefInfo.buildStatus === 'BUILDING'}"
+                                  ng-show="currentStageExpandPointers[-2]">
+                        </span>
+                        <span class="progress-bar-span" ng-class="{'bg-waiting': compileBriefInfo.buildStatus === 'WAITING',
+                                    'bg-success': compileBriefInfo.buildStatus === 'SUCCESS',
+                                    'bg-fail': compileBriefInfo.buildStatus === 'FAIL',
+                                    'bg-running running-progress-bar': compileBriefInfo.buildStatus === 'BUILDING',
+                                    'active':currentStageExpandPointers[-2]}"
+                                  ng-style="{width: compileBriefInfo.runPercentage + '%'}">
+                            &nbsp;
+                        </span>
+                    </div>
+                </div>
+                <!-- end compileInfo -->
+
+                <!-- start releaseInfo -->
+                <div class="pipeline-stage col-md-6 padding-left-right-0"
+                     ng-click="stageTabToggle(-3, 'pipeline-release-info-tpl');$event.stopPropagation();"
+                     ng-class="stageWidthClass">
+                    <div class="stage-name font-normal-color">
+                        <span ng-class="{running:'WAITING' === releaseBriefInfo.releaseStatus,
+                            fail:'FAILED' === releaseBriefInfo.releaseStatus}">
+                            发布
+                        </span>
+                    </div>
+                    <div class="stage-cost-time release-stage-cost-time">
+                        <span ng-bind="'SUCCESS' === releaseBriefInfo.releaseStatus && releaseBriefInfo.releasedVersion || '--'">&nbsp;-</span>
+                    </div>
+                    <div class="pipeline-process-bar">
+                        <span class="action-span"
+                              app-build-release="" app-pipeline-build="currentBuild"
+                              app-can-release="{{tool.isCanRelease()}}"
+                              ng-disabled="!tool.isCanRelease()"
+                              ng-class="{
+                                  'manually-trigger-waiting': 'WAIT' === releaseBriefInfo.releaseStatus,
+                                  'manually-trigger-success': 'SUCCESS' === releaseBriefInfo.releaseStatus,
+                                  'manually-trigger-fail': 'FAIL' === releaseBriefInfo.releaseStatus,
+                                  'manually-trigger-running': 'RUNNING' === releaseBriefInfo.releaseStatus}">
+                        </span>
+                        <span class="expand-pointer"
+                              ng-class="{'waiting-stage-expand': 'WAIT' === releaseBriefInfo.releaseStatus || !releaseBriefInfo.releaseStatus,
+                              'fail-stage-expand': 'FAIL' === releaseBriefInfo.releaseStatus,
+                              'success-stage-expand': 'SUCCESS' === releaseBriefInfo.releaseStatus,
+                              'running-stage-expand': 'RUNNING' === releaseBriefInfo.releaseStatus}"
+                              ng-show="currentStageExpandPointers[-3]">
+                        </span>
+                        <span class="progress-bar-span" ng-class="{'bg-waiting': 'WAIT' === releaseBriefInfo.releaseStatus || !releaseBriefInfo.releaseStatus,
+                               'bg-success': 'SUCCESS' === releaseBriefInfo.releaseStatus,
+                               'bg-fail': 'FAIL' === releaseBriefInfo.releaseStatus,
+                               'bg-running running-progress-bar': 'RUNNING' === releaseBriefInfo.releaseStatus,
+                               'active':currentStageExpandPointers[-3]}"
+                              style="width: 100%">
+                        </span>
+                    </div>
+                </div>
+                <!-- end releaseInfo -->
+            </div>
+
+        </div>
+
+
+        <!--模板区域-->
+        <!--Start 代码提交信息模板-->
+        <script type="text/ng-template" id="pipeline-commit-info-tpl">
+
+            <div class="expand-container">
+                <span class="expand-contents">
+                    <ul class="list-unstyled commit-info-ul">
+                        <li>
+                            <span class="label-message">Commits: </span>
+                            <span>{{::currentBuild.gitHubCommit.commits}}</span>
+                        </li>
+                        <li>
+                            <span class="label-message">GitHub Commit: </span>
+                            <span >
+                                <a ng-href="{{::currentBuild.gitHubCommit.commitUrl}}"
+                                   target="_blank">{{::currentBuild.gitHubCommit.commitUrl}}</a>
+                            </span>
+                        </li>
+                    </ul>
+                </span>
+                <div class="operation">
+                    <button type="button" class="btn btn-primary"
+                            ng-if="currentBuild.branchType === 'TRUNK'"
+                            app-show-autobranches="currentBuild.pipelineBuildId">
+                        <i class="fa fa-eye icon"></i>&nbsp;查看分支
+                    </button>
+                    <div class="pull-right">
+                        <span><label>代码提交人:</label> {{::currentBuild.gitHubCommit.committer}}</span>
+                        <span><label>提交时间:</label> {{::currentBuild.gitHubCommit.commitTime}}</span>
+                    </div>
+                </div>
+            </div>
+        </script>
+        <!--End 代码提交信息模板-->
+
+        <!--Start compile stage模板-->
+        <script type="text/ng-template" id="pipeline-compile-info-tpl">
+            <div class="expand-container">
+                <div class="expand-contents">
+                    <app-overview-compile app-pipeline-build="currentBuild"></app-overview-compile>
+                </div>
+                <div class="operation">
+                    <button type="button" class="btn btn-primary"
+                            app-re-compile compile-build-brief="compileBriefInfo" app-context="context">
+                        <i class="fa fa-caret-right icon"></i>&nbsp;重新构建
+                    </button>
+                    <div class="pull-right">
+                        <span><label>触发人:</label> {{::compileBriefInfo.triggerUser}}</span>
+                        <span><label>开始时间:</label> {{::compileBriefInfo.startTime}}</span>
+                        <span><label>结束时间:</label> {{::compileBriefInfo.endTime}}</span>
+                    </div>
+                </div>
+            </div>
+        </script>
+
+        <!--End compile stage模板-->
+
+        <!--Start 发布stage模板-->
+        <script type="text/ng-template" id="pipeline-release-info-tpl">
+            <div class="expand-container">
+                <div class="expand-contents">
+                    <app-overriew-release app-pipeline-build="currentBuild" app-can-release="{{tool.isCanRelease()}}">
+                    </app-overriew-release>
+                </div>
+            </div>
+        </script>
+
+        <!--End 发布stage模板-->
+    </div>
+    <div class="expand-area clearfix col-md-1" style="margin-bottom: 25px;"></div>
 </div>

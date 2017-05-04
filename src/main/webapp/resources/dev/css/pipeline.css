@@ -216,6 +216,10 @@
     width: 100%;
 }
 
+.pipeline-overview .pipeline-content > a {
+    color: #929292 !important;
+}
+
 .pipeline-overview .pipeline-content {
     height: 60px;
     margin-top: 25px;
@@ -255,3 +259,136 @@
 .pipeline-overview .expand-area input[type="button"]:hover {
     background-color: #3b71df !important;
 }
+
+.expand-area .expand-container .expand-contents table,
+.expand-area .expand-container .expand-contents > div .table,
+.expand-area .expand-container .operation,
+.expand-area .expand-container .expand-contents {
+    font-size: 12px !important;
+}
+.expand-area .expand-container {
+    padding: 20px 70px;
+}
+.expand-area .expand-container .operation {
+    height: 25px;
+    padding-left: 10px;
+}
+
+.expand-area .expand-container .operation .pull-right {
+    margin-right: 70px;
+}
+.expand-area .expand-container .operation .pull-right > span {
+    padding-right: 30px;
+}
+
+.expand-area .expand-container .operation .pull-right > span > label {
+    display: inline-block;
+    color: #929292;
+    font-weight: 100;
+    margin-right: 5px;
+}
+.expand-area .expand-container .expand-contents input[type="button"],
+.expand-area .expand-container .operation > button {
+    height: 24px;
+    padding-top: 3px;
+    font-size: 13px;
+}
+
+.expand-contents  .list-unstyled > li {
+    padding-bottom: 5px;
+}
+.expand-contents  .list-unstyled > li {
+    line-height: 24px;
+    min-height: 24px;
+    border-bottom: 1px dotted #DCDDDE;
+    padding-left: 10px;
+    position: relative;
+}
+
+.expand-contents .commit-info-ul .code-url {
+    margin-right: 5px;
+    padding: 2px;
+    background-color: #EBF0FB;
+}
+
+.expand-contents .commit-info-ul .commit-changes-file-link > a {
+    padding: 2px 20px 5px 20px;
+    border: 1px solid transparent;
+    border-bottom: none;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+.expand-contents .commit-info-ul .commit-changes-file-link > .without-links {
+    padding-left: 0;
+}
+.expand-contents .commit-info-ul .commit-changes-file-link.expand {
+    position: relative;
+    top: 1px;
+}
+.expand-contents .commit-info-ul .commit-changes-file-link.expand .without-links {
+    padding-left: 20px;
+}
+
+.expand-contents .commit-info-ul .commit-changes-file-link.expand > a {
+    border-color: #DDD !important;
+    background-color: #FFF;
+}
+.expand-contents .commit-info-ul .changes-file-expand-container {
+    border: 1px solid #DDD;
+    background-color: #FFF;
+    border-radius: 3px;
+}
+.expand-contents .commit-info-ul .changes-file-expand-container > ul > li > span {
+    padding-right: 20px;
+    margin-left: -20px;
+}
+.expand-contents .commit-info-ul .changes-file-expand-container > .table > tbody > tr:first-child > td {
+    border-top: none;
+}
+.expand-contents .commit-info-ul .changes-file-expand-container > .table {
+    margin-bottom: 0;
+}
+
+
+.expand-contents  .table-list-unstyled {
+    font-size: 12px;
+    margin-bottom: 10px;
+    width: 100%;
+}
+.expand-contents  .table-list-unstyled tr {
+    border-bottom: 1px dotted #DCDDDE;
+}
+.expand-contents  .table-list-unstyled tr td:first-child {
+    padding-left: 10px;
+}
+.expand-contents  .table-list-unstyled tr td {
+    padding-bottom: 3px;
+    white-space: nowrap;
+}
+.expand-contents  .table-list-unstyled .running {
+    font-size: 16px;
+}
+
+.expand-contents  .table-list-unstyled .col-pl-20 {
+    padding-left: 20px;
+}
+
+.expand-contents  .table-list-unstyled .col-pl-60 {
+    padding-left: 60px;
+}
+.expand-contents  .table-list-unstyled tr {
+    line-height: 24px;
+}
+
+.expand-contents  .table-list-unstyled .col-pl-80 {
+    padding-left: 80px;
+}
+.expand-contents  .table-list-unstyled tr td:last-child {
+    width: 100%;
+}
+
+.expand-contents  .table-list-unstyled .cost-time-val {
+    color: #929292 !important;
+}
+
+
