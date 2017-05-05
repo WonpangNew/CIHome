@@ -33,4 +33,12 @@ public interface IGithubDataService {
      * @return
      */
     Map<String, Object> creatHooks(String username, String repo, String githubPassword);
+
+    /**
+     * 增加新的模块
+     * @param username
+     * @param module
+     * @return
+     */
+    String addModule(String username, String module);
 }

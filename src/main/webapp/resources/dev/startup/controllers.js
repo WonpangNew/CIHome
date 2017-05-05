@@ -14,6 +14,7 @@ define(
         'js/pipeline/controllers/builds-controller',
         'js/permission/controllers/permission-controller',
         'js/permission/controllers/register-controller',
-        'js/pipeline/controllers/release-history-controller'
+        'js/pipeline/controllers/release-history-controller',
+        'js/pipeline/controllers/config-controller'
     ], function () {
     });

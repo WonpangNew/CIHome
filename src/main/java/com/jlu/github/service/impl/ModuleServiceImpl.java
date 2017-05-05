@@ -29,6 +29,14 @@ public class ModuleServiceImpl implements IModuleService{
     }
 
     /**
+     * 删除模块
+     * @param ciHomeModule
+     */
+    public void delete(CiHomeModule ciHomeModule) {
+        moduleDao.delete(ciHomeModule);
+    }
+
+    /**
      * 批量保存模块信息
      * @param list
      */

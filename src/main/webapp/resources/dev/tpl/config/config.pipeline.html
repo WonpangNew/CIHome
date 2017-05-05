@@ -1,0 +1,77 @@
+<div class="container-fluid">
+    <!-- 顶部提示信息以及展示模块和配置按钮行-->
+    <div class="page-header" style="margin-top: 0px;margin-bottom: 0px;">
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-4">
+                <span class="current-module">
+                    <i class="fa fa-home"></i>
+                    <a ui-sref="builds.trunk({module: configCtrl.currentModule})">
+                        <span>
+                            {{::configCtrl.username}}&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;
+                        </span>
+                    </a>
+                    <a>
+                        配置
+                    </a>
+                </span>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4">
+            </div>
+        </div>
+    </div>
+
+
+    <div class="release-his">
+        <div class="panel panel-default" style="margin: 50px auto auto auto;width: 50%;">
+            <div class="panel-heading element-center">
+                <h3 class="font-light">配置新模块</h3>
+            </div>
+            <div class="panel-body" ng-show="!configCtrl.showLoading">
+                <ul>
+                    <li class="text-center" style="margin-bottom: 35px;">使用CiHome管理仓库，享受持续交付带来的便捷。</li>
+                    <li>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon3">git@github.com:{{::configCtrl.username}}/</span>
+                            <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3"
+                                   placeholder="for example: CiHome.git"
+                                   ng-model="configCtrl.configModule">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="switch switch-mini">
+                            <input type="checkbox" ng-true-value="true" ng-false-value="false" ng-model="configCtrl.isSyncGithub" checked/>
+                            同意CiHome从GitHub获得该仓库的基本信息
+                       </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="panel-body" ng-show="configCtrl.showLoading"><br>
+                <div style="text-align: center;">
+                    <span>正在为您创建新的模块并同步GitHub数据，这需要一点时间，请稍等</span>
+                </div><br><br><br>
+                <div class="agile-loading-circle">
+                    <div class="ag-ld-circle1 ag-ld-circle"></div>
+                    <div class="ag-ld-circle2 ag-ld-circle"></div>
+                    <div class="ag-ld-circle3 ag-ld-circle"></div>
+                    <div class="ag-ld-circle4 ag-ld-circle"></div>
+                    <div class="ag-ld-circle5 ag-ld-circle"></div>
+                    <div class="ag-ld-circle6 ag-ld-circle"></div>
+                    <div class="ag-ld-circle7 ag-ld-circle"></div>
+                    <div class="ag-ld-circle8 ag-ld-circle"></div>
+                    <div class="ag-ld-circle9 ag-ld-circle"></div>
+                    <div class="ag-ld-circle10 ag-ld-circle"></div>
+                    <div class="ag-ld-circle11 ag-ld-circle"></div>
+                    <div class="ag-ld-circle12 ag-ld-circle"></div>
+                </div><br><br><br>
+            </div>
+            <div class="panel-footer" style="margin-top: 35px;">
+                <div class="text-right">
+                    <div class="btn-group btn-group-sm" role="group" aria-label="...">
+                        <button type="button" class="btn btn-default" ng-click="configCtrl.cancel()">取消</button>
+                        <button type="button" class="btn btn-default" ng-disabled="!configCtrl.canGoOn" ng-click="configCtrl.addModule()">继续</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

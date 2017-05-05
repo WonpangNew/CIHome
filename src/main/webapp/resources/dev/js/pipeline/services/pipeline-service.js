@@ -117,6 +117,19 @@ define(['app', 'constants'], function (app, constants) {
                 .then(function (data) {
                     return data.data;
                 });
+        };
+
+        /**
+         * 增加新的模块
+         * @param username
+         * @param module
+         * @returns {*}
+         */
+        self.addModule = function (username, module) {
+            return $http.get(constants.api('github/addModule?username=' + username + '&module=' + module))
+                .then(function (data) {
+                    return data.data;
+                });
         }
     }
 });

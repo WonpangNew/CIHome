@@ -65,6 +65,12 @@ define(
                     templateUrl: constants.resource('pipeline/release.history.html'),
                     controller: 'ReleaseHistoryController',
                     controllerAs: 'releaseHisCtrl'
+                })
+                .state('config', {
+                    url: '/config/{module:path}',
+                    templateUrl: constants.resource('config/config.pipeline.html'),
+                    controller: 'ConfigController',
+                    controllerAs: 'configCtrl'
                 });
 
         }

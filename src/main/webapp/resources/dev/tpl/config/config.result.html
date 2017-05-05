@@ -1,0 +1,22 @@
+<ng-form name="form">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancelWindow()">
+            <span>&times;</span>
+        </button>
+        <h4 class="modal-title">配置结果</h4>
+    </div>
+    <div class="modal-body release">
+        {{::result.MESSAGE}}
+    </div>
+    <div class="modal-footer release" style="top: 0px;">
+        <button type="button"
+                ng-show="result.ADD_MODULE_STATUS === 'OK'"
+                class="btn btn-primary button-release"
+                ng-click="goNewModule(result.MODULE)">查看
+        </button>
+        <button type="button"
+                class="btn btn-primary button-release"
+                ng-click="cancelWindow()">关闭
+        </button>
+    </div>
+</ng-form>

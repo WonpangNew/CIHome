@@ -16,6 +16,12 @@ public interface IModuleService {
     void saveModule(CiHomeModule ciHomeModule);
 
     /**
+     * 删除模块
+     * @param ciHomeModule
+     */
+    void delete(CiHomeModule ciHomeModule);
+
+    /**
      * 批量保存模块信息
      * @param list
      */

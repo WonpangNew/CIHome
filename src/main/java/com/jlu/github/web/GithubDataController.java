@@ -36,13 +36,13 @@ public class GithubDataController {
     /**
      * 根据用户名获得GitHub代码仓库信息并保存
      * 注册时调用
-     * @param userame
+     * @param username
      * @return
      */
     @RequestMapping("/syncReposByUser")
     @ResponseBody
-    public boolean syncReposByUser(@RequestParam(value = "username") String userame) {
-        return githubDataService.syncReposByUser(userame);
+    public boolean syncReposByUser(@RequestParam(value = "username") String username) {
+        return githubDataService.syncReposByUser(username);
     }
 
     /**
@@ -85,5 +85,18 @@ public class GithubDataController {
     @ResponseBody
     public Map<String, Object> initUser(@RequestBody UserBean userBean) {
        return githubDataService.initUser(userBean);
+    }
+
+    /**
+     * 配置新的模块
+     * @param module
+     * @param username
+     * @return
+     */
+    @RequestMapping(value = "/addModule", method = RequestMethod.GET)
+    @ResponseBody
+    public String addModule(@RequestParam(value = "module") String module,
+                            @RequestParam(value = "username") String username) {
+        return githubDataService.addModule(username, module);
     }
 }

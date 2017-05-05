@@ -17,6 +17,7 @@ import com.jlu.github.service.IModuleService;
 import com.jlu.user.bean.UserBean;
 import com.jlu.user.model.CiHomeUser;
 import com.jlu.user.service.IUserService;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,7 @@ public class GithubDataServiceImpl implements IGithubDataService {
     private static final Gson GSON = new Gson();
     private final static String REGISTER_STATUS = "REGISTER_STATUS";
     private final static String MESSAGE = "MESSAGE";
+    private final static String ADD_MODULE_STATUS = "ADD_MODULE_STATUS";
 
     /**
      * 根据用户注册信息初始化用户
@@ -91,12 +93,7 @@ public class GithubDataServiceImpl implements IGithubDataService {
         List<GithubRepoBean> repoList = GSON.fromJson(result, new TypeToken<List<GithubRepoBean>>(){}.getType());
         List<CiHomeModule> ciHomeModules = this.saveCiHomeModuleByBean(repoList, username);
         for (CiHomeModule ciHomeModule : ciHomeModules) {
-            String requestBranchUrl
-                    = String.format(CiHomeReadConfig.getConfigValueByKey("github.repo.branches"),
-                    username, ciHomeModule.getModule());
-            result = HttpClientUtil.get(requestBranchUrl, null);
-            List<GithubBranchBean> branchBeans = GSON.fromJson(result, new TypeToken<List<GithubBranchBean>>(){}.getType());
-            this.saveCiHomeBranchByBean(branchBeans, ciHomeModule);
+            this.initBranch(ciHomeModule, username);
         }
         return true;
     }
@@ -118,6 +115,47 @@ public class GithubDataServiceImpl implements IGithubDataService {
     }
 
     /**
+     * 增加新的模块
+     * @param username
+     * @param module
+     * @return
+     */
+    @Override
+    public String addModule(String username, String module) {
+        module = StringUtils.substringBeforeLast(module, ".git");
+        Map<String, String> result = new HashMap<>();
+        result.put(ADD_MODULE_STATUS, "NO");
+        CiHomeUser ciHomeUser = userService.getUserByName(username);
+        if (ciHomeUser == null) {
+            result.put(MESSAGE, "该用户不存在！请联系管理员！");
+        } else {
+            CiHomeModule module1 = moduleService.getModuleByUserAndModule(username, module);
+            if (module1 != null) {
+                result.put(MESSAGE, "该模块已存在，不需要再次配置！");
+            } else {
+                LOGGER.info("Start init module:{} on user:{}", module, username);
+                CiHomeModule ciHomeModule = new CiHomeModule(module, username, DateUtil.getNowDateFormat());
+                ciHomeModule.setVersion("1.0.0");
+                moduleService.saveModule(ciHomeModule);
+                try {
+                    LOGGER.info("Start init branch on module:{}, user:{}", module, username);
+                    this.initBranch(ciHomeModule, username);
+                    LOGGER.info("Start create hook on module:{}, user:{}", module, username);
+                    this.creatHooks(username, module, ciHomeUser.getGitHubToken());
+                    LOGGER.info("Add module is successful! module:{}, user:{}", module, username);
+                    result.put(ADD_MODULE_STATUS, "OK");
+                    result.put(MESSAGE, "仓库" + module +"配置成功!");
+                    result.put("MODULE", module);
+                } catch (Exception e) {
+                    moduleService.delete(ciHomeModule);
+                    result.put(MESSAGE, "该仓库不存在!请检查是否配置正确。");
+                }
+            }
+        }
+        return GSON.toJson(result);
+    }
+
+    /**
      *  保存模块数据
      * @param repoList
      * @param username
@@ -131,6 +169,20 @@ public class GithubDataServiceImpl implements IGithubDataService {
         }
         moduleService.saveModules(ciHomeModules);
         return moduleService.getModulesByUsername(username);
+    }
+
+    /**
+     * 初始化分支
+     * @param ciHomeModule
+     * @param username
+     */
+    private void initBranch(CiHomeModule ciHomeModule, String username) {
+        String requestBranchUrl
+                = String.format(CiHomeReadConfig.getConfigValueByKey("github.repo.branches"),
+                username, ciHomeModule.getModule());
+        String result = HttpClientUtil.get(requestBranchUrl, null);
+        List<GithubBranchBean> branchBeans = GSON.fromJson(result, new TypeToken<List<GithubBranchBean>>(){}.getType());
+        this.saveCiHomeBranchByBean(branchBeans, ciHomeModule);
     }
 
     /**
