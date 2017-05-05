@@ -214,6 +214,8 @@ public class CiHomePipelineServiceImpl implements ICiHomePipelineService {
                     releaseBean.setVersion("--");
                 } else {
                     releaseBean.setVersion(ciHomeRelease.getVersion());
+                    releaseBean.setTriggerUser(ciHomeRelease.getReleaseUser());
+                    releaseBean.setStartTime(ciHomeRelease.getReleaseTime());
                 }
             }
             releaseBeanMap.put(pipelineBuild.getId(), releaseBean);

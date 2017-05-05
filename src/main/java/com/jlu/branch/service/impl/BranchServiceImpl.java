@@ -51,7 +51,7 @@ public class BranchServiceImpl implements IBranchService {
         conditionAndSet.put("moduleId", ciHomeModule.getId());
         List<OrderCondition> orders = new ArrayList<OrderCondition>();
         orders.add(new DescOrder("id"));
-        List<CiHomeBranch> branches = branchDao.findByProperties(conditionAndSet, orders);
+        List<CiHomeBranch> branches = branchDao.findHeadByProperties(conditionAndSet, orders, 0, 1);
         if (branches != null && branches.size() != 0) {
             String threeVersion = branches.get(0).getVersion();
             String[] numbers = threeVersion.split("\\.");
@@ -59,6 +59,21 @@ public class BranchServiceImpl implements IBranchService {
         } else {
             return "2.0.0";
         }
+    }
+
+    /**
+     * 获得分支信息
+     * @param moduleId
+     * @param branchName
+     * @return
+     */
+    @Override
+    public CiHomeBranch getBranchByModule(int moduleId, String branchName) {
+        ConditionAndSet conditionAndSet = new ConditionAndSet();
+        conditionAndSet.put("moduleId", moduleId);
+        conditionAndSet.put("branchName", branchName);
+        List<CiHomeBranch> ciHomeBranches = branchDao.findByProperties(conditionAndSet);
+        return ciHomeBranches != null && ciHomeBranches.size() != 0 ? ciHomeBranches.get(0) : null;
     }
 
 }

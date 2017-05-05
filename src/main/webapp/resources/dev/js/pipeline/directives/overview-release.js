@@ -3,31 +3,27 @@
  */
 
 /**
- * @file 发布指令
+ * @file 发布expend指令
  */
 define(['app', 'constants'], function (app, constants) {
     app.directive(
-        'appOverriewRelease',
+        'appOverviewRelease',
         [
             'pipelineDataService',
             function (pipelineDataService) {
                 return {
                     restrict: 'E',
                     scope: {
-                        pipelineBuild: '=appPipelineBuild',
-                        isCanRelease: '@appCanRelease',
-                        isAggregationRelease: '@'
+                        currentBuild: '=appPipelineBuild',
+                        isCanRelease: '@appCanRelease'
                     },
                     templateUrl: constants.resource('directive/overview-release.html'),
                     replace: true,
                     link: function (scope, el, attr) {
-
-                        scope.isDirectoryModule = false;
-
-                        scope.releaseInfo = {};
-
-                        scope.releaseDetailInfo = {};
-
+                        pipelineDataService.getReleaseDetail(scope.currentBuild.pipelineBuildId)
+                            .then(function (data) {
+                                scope.releaseDetail = data;
+                            });
                     }
                 }
             }

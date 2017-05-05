@@ -1,0 +1,75 @@
+<div class="container-fluid">
+
+    <!-- 顶部提示信息以及展示模块和配置按钮行-->
+    <div class="page-header" style="margin-top: 0px;margin-bottom: 0px;">
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-4">
+                <span class="current-module">
+                    <i class="fa fa-home"></i>
+                    <a ui-sref="builds.trunk({module: releaseHisCtrl.currentModule})">
+                        <span>
+                            {{::releaseHisCtrl.currentModule}}&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;
+                        </span>
+                    </a>
+                    <a>
+                        发布记录
+                    </a>
+                </span>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4">
+            </div>
+        </div>
+    </div>
+
+
+    <div class="release-his">
+        <table class="table table-striped table-hover release-table">
+            <thead>
+            <tr>
+                <th>版本</th>
+                <th>分支</th>
+                <th>操作人</th>
+                <th>操作时间</th>
+                <th>发布产出</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="release in releaseHisCtrl.releaseHistorys track by $index">
+                <td>{{::release.version}}
+                </td>
+                <td >{{::release.branchName}}</td>
+                <td>{{::release.releaseUser}}</td>
+                <td>{{::release.releaseTime}}</td>
+                <td>
+                    <span>
+                        <a ng-href=="{{::release.productPath}}">产出下载</a>
+                    </span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="load-more-row agile-w-1" ng-show="releaseHisCtrl.initReleasesDone">
+        <div class="load-more-loader"><span class="agile-liner-loader"
+                                            ng-show="releaseHisCtrl.showLoadMoreBuildsLoader"></span></div>
+        <div class="load-more-button">
+            <button type="button" class="btn btn-default"
+                    ng-show="!releaseHisCtrl.showLoadMoreBuildsLoader && releaseHisCtrl.releaseInfos.length >= 15"
+                    ng-click="releaseHisCtrl.loadMoreReleaseHistory()"><i
+                    class="fa fa-bars icon"></i>&nbsp;加载更多
+            </button>
+        </div>
+    </div>
+
+    <div class="load-more-row" ng-show="releaseHisCtrl.initReleasesDone">
+        <div class="load-more-button">
+            <button type="button" class="btn btn-default"
+                    ng-show="!releaseHisCtrl.showLoadMoreBuildsLoader && releaseHisCtrl.releaseInfos.length >= 15"
+                    ng-click="releaseHisCtrl.loadMoreReleaseHistory()">
+                <i class="fa fa-bars icon" ng-if="!trunkCtrl.noMoreBuildsToLoad"></i>&nbsp;
+                <span ng-if="releaseHisCtrl.noMoreBuildsToLoad">没有记录了</span>
+                <span ng-if="!releaseHisCtrl.noMoreBuildsToLoad">加载更多</span>
+            </button>
+        </div>
+    </div>
+</div>

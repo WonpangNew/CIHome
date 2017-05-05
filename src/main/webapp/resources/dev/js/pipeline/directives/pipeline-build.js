@@ -26,13 +26,6 @@ define(['app', 'constants', 'angular'], function (app, constants, angular) {
                         scope.compileBriefInfo = scope.currentBuild.compileBuildBean;
                         scope.releaseBriefInfo = scope.currentBuild.releaseBean;
 
-                        scope.getReleaseDetail = function () {
-                            pipelineDataService.getReleaseDetail(scope.currentBuild.pipelineBuildId)
-                                .then(function (data) {
-                                    scope.releaseDetail = data;
-                                });
-                        };
-
                         scope.tool = {
                             isSuccBuildStatus: function (status) {
                                 return 'SUCCESS' === status;

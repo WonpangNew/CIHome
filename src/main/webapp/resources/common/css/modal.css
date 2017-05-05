@@ -1,0 +1,163 @@
+/*
+ * Copyright (C) 2015 Baidu, Inc. All Rights Reserved.
+ */
+
+.modal-header {
+    padding: 10px 15px;
+    background-color: #E9E9E9;
+    font-size: 16px;
+    border-radius: 3px;
+    border-bottom: none;
+}
+.modal-header .modal-title {
+    font-size: 16px !important;
+}
+.modal-backdrop {
+    -webkit-backface-visibility: hidden;
+}
+.modal-backdrop.zoom{
+    opacity: 0;
+    transition: opacity .4s ease;
+}
+.modal-backdrop.in {
+    opacity: .6;
+}
+
+.modal-content {
+    border-radius: 4px !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none!important;
+}
+
+
+
+
+
+.modal.zoom .modal-dialog {
+    opacity: 0;
+    -webkit-transition: all .5s, ease-in-out;
+    -o-transition: all .5s, ease-in-out;
+    transition: all .5s, ease-in-out;
+    transform: scale(0.6);
+}
+.modal.in .modal-dialog {
+    opacity: 1;
+    -webkit-transition: all .4s, ease-in-out;
+    -o-transition: all .4s, ease-in-out;
+    transition: all .4s, ease-in-out;
+    transform: scale(1);
+}
+
+.modal.in .modal-dialog {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+}
+
+.modal.in .modal-dialog {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.modal.in .modal-dialog {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.modal.in .modal-dialog {
+    opacity: 1;
+    transform: rotateY(0deg);
+}
+
+.modal.in .modal-dialog {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.modal-footer {
+    padding: 15px;
+    text-align: center;
+    border-top: none;
+}
+
+.modal-footer .ok-button {
+    width: 80px;
+    height: 30px !important;
+}
+.modal-footer .cancel-button {
+    width: 80px;
+    height: 30px !important;
+    color: #3b71df !important;
+    background-color: #FFF !important;;
+    border: 1px solid #3b71df !important;;
+}
+.modal-footer .close-button {
+    width: 80px;
+    height: 30px;
+}
+.modal-footer .cancel-button:hover {
+    background-color: #fff !important;;
+}
+
+.modal-footer.release {
+    position: relative;
+    bottom: 50px;
+}
+
+.modal-body.release .dashed {
+    border-top-style: dashed;
+}
+
+.modal-body.release .form-group {
+    margin: 20px 0;
+}
+
+.modal-body.release .control-label {
+    color: #7d7d7d;
+    font-size: 14px;
+    margin: 6px 0;
+    padding: 0;
+}
+
+.modal-body.release .form-control {
+    display: inline-block;
+    width: 350px;
+    height: 32px;
+}
+
+.modal-body.release table {
+    font-size: 12px;
+}
+
+.modal-body.release .release-card-table {
+    margin-top: -20px;
+    margin-left: -90px;
+    border: 1px #dcddde solid;
+}
+
+.modal-body.release .more-cards,
+.modal-body.release .no-more-cards {
+    text-align: center;
+}
+
+.modal-body.release .more-cards {
+    cursor: pointer;
+}
+
+.modal-body.release .fa-question-circle {
+    font-size: 20px;
+    color: #66f;
+}
+
+
+.modal-body.release .more-cards .fa {
+    width: 30px;
+    height: 20px;
+    font-size: 20px;
+}
+
+.button-release {
+    height: 24px !important;
+    padding-top: 3px !important;
+    font-size: 13px !important;
+    background-color: #638EE6 !important;
+}

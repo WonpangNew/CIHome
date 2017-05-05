@@ -42,7 +42,7 @@ public class GitHubCommitServiceImpl implements IGitHubCommitService {
         conditionAndSet.put("pipelineBuildId", pipelineBuildId);
         List<OrderCondition> orders = new ArrayList<OrderCondition>();
         orders.add(new DescOrder("id"));
-        List<GitHubCommit> gitHubCommits = gitHubCommitDao.findByProperties(conditionAndSet, orders);
+        List<GitHubCommit> gitHubCommits = gitHubCommitDao.findHeadByProperties(conditionAndSet, orders, 0, 1);
         return  (null == gitHubCommits || gitHubCommits.size() == 0) ? null : gitHubCommits.get(0);
     }
 }

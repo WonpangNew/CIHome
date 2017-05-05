@@ -59,6 +59,12 @@ define(
                     templateUrl: constants.resource('pipeline/builds.branch.html'),
                     controller: 'BranchController',
                     controllerAs: 'branchCtrl'
+                })
+                .state('release', {
+                    url: '/release/{module:path}',
+                    templateUrl: constants.resource('pipeline/release.history.html'),
+                    controller: 'ReleaseHistoryController',
+                    controllerAs: 'releaseHisCtrl'
                 });
 
         }

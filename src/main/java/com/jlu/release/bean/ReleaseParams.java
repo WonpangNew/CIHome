@@ -1,6 +1,7 @@
 package com.jlu.release.bean;
 
 import com.jlu.branch.bean.BranchType;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**
  * Created by niuwanpeng on 17/4/26.
@@ -8,6 +9,7 @@ import com.jlu.branch.bean.BranchType;
  * 前端执行发布操作返回给后端的参数
  * 发布参数
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ReleaseParams {
 
     private int pipelineBuildId;
@@ -25,6 +27,8 @@ public class ReleaseParams {
     private String version;
 
     private String releaseUser;
+
+    private String remarks;
 
     public int getPipelineBuildId() {
         return pipelineBuildId;
@@ -88,6 +92,14 @@ public class ReleaseParams {
 
     public void setReleaseUser(String releaseUser) {
         this.releaseUser = releaseUser;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
     }
 
     @Override

@@ -78,5 +78,45 @@ define(['app', 'constants'], function (app, constants) {
                     return data.data;
                 });
         };
+
+        /**
+         * 发布操作
+         * @param releaseParams
+         * @returns {*}
+         */
+        self.doRelease = function (releaseParams) {
+            return $http.post(constants.api('release/doRelease'), releaseParams)
+                .then(function (data) {
+                    return data.data;
+                });
+        };
+
+        /**
+         * 获取推荐的三位版本
+         * @param moduleId
+         * @param branchName
+         * @returns {*}
+         */
+        self.getThreeVersion = function (moduleId, branchName) {
+            return $http.get(constants.api('release/v1/threeVersion?moduleId=' + moduleId + '&branchName=' + branchName))
+                .then(function (data) {
+                    return data.data;
+                });
+        };
+
+        /**
+         * 获取发布记录
+         * @param username
+         * @param module
+         * @param releaseId
+         * @returns {*}
+         */
+        self.getReleaseHistory = function (username, module, releaseId) {
+            return $http.get(constants.api('release/v1/getReleaseHistory?username=' + username + '&module='
+                + module + '&releaseId=' + releaseId))
+                .then(function (data) {
+                    return data.data;
+                });
+        }
     }
 });

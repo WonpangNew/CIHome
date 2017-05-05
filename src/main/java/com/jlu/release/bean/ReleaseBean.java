@@ -9,6 +9,10 @@ public class ReleaseBean {
 
     private String version;
 
+    private String startTime;
+
+    private String triggerUser;
+
     public ReleaseStatus getReleaseStatus() {
         return releaseStatus;
     }
@@ -23,5 +27,21 @@ public class ReleaseBean {
 
     public void setVersion(String version) {
         this.version = version;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getTriggerUser() {
+        return triggerUser;
+    }
+
+    public void setTriggerUser(String triggerUser) {
+        this.triggerUser = triggerUser;
     }
 }

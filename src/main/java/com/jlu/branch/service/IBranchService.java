@@ -28,4 +28,12 @@ public interface IBranchService {
      * @return
      */
     String getLastThreeVersion(CiHomeModule ciHomeModule);
+
+    /**
+     * 获得分支信息
+     * @param moduleId
+     * @param branchName
+     * @return
+     */
+    CiHomeBranch getBranchByModule(int moduleId, String branchName);
 }

@@ -1,5 +1,6 @@
 package com.jlu.compile.service;
 
+import com.jlu.compile.bean.CompileDetailBean;
 import com.jlu.compile.model.CompileBuild;
 import com.jlu.github.bean.GitHubCommitBean;
 import com.jlu.github.bean.HookRepositoryBean;
@@ -23,6 +24,13 @@ public interface ICompileBuildService {
      * @return
      */
     void dealCompileEnd(JenkinsEndCompileBean jenkinsEndCompileBean);
+
+    /**
+     * 根据pipelineBuildId获得编译信息
+     * @param pipelineBuildId
+     * @return
+     */
+    CompileDetailBean getCompileDetailByPipelineId(int pipelineBuildId);
 
     /**
      * 根据pipelineBuildId获得编译信息

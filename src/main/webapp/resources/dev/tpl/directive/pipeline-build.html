@@ -98,17 +98,19 @@
                      ng-class="stageWidthClass">
                     <div class="stage-name font-normal-color">
                         <span ng-class="{running:'WAITING' === releaseBriefInfo.releaseStatus,
-                            fail:'FAILED' === releaseBriefInfo.releaseStatus}">
+                            fail:'FAIL' === releaseBriefInfo.releaseStatus}">
                             发布
                         </span>
                     </div>
                     <div class="stage-cost-time release-stage-cost-time">
-                        <span ng-bind="'SUCCESS' === releaseBriefInfo.releaseStatus && releaseBriefInfo.releasedVersion || '--'">&nbsp;-</span>
+                        <span ng-show="'SUCCESS' === releaseBriefInfo.releaseStatus">&nbsp;{{::releaseBriefInfo.version}}</span>
+                        <span ng-show="'SUCCESS' !== releaseBriefInfo.releaseStatus">&nbsp;--</span>
                     </div>
-                    <div class="pipeline-process-bar">
+                    <div class="pipeline-process-bar" ng-click="$event.stopPropagation()">
                         <span class="action-span"
-                              app-build-release="" app-pipeline-build="currentBuild"
+                              app-build-release app-pipeline-build="currentBuild"
                               app-can-release="{{tool.isCanRelease()}}"
+                              app-release-context="context"
                               ng-disabled="!tool.isCanRelease()"
                               ng-class="{
                                   'manually-trigger-waiting': 'WAIT' === releaseBriefInfo.releaseStatus,
@@ -159,11 +161,6 @@
                     </ul>
                 </span>
                 <div class="operation">
-                    <button type="button" class="btn btn-primary"
-                            ng-if="currentBuild.branchType === 'TRUNK'"
-                            app-show-autobranches="currentBuild.pipelineBuildId">
-                        <i class="fa fa-eye icon"></i>&nbsp;查看分支
-                    </button>
                     <div class="pull-right">
                         <span><label>代码提交人:</label> {{::currentBuild.gitHubCommit.committer}}</span>
                         <span><label>提交时间:</label> {{::currentBuild.gitHubCommit.commitTime}}</span>
@@ -198,9 +195,18 @@
         <!--Start 发布stage模板-->
         <script type="text/ng-template" id="pipeline-release-info-tpl">
             <div class="expand-container">
-                <div class="expand-contents">
-                    <app-overriew-release app-pipeline-build="currentBuild" app-can-release="{{tool.isCanRelease()}}">
-                    </app-overriew-release>
+                <div ng-show="'WAIT' === releaseBriefInfo.releaseStatus">
+                    <span class="label label-default">等待发布</span>
+                </div>
+                <div class="expand-contents" ng-show="releaseBriefInfo.releaseStatus !== 'WAIT'">
+                    <app-overview-release app-pipeline-build="currentBuild" app-can-release="{{tool.isCanRelease()}}">
+                    </app-overview-release>
+                </div>
+                <div class="operation" ng-show="releaseBriefInfo.releaseStatus === 'SUCCESS' || releaseBriefInfo.releaseStatus === 'FAIL'">
+                    <div class="pull-right">
+                        <span><label>触发人:</label> {{::releaseBriefInfo.triggerUser}}</span>
+                        <span><label>发布时间:</label> {{::releaseBriefInfo.startTime}}</span>
+                    </div>
                 </div>
             </div>
         </script>

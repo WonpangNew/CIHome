@@ -2,21 +2,29 @@ package com.jlu.release.service.impl;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.jlu.branch.model.CiHomeBranch;
+import com.jlu.branch.service.IBranchService;
 import com.jlu.common.db.sqlcondition.ConditionAndSet;
 import com.jlu.common.db.sqlcondition.DescOrder;
 import com.jlu.common.db.sqlcondition.OrderCondition;
 import com.jlu.common.utils.CiHomeReadConfig;
 import com.jlu.common.utils.DateUtil;
+import com.jlu.common.utils.FTPUtils;
 import com.jlu.common.utils.HttpClientUtil;
 import com.jlu.compile.service.ICompileBuildService;
+import com.jlu.github.model.CiHomeModule;
+import com.jlu.github.service.IModuleService;
+import com.jlu.release.bean.ReleaseDetailBean;
 import com.jlu.release.bean.ReleaseParams;
 import com.jlu.release.bean.ReleaseResponseBean;
 import com.jlu.release.bean.ReleaseStatus;
 import com.jlu.release.dao.IReleaseDao;
 import com.jlu.release.model.CiHomeRelease;
 import com.jlu.release.service.IReleaseService;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +43,13 @@ public class ReleaseServiceImpl implements IReleaseService{
     private IReleaseDao releaseDao;
 
     @Autowired
+    private IBranchService branchService;
+
+    @Autowired
     private ICompileBuildService compileBuildService;
+
+    @Autowired
+    private IModuleService moduleService;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ReleaseServiceImpl.class);
 
@@ -65,6 +79,22 @@ public class ReleaseServiceImpl implements IReleaseService{
         orders.add(new DescOrder("id"));
         List<CiHomeRelease> ciHomeReleases = releaseDao.findByProperties(conditionAndSet, orders);
         return  (null == ciHomeReleases || ciHomeReleases.size() == 0) ? null : ciHomeReleases.get(0);
+    }
+
+    /**
+     * 通过pipelineId获得发布信息
+     * @param pipelineId
+     * @return
+     */
+    @Override
+    public ReleaseDetailBean getReleaseDetailByPipelineId(int pipelineId) {
+        CiHomeRelease ciHomeRelease = getReleaseByPipelineId(pipelineId);
+        ReleaseDetailBean releaseDetailBean = new ReleaseDetailBean();
+        BeanUtils.copyProperties(ciHomeRelease, releaseDetailBean);
+        if (releaseDetailBean != null) {
+            releaseDetailBean.setProductPath(FTPUtils.getDownloadUrl(ciHomeRelease.getProductPath()));
+        }
+        return releaseDetailBean;
     }
 
     /**
@@ -119,6 +149,7 @@ public class ReleaseServiceImpl implements IReleaseService{
         ciHomeRelease.setReleaseTime(DateUtil.getNowDateFormat());
         ciHomeRelease.setReleaseUser(releaseParams.getReleaseUser());
         ciHomeRelease.setVersion(releaseParams.getVersion());
+        ciHomeRelease.setRemarks(releaseParams.getRemarks());
         releaseDao.save(ciHomeRelease);
         LOGGER.info("Init CiHomeRelease successful, releaseId:{}", ciHomeRelease.getId());
         return ciHomeRelease;
@@ -147,11 +178,11 @@ public class ReleaseServiceImpl implements IReleaseService{
         params.put("compileProductPath", compileProductPath);
         String result = HttpClientUtil.post(CiHomeReadConfig.getConfigValueByKey("cihome.release.api"), params);
         ReleaseResponseBean releaseResponesBean = GSON.fromJson(result, new TypeToken<ReleaseResponseBean>(){}.getType());
-        if (releaseResponesBean.getReleaseStatus().equals("RUNNING")) {
+        if (releaseResponesBean.getReleaseStatus().equals(ReleaseStatus.RUNNING)) {
             returnContent.put("ERR_MSG", "正在发布！");
             returnContent.put("STATUS", "RUNNING");
             LOGGER.info("Release request is successful and running! releaseId:{}", releaseId);
-        } else if (releaseResponesBean.getReleaseStatus().equals("FAIL")) {
+        } else if (releaseResponesBean.getReleaseStatus().equals(ReleaseStatus.FAIL)) {
             returnContent.put("ERR_MSG", "请求失败，请重新发布！");
             returnContent.put("STATUS", "FAIL");
             LOGGER.info("Release request is fail! releaseId:{}", releaseId);
@@ -171,6 +202,65 @@ public class ReleaseServiceImpl implements IReleaseService{
         ciHomeRelease.setProductPath(responseBean.getReleaseProductPath());
         releaseDao.saveOrUpdate(ciHomeRelease);
         LOGGER.info("Callback release service is successful! Releasing success! responseBean:{}", responseBean);
+    }
+
+    /**
+     * 获得前三位版本号，和第四位
+     * @param moduleId
+     * @param branchName
+     * @return
+     */
+    @Override
+    public String getThreeVersion(int moduleId, String branchName) {
+        ConditionAndSet conditionAndSet = new ConditionAndSet();
+        conditionAndSet.put("moduleId", moduleId);
+        conditionAndSet.put("branchName", branchName);
+        List<OrderCondition> orders = new ArrayList<>();
+        orders.add(new DescOrder("id"));
+        List<CiHomeRelease> ciHomeReleases = releaseDao.findHeadByProperties(conditionAndSet, orders, 0, 1);
+        Map<String, String> result = new HashMap<>();
+        result.put("THREE_VERSION", "");
+        result.put("FOURTH_VERSION", "");
+        if (ciHomeReleases != null && ciHomeReleases.size() != 0) {
+            String version = ciHomeReleases.get(0).getVersion();
+            String threeVersion = StringUtils.substringBeforeLast(version, ".");
+            String fourthVersion = StringUtils.substringAfterLast(version, ".");
+            result.put("THREE_VERSION", threeVersion);
+            result.put("FOURTH_VERSION", String.valueOf(Integer.valueOf(fourthVersion) + 1));
+        } else {
+            CiHomeBranch ciHomeBranch = branchService.getBranchByModule(moduleId, branchName);
+            if (ciHomeBranch != null) {
+                result.put("THREE_VERSION", ciHomeBranch.getVersion());
+                result.put("FOURTH_VERSION", "1");
+            }
+        }
+        return GSON.toJson(result);
+    }
+
+    /**
+     * 获取发布记录
+     * @param username
+     * @param module
+     * @param releaseId
+     * @return
+     */
+    public List<ReleaseDetailBean> getCiHomeReleaseDetail(String username, String module, int releaseId) {
+        CiHomeModule ciHomeModule = moduleService.getModuleByUserAndModule(username, module);
+        ConditionAndSet conditionAndSet = new ConditionAndSet();
+        conditionAndSet.put("moduleId", ciHomeModule.getId());
+        List<OrderCondition> orderConditions = new ArrayList<>();
+        orderConditions.add(new DescOrder("id"));
+        List<CiHomeRelease> ciHomeReleases = releaseDao.findHeadByProperties(conditionAndSet, orderConditions, releaseId, 15);
+        List<ReleaseDetailBean> releaseDetails = new ArrayList<>();
+        if (ciHomeReleases != null) {
+            for (CiHomeRelease ciHomeRelease : ciHomeReleases) {
+                ReleaseDetailBean releaseDetail = new ReleaseDetailBean();
+                BeanUtils.copyProperties(ciHomeRelease, releaseDetail);
+                releaseDetail.setProductPath(FTPUtils.getDownloadUrl(ciHomeRelease.getProductPath()));
+                releaseDetails.add(releaseDetail);
+            }
+        }
+        return releaseDetails;
     }
 
 }

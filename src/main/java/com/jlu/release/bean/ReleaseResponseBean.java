@@ -14,26 +14,20 @@ public class ReleaseResponseBean {
 
     private String module;
 
-    private String username;
-
     private String releaseProductPath;
 
     private ReleaseStatus releaseStatus;
-
-    private String errMsg;
 
     public ReleaseResponseBean() {
 
     }
 
-    public ReleaseResponseBean(int releaseId, String module, String username, String releaseProductPath,
-                               ReleaseStatus releaseStatus, String errMsg) {
+    public ReleaseResponseBean(int releaseId, String module, String releaseProductPath,
+                               ReleaseStatus releaseStatus) {
         this.releaseId = releaseId;
         this.module = module;
-        this.username = username;
         this.releaseProductPath = releaseProductPath;
         this.releaseStatus = releaseStatus;
-        this.errMsg = errMsg;
     }
 
     public int getReleaseId() {
@@ -52,14 +46,6 @@ public class ReleaseResponseBean {
         this.module = module;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public String getReleaseProductPath() {
         return releaseProductPath;
     }
@@ -76,23 +62,13 @@ public class ReleaseResponseBean {
         this.releaseStatus = releaseStatus;
     }
 
-    public String getErrMsg() {
-        return errMsg;
-    }
-
-    public void setErrMsg(String errMsg) {
-        this.errMsg = errMsg;
-    }
-
     @Override
     public String toString() {
         return "ReleaseResponseBean{" +
                 "releaseId=" + releaseId +
                 ", module='" + module + '\'' +
-                ", username='" + username + '\'' +
                 ", releaseProductPath='" + releaseProductPath + '\'' +
                 ", releaseStatus=" + releaseStatus +
-                ", errMsg='" + errMsg + '\'' +
                 '}';
     }
 }

@@ -6,8 +6,10 @@ import com.jlu.common.db.sqlcondition.DescOrder;
 import com.jlu.common.db.sqlcondition.OrderCondition;
 import com.jlu.common.utils.CiHomeReadConfig;
 import com.jlu.common.utils.DateUtil;
+import com.jlu.common.utils.FTPUtils;
 import com.jlu.common.utils.JenkinsUtils;
 import com.jlu.compile.bean.BuildStatus;
+import com.jlu.compile.bean.CompileDetailBean;
 import com.jlu.compile.dao.ICompileBuildDao;
 import com.jlu.compile.model.CompileBuild;
 import com.jlu.compile.service.ICompileBuildService;
@@ -21,6 +23,7 @@ import com.jlu.jenkins.service.IJenkinsService;
 import com.offbytwo.jenkins.model.BuildResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -169,6 +172,19 @@ public class CompileBuildServiceImpl implements ICompileBuildService {
         orders.add(new DescOrder("id"));
         List<CompileBuild> compileBuilds = compileBuildDao.findByProperties(conditionAndSet, orders);
         return  (null == compileBuilds || compileBuilds.size() == 0) ? null : compileBuilds.get(0);
+    }
+
+    /**
+     * 根据pipelineBuildId获得编译信息
+     * @param pipelineBuildId
+     * @return
+     */
+    public CompileDetailBean getCompileDetailByPipelineId(int pipelineBuildId) {
+        CompileBuild compileBuild = getCompileBuildByPipelineId(pipelineBuildId);
+        CompileDetailBean compileDetailBean = new CompileDetailBean();
+        BeanUtils.copyProperties(compileBuild, compileDetailBean);
+        compileDetailBean.setProductPath(FTPUtils.getDownloadUrl(compileDetailBean.getProductPath()));
+        return  compileDetailBean;
     }
 
     /**

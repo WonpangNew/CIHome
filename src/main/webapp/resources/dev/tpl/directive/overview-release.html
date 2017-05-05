@@ -1,10 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<ul class="list-unstyled commit-info-ul">
+    <li class="row">
+        <span class="col-md-3">
+            <span ng-show="'SUCCESS' === releaseDetail.releaseStatus" class="label label-success">发布成功</span>
+            <span ng-show="'RUNNING' === releaseDetail.releaseStatus" class="label label-warning">正在发布</span>
+            <span ng-show="'FAIL' === releaseDetail.releaseStatus" class="label label-danger">发布失败</span>
+        </span>
+        <span class="col-md-3">
+            版本：{{::releaseDetail.version}}
+        </span>
+        <span class="col-md-3">
+            <span ng-show="'SUCCESS' === releaseDetail.releaseStatus">
+                <i class="fa fa-cloud-download" aria-hidden="true"></i>
+                <a ng-href="{{::releaseDetail.productPath}}">下载发布产出</a>
+            </span>
+        </span>
+        <span class="col-md-3">
+            备注：{{::releaseDetail.remarks}}
+        </span>
+    </li>
+</ul>
 
-</body>
-</html>

@@ -13,6 +13,7 @@ define(
         'js/pipeline/controllers/branch-controller',
         'js/pipeline/controllers/builds-controller',
         'js/permission/controllers/permission-controller',
-        'js/permission/controllers/register-controller'
+        'js/permission/controllers/register-controller',
+        'js/pipeline/controllers/release-history-controller'
     ], function () {
     });

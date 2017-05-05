@@ -1,5 +1,6 @@
 package com.jlu.compile.web;
 
+import com.jlu.compile.bean.CompileDetailBean;
 import com.jlu.compile.model.CompileBuild;
 import com.jlu.compile.service.ICompileBuildService;
 import com.jlu.jenkins.bean.JenkinsEndCompileBean;
@@ -40,8 +41,8 @@ public class CompileBuildController {
 
     @RequestMapping(value = "/v1/detail", method = RequestMethod.GET)
     @ResponseBody
-    public CompileBuild getCompileBuildByPipelineId(@RequestParam("pipelineBuildId") int pipelineBuildId) {
-        return compileBuildService.getCompileBuildByPipelineId(pipelineBuildId);
+    public CompileDetailBean getCompileBuildByPipelineId(@RequestParam("pipelineBuildId") int pipelineBuildId) {
+        return compileBuildService.getCompileDetailByPipelineId(pipelineBuildId);
     }
 
     @RequestMapping(value = "/v1/rebuild", method = RequestMethod.GET)

@@ -1,53 +1,36 @@
-package com.jlu.release.model;
+package com.jlu.release.bean;
 
 import com.jlu.branch.bean.BranchType;
-import com.jlu.release.bean.ReleaseStatus;
 
-import javax.persistence.*;
+import javax.persistence.Column;
 
 /**
- * Created by niuwanpeng on 17/3/10.
+ * Created by niuwanpeng on 17/5/5.
  */
-@Entity
-@Table(name = "CIHOME_RELEASE")
-public class CiHomeRelease {
+public class ReleaseDetailBean {
 
-    @Id
-    @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "PIPELINE_BUILD_ID")
     private int pipelineBuildId;
 
-    @Column(name = "MODULE_ID")
     private int moduleId;
 
-    @Column(name = "RELEASE_STATUS")
     private ReleaseStatus releaseStatus;
 
-    @Column(name = "VERSION")
     private String version;
 
-    @Column(name = "TAG")
     private String tag;
 
-    @Column(name = "PRODUCT_PATH")
     private String productPath;
 
-    @Column(name = "RELEASE_USER")
     private String releaseUser;
 
-    @Column(name = "RELEASE_TIME")
     private String releaseTime;
 
-    @Column(name = "BRANCH_NAME")
     private String branchName;
 
-    @Column(name = "BRANCH_TYPE")
     private BranchType branchType;
 
-    @Column(name = "REMARKS")
     private String remarks;
 
     public int getId() {
@@ -64,6 +47,14 @@ public class CiHomeRelease {
 
     public void setPipelineBuildId(int pipelineBuildId) {
         this.pipelineBuildId = pipelineBuildId;
+    }
+
+    public int getModuleId() {
+        return moduleId;
+    }
+
+    public void setModuleId(int moduleId) {
+        this.moduleId = moduleId;
     }
 
     public ReleaseStatus getReleaseStatus() {
@@ -90,6 +81,14 @@ public class CiHomeRelease {
         this.tag = tag;
     }
 
+    public String getProductPath() {
+        return productPath;
+    }
+
+    public void setProductPath(String productPath) {
+        this.productPath = productPath;
+    }
+
     public String getReleaseUser() {
         return releaseUser;
     }
@@ -104,22 +103,6 @@ public class CiHomeRelease {
 
     public void setReleaseTime(String releaseTime) {
         this.releaseTime = releaseTime;
-    }
-
-    public int getModuleId() {
-        return moduleId;
-    }
-
-    public void setModuleId(int moduleId) {
-        this.moduleId = moduleId;
-    }
-
-    public String getProductPath() {
-        return productPath;
-    }
-
-    public void setProductPath(String productPath) {
-        this.productPath = productPath;
     }
 
     public String getBranchName() {
