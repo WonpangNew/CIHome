@@ -36,4 +36,19 @@ public interface IBranchService {
      * @return
      */
     CiHomeBranch getBranchByModule(int moduleId, String branchName);
+
+    /**
+     * 获得branchId之前的10条记录
+     * @param ciHomeModule
+     * @return
+     */
+    List<CiHomeBranch> getBranches(CiHomeModule ciHomeModule, int branchId, int limit);
+
+    /**
+     * 获得分支名集合
+     * @param username
+     * @param module
+     * @return
+     */
+    List<String> getBranchesByModule(String username, String module);
 }

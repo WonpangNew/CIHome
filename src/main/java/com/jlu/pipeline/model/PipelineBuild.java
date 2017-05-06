@@ -22,6 +22,9 @@ public class PipelineBuild {
     @Column(name = "BRANCH_NAME")
     private String branchName;
 
+    @Column(name = "BRANCH_ID")
+    private int branchId;
+
     @Column(name = "BRANCH_TYPE")
     private BranchType branchType;
 
@@ -50,6 +53,14 @@ public class PipelineBuild {
 
     public void setBranchName(String branchName) {
         this.branchName = branchName;
+    }
+
+    public int getBranchId() {
+        return branchId;
+    }
+
+    public void setBranchId(int branchId) {
+        this.branchId = branchId;
     }
 
     public BranchType getBranchType() {

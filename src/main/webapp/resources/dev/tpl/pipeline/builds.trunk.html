@@ -1,11 +1,16 @@
 <div class="pipeline-builds-top">
+    <div ng-show="!trunkCtrl.module">
+        <div class="alert alert-warning" role="alert">
+            请输入模块名查看流水线!
+        </div>
+    </div>
     <div ng-show="trunkCtrl.pipelineBuilds && trunkCtrl.pipelineBuilds.length === 0">
         <div class="alert alert-warning" role="alert">
             该模块下还没有构建记录，请先提交代码!
         </div>
     </div>
 
-    <pipeline-builds app-pipeline-builds="trunkCtrl.pipelineBuilds" context="trunkCtrl.context"></pipeline-builds>
+    <pipeline-builds app-pipeline-builds="trunkCtrl.pipelineBuilds" app-fold="false" context="trunkCtrl.context"></pipeline-builds>
 
     <div class="load-more-row" ng-show="trunkCtrl.initBuildsDone && trunkCtrl.pipelineBuilds.length >= 10">
         <div class="load-more-button">

@@ -41,6 +41,37 @@ define(['app', 'constants'], function (app, constants) {
         };
 
         /**
+         * 获得单个分支流水线记录
+         * @param username
+         * @param module
+         * @param branchName
+         * @param pipelineBuildId
+         * @returns {*}
+         */
+        self.getBranchPipelines = function (username, module, branchName, pipelineBuildId) {
+            return $http.get(constants.api('pipeline/v1/branch/pipelineBuilds?username=' + username + '&module=' + module
+                + '&branchName=' + branchName + '&pipelineBuildId=' + pipelineBuildId))
+                .then(function (data) {
+                    return data.data;
+                });
+        };
+
+        /**
+         * 获得总体分支流水线记录
+         * @param username
+         * @param module
+         * @param branchId
+         * @returns {*}
+         */
+        self.getBranchesPipelines = function (username, module, branchId) {
+            return $http.get(constants.api('pipeline/v1/branches/pipelineBuilds?username=' + username + '&module=' + module
+                + '&branchId=' + branchId))
+                .then(function (data) {
+                    return data.data;
+                });
+        };
+
+        /**
          * 获得编译详细信息
          * @param pipelineBuildId
          * @returns {*}
@@ -127,6 +158,19 @@ define(['app', 'constants'], function (app, constants) {
          */
         self.addModule = function (username, module) {
             return $http.get(constants.api('github/addModule?username=' + username + '&module=' + module))
+                .then(function (data) {
+                    return data.data;
+                });
+        };
+
+        /**
+         * 分支页面检索用，获得前50个常用分支
+         * @param username
+         * @param module
+         * @returns {*}
+         */
+        self.getBranches = function (username, module) {
+            return $http.get(constants.api('branch/getBranches?username=' + username + '&module=' + module))
                 .then(function (data) {
                     return data.data;
                 });

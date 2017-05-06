@@ -1,3 +1,57 @@
-<div>
-    <h1>branches</h1>
+<div class="pipeline-builds-top">
+    <div class="select-branch">
+        <div class="btn-group" uib-dropdown="">
+            <button type="button" class="btn btn-default" uib-dropdown-toggle="" id="select-branch-button">
+                全部分支
+                <span class="caret"></span>
+            </button>
+            <ul class="uib-dropdown-menu" role="menu">
+                <li>
+                    <div class="menu-search-input" ng-click="$event.stopPropagation()">
+                        <input class="input-box form-control" type="text"
+                               ng-model="branchFilter"
+                               placeholder="搜索">
+                    </div>
+                </li>
+                <li><div class="divider"></div></li>
+                <li role="menuitem" ng-repeat="branch in branchesCtrl.branches | filter:branchFilter | limitTo:15 track by $index">
+                    <a ui-sref="builds.branch({branch: branch})" ng-bind="branch"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="branch-tips" ng-show="branchesCtrl.branchPipelines.length === 0">
+        <div class="alert alert-warning" role="alert">
+            该模块下所有分支还没有构建记录，请先提交代码!
+        </div>
+    </div>
+
+    <div class="branch-builds" ng-repeat="(branch, builds) in branchesCtrl.branchPipelines track by branch">
+        <div class="branches">
+            <div class="branch-name-and-expand"
+                 ng-init="fold = true;displayInput = {isShow:false,showError:false,errorTimes:0}"
+                 ng-init="firstPipelineStatus = builds && builds.length && builds[0] ? builds[0].pipelineStatus : ''">
+                <button type="button" class="btn btn-default"  ng-click="fold = !fold; branchesCtrl.loadSingleBranchPipelines(fold, branch, builds)">
+                    <i class="fa" ng-class="fold ? 'fa-plus' : 'fa-minus'" ng-show="true"></i>
+                    <span ng-bind="branch"></span>
+                </button>
+            </div>
+        </div>
+        <pipeline-builds app-pipeline-builds="builds" app-fold="fold" context="branchesCtrl.context"></pipeline-builds>
+    </div>
+
+    <div class="load-more-row" ng-show="branchesCtrl.initBuildsDone && branchesCtrl.pipelineBuilds.length >= 10">
+        <div class="load-more-button">
+            <button type="button" class="btn btn-default"
+                    ng-show="!branchesCtrl.showLoadMoreBuildsLoader"
+                    ng-disabled="branchesCtrl.noMoreBuildsToLoad"
+                    ng-click="branchesCtrl.loadMoreBuilds()">
+                <i class="fa fa-bars icon" ng-if="!branchesCtrl.noMoreBuildsToLoad"></i>&nbsp;
+                <span ng-if="branchesCtrl.noMoreBuildsToLoad">没有记录了</span>
+                <span ng-if="!branchesCtrl.noMoreBuildsToLoad">加载更多</span>
+            </button>
+        </div>
+    </div>
+
 </div>

@@ -1,3 +1,49 @@
-<div>
-    <h1>branch</h1>
+<div class="pipeline-builds-top">
+    <div class="select-branch">
+        <div class="btn-group" uib-dropdown="">
+            <button type="button" class="btn btn-default" uib-dropdown-toggle="" id="select-branch-button">
+                <span ng-bind="branchCtrl.branchName"></span>
+                <span class="caret"></span>
+            </button>
+            <ul class="uib-dropdown-menu" role="menu">
+                <li>
+                    <div class="menu-search-input" ng-click="$event.stopPropagation()">
+                        <input class="input-box form-control" type="text"
+                               ng-model="branchFilter"
+                               placeholder="搜索">
+                    </div>
+                </li>
+                <li><div class="divider"></div></li>
+                <li role="menuitem">
+                    <a ui-sref="builds.branches">
+                        全部分支
+                    </a>
+                </li>
+                <li role="menuitem" ng-repeat="branch in branchCtrl.branches | filter:branchFilter | limitTo:15 track by $index">
+                    <a ui-sref="builds.branch({branch: branch})" ng-bind="branch"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="branch-tips" ng-show="branchCtrl.pipelineBuilds.length === 0">
+        <div class="alert alert-warning" role="alert">
+            该分支还没有构建记录，请先提交代码!
+        </div>
+    </div>
+
+    <pipeline-builds app-pipeline-builds="branchCtrl.pipelineBuilds" app-fold="false" context="branchCtrl.context"></pipeline-builds>
+
+    <div class="load-more-row" ng-show="branchCtrl.initBuildsDone && branchCtrl.pipelineBuilds.length >= 10">
+        <div class="load-more-button">
+            <button type="button" class="btn btn-default"
+                    ng-show="!branchCtrl.showLoadMoreBuildsLoader"
+                    ng-disabled="branchCtrl.noMoreBuildsToLoad"
+                    ng-click="branchCtrl.loadMoreBuilds()">
+                <i class="fa fa-bars icon" ng-if="!branchCtrl.noMoreBuildsToLoad"></i>&nbsp;
+                <span ng-if="branchCtrl.noMoreBuildsToLoad">没有记录了</span>
+                <span ng-if="!branchCtrl.noMoreBuildsToLoad">加载更多</span>
+            </button>
+        </div>
+    </div>
+
 </div>

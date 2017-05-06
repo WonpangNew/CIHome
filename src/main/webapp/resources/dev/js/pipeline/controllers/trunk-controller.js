@@ -4,7 +4,7 @@
  * 主干流水线
  */
 
-define(['app'], function (app) {
+define(['app', 'angular'], function (app, angular) {
     'use strict';
 
     app.controller('TrunkController', [

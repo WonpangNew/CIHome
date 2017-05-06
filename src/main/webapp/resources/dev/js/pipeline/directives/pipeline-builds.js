@@ -10,7 +10,8 @@ define(['app', 'constants'], function (app, constants) {
                     restrict: 'E',
                     scope: {
                         builds: '=appPipelineBuilds',
-                        context: '=context'
+                        context: '=context',
+                        fold: '=appFold'
                     },
                     templateUrl: constants.resource('directive/pipeline-builds.html'),
                     replace: true

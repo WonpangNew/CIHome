@@ -26,6 +26,8 @@ public class CiHomePipelineBean {
 
     private String branchName;
 
+    private int branchId;
+
     private BranchType branchType;
 
     private CompileBuildBean compileBuildBean;
@@ -82,6 +84,14 @@ public class CiHomePipelineBean {
 
     public void setBranchName(String branchName) {
         this.branchName = branchName;
+    }
+
+    public int getBranchId() {
+        return branchId;
+    }
+
+    public void setBranchId(int branchId) {
+        this.branchId = branchId;
     }
 
     public BranchType getBranchType() {

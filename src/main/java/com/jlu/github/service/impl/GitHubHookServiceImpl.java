@@ -14,7 +14,6 @@ import com.jlu.github.service.IGitHubHookService;
 import com.jlu.github.service.IModuleService;
 import com.jlu.pipeline.model.PipelineBuild;
 import com.jlu.pipeline.service.IPipelineBuildService;
-import com.jlu.release.service.IReleaseService;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
@@ -105,11 +104,13 @@ public class GitHubHookServiceImpl implements IGitHubHookService{
      * @return
      */
     private PipelineBuild initPipelineBuild(CiHomeModule ciHomeModule, String branchName, BranchType branchType) {
+        CiHomeBranch ciHomeBranch = branchService.getBranchByModule(ciHomeModule.getId(), branchName);
         PipelineBuild pipelineBuild = new PipelineBuild();
         pipelineBuild.setModuleId(ciHomeModule.getId());
         pipelineBuild.setBranchName(branchName);
         pipelineBuild.setCreateTime(DateUtil.getNowDateFormat());
         pipelineBuild.setBranchType(branchType);
+        pipelineBuild.setBranchId(ciHomeBranch.getId());
         pipelineBuildService.save(pipelineBuild);
         return pipelineBuild;
     }
