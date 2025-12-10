@@ -1,33 +1,108 @@
 @import "pipeline.css";
 @import "release-history.css";
 @import "branch.css";
+
+.landing-body {
+    margin: 0;
+    min-height: 100vh;
+    background-color: #030714;
+    font-family: "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+    color: #f3f6ff;
+}
+
 .background-index {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+    background: radial-gradient(circle at top, rgba(13, 44, 94, 0.85), #050913 60%, #02040a);
+}
+
+.background-index__overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1), transparent 35%),
+                radial-gradient(circle at 80% 0%, rgba(15, 116, 204, 0.22), transparent 40%),
+                radial-gradient(circle at 10% 80%, rgba(13, 211, 185, 0.2), transparent 45%);
+    filter: blur(40px);
+    opacity: 0.7;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.background-index__content {
+    position: relative;
+    z-index: 2;
+    min-height: 100vh;
+    padding: 48px 16px 32px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.particle-canvas {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
-    background-image: url("../img/backgroud/bg-index.jpg");
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.8;
 }
 
 .cihome-logo-index {
     width: 295px;
     height: 84px;
-    margin: auto;
+    margin: 0 auto 24px auto;
     background: url("../img/logo/cihome-logo.png");
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.65));
+}
+
+.hero-tagline {
+    font-size: 20px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 32px;
 }
 
 .login {
-    width: 25%;
-    margin: 25px auto;
+    width: 90%;
+    max-width: 420px;
+    margin: 0 auto 24px auto;
 }
 
-/*.login .form-group > input {*/
-    /*border: 0px;*/
-    /*background: rgba(0, 0, 0, 0);*/
-/*}*/
+.glass-panel {
+    background: rgba(6, 10, 28, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.55);
+    border-radius: 16px;
+    padding: 32px;
+    backdrop-filter: blur(6px);
+}
+
+.login .form-control {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #f7fbff;
+}
+
+.login .form-control:focus {
+    border-color: rgba(65, 176, 255, 0.8);
+    box-shadow: 0 0 12px rgba(65, 176, 255, 0.25);
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.login .form-control::placeholder {
+    color: rgba(255, 255, 255, 0.65);
+}
 
 .input-group-btn > button > i {
     height: 20px;
     padding-top: 3px;
-    color: #777;
+    color: #050b1a;
 }
 
 .input-group-btn > button > span > i {
@@ -35,10 +110,57 @@
     padding-top: 3px;
 }
 
+.input-group-btn > .btn {
+    height: 100%;
+    padding: 6px 16px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border-color: transparent;
+    background: linear-gradient(135deg, #33d9ff 0%, #6390ff 60%, #8c5bff 100%);
+    color: #050b1a;
+    font-weight: 600;
+    box-shadow: 0 10px 25px rgba(22, 130, 255, 0.35);
+}
+
+.input-group-btn > .btn:disabled {
+    opacity: 0.4;
+    box-shadow: none;
+}
+
+.input-group-btn > .btn:not(:disabled):hover {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 30px rgba(22, 130, 255, 0.45);
+}
+
+.support-links a {
+    color: rgba(255, 255, 255, 0.75) !important;
+}
+
+.support-links a:hover {
+    color: #ffffff !important;
+}
+
+.index-footer {
+    margin-top: 32px;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.notice-error {
+    font-family: "PingFang HK";
+    font-weight: lighter;
+    color: #ff7c7c;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    font-size: 13px;
+}
+
 /* 渐变分割线 start */
 .cut-line {
-    margin: auto;
-    width: 23%;
+    margin: 24px auto 16px auto;
+    width: 280px;
+    max-width: 65%;
 }
 
 .cut-line-right{
@@ -72,6 +194,24 @@
     color: #fefff3 !important;
     font-family: "PingFang HK";
     font-weight: lighter;
+}
+
+@media (max-width: 768px) {
+    .background-index__content {
+        padding: 32px 16px 24px 16px;
+    }
+
+    .glass-panel {
+        padding: 24px;
+    }
+
+    .hero-tagline {
+        font-size: 18px;
+    }
+
+    .cut-line {
+        width: 220px;
+    }
 }
 
 /*  登录提示 */
