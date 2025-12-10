@@ -77,9 +77,9 @@ src/main/webapp
 2. **后端启动**
    ```bash
    mvn clean package
-   mvn jetty:run
+   mvn jetty:run    # 默认监听 http://localhost:9999/
    ```
-   默认通过 Jetty 在 `http://localhost:8888/` 暴露应用，也可以将 `target/CIHome-1.0-SNAPSHOT.war` 部署到 Tomcat。
+   默认通过 Jetty 在 `http://localhost:9999/` 暴露应用，也可以将 `target/CIHome-1.0-SNAPSHOT.war` 部署到 Tomcat。
 3. **前端依赖**
    ```bash
    cd src/main/webapp

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="logStoreDirectory" value="/Users/niuwanpeng/worksapce/jlu/logs" />
+
+    <!-- 日志文件  appender定义 -->
+
+    <appender name="ciHomeAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${logStoreDirectory}/cihome.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>${logStoreDirectory}/history/%d{yyyy-MM-dd}.cihome.%i.log</fileNamePattern>
+            <maxHistory>20</maxHistory>
+            <TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>50MB</maxFileSize>
+            </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%d [%thread] %-5level %logger{36} %line - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+
+    <appender name="ciHomeErrorAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+
+        <File>${logStoreDirectory}/cihome_error.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <FileNamePattern>${logStoreDirectory}/history/cihome_error.log.%i.log</FileNamePattern>
+            <MinIndex>1</MinIndex>
+            <MaxIndex>13</MaxIndex>
+        </rollingPolicy>
+        <triggeringPolicy
+                class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>50MB</MaxFileSize>
+        </triggeringPolicy>
+        <encoder>
+            <charset>UTF-8</charset>
+            <Pattern>%d [%thread] %-5level %logger{36} %line - %msg%n</Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="ciHomeAccessAppender"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+        <File>${logStoreDirectory}/ciHome_access.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>${logStoreDirectory}/history/%d{yyyy-MM-dd}.ciHome_access.%i.log
+            </fileNamePattern>
+            <maxHistory>20</maxHistory>
+            <TimeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>50MB</maxFileSize>
+            </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%d [%thread] %-5level %logger{36} %line - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="com.jlu" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="ciHomeAppender" />
+        <appender-ref ref="ciHomeErrorAppender" />
+    </logger>
+
+    <logger name="accseeLog" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="ciHomeAccessAppender" />
+    </logger>
+
+    <!-- ===================================================================== -->
+    <!--  Root logger的定义                                                         -->
+    <!-- ===================================================================== -->
+    <root>
+        <level value="ERROR"/>
+        <appender-ref ref="ciHomeAppender"/>
+    </root>
+</configuration>
