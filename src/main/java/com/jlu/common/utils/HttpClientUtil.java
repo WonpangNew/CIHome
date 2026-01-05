@@ -32,18 +32,47 @@ import org.slf4j.LoggerFactory;
 import com.google.gson.Gson;
 
 /**
- * Created by niuwanpeng on 17/3/24.
+ * HTTP客户端工具类
+ * <p>
+ * 基于Apache HttpClient封装的HTTP请求工具类，提供GET和POST请求的便捷方法。
+ * 支持多种Content-Type、自定义超时时间、请求参数编码等功能。
+ * 主要用于与GitHub API、Jenkins API等外部服务进行HTTP通信。
+ * </p>
+ *
+ * @author niuwanpeng
+ * @since 2017-03-24
  */
 public class HttpClientUtil {
     public static final Logger LOGGER = LoggerFactory.getLogger(HttpClientUtil.class);
-    //设置连接超时时间(单位毫秒)
+
+    /**
+     * 连接超时时间（单位：毫秒）
+     */
     public static final int CONNECTION_TIME_OUT = 7000;
-    //设置读数据超时时间(单位毫秒)
+
+    /**
+     * 读取数据超时时间（单位：毫秒）
+     */
     public static final int SOCKET_TIME_OUT = 30000;
 
+    /**
+     * HTML内容类型
+     */
     public static final String HTML_CONTENT_TYPE = "text/html;charset=UTF-8";
+
+    /**
+     * 默认表单内容类型
+     */
     public static final String DEFAULT_CONTENT_TYPE = "application/x-www-form-urlencoded";
+
+    /**
+     * 纯文本内容类型
+     */
     public static final String TEXT_CONTENT_TYPE = "text/plain";
+
+    /**
+     * JSON内容类型
+     */
     public static final String APPLICATION_JSON_CONTENT_TYPE = "application/json";
 
     private static HttpClient getHttpClient(){

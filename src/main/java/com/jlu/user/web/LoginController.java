@@ -15,7 +15,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by niuwanpeng on 17/3/16.
+ * 用户登录控制器
+ * <p>
+ * 负责处理用户登录、登出、注册等认证相关的HTTP请求。
+ * 使用Cookie机制维护用户会话状态。
+ * </p>
+ *
+ * @author niuwanpeng
+ * @since 2017-03-16
  */
 @Controller
 @RequestMapping("cihome/login")
@@ -27,6 +34,17 @@ public class LoginController {
     private final static String LOGIN_STATUS = "LOGIN_STATUS";
     private final static String MESSAGE = "MESSAGE";
 
+    /**
+     * 用户登录系统
+     * <p>
+     * 验证用户名和密码，成功后将用户信息写入Cookie。
+     * </p>
+     *
+     * @param response HTTP响应对象，用于写入Cookie
+     * @param username 用户名
+     * @param password 密码
+     * @return JSON格式的登录结果，包含登录状态和提示信息
+     */
     @RequestMapping("/loginSystem")
     @ResponseBody
     public String loginSystem(HttpServletResponse response, String username, String password) {
@@ -50,6 +68,17 @@ public class LoginController {
         return new Gson().toJson(result);
     }
 
+    /**
+     * 用户退出登录
+     * <p>
+     * 删除用户的Cookie信息，清除会话状态。
+     * </p>
+     *
+     * @param response HTTP响应对象
+     * @param request HTTP请求对象
+     * @param username 用户名
+     * @return 退出成功返回true
+     */
     @RequestMapping("/exitLogin")
     @ResponseBody
     public boolean exitLogin(HttpServletResponse response, HttpServletRequest request, String username) {
@@ -57,6 +86,14 @@ public class LoginController {
         return true;
     }
 
+    /**
+     * 跳转到注册页面
+     * <p>
+     * 返回用户注册页面的视图名称。
+     * </p>
+     *
+     * @return 注册页面视图名称
+     */
     @RequestMapping("/register")
     public String registerToJsp() {
         return "register";

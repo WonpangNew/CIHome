@@ -15,22 +15,42 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by niuwanpeng on 17/4/15.
+ * Jenkins工具类
+ * <p>
+ * 提供与Jenkins服务器交互的核心功能，包括构建任务的触发、状态查询等。
+ * 使用单例模式管理JenkinsServer实例，支持多线程安全访问。
+ * </p>
  *
- * jenkins工具类
+ * @author niuwanpeng
+ * @since 2017-04-15
  */
 public class JenkinsUtils {
 
+    /**
+     * Jenkins默认编译任务名称
+     */
     private static final String COMPILE_JOB_NAME = "cihome_default_compile";
+
     private static final Logger LOGGER = LoggerFactory.getLogger(JenkinsUtils.class);
 
+    /**
+     * Jenkins服务器实例，使用volatile保证多线程可见性
+     */
     private static volatile JenkinsServer jenkinsServer;
 
+    /**
+     * 私有构造函数，防止外部实例化
+     */
     private JenkinsUtils() {}
 
     /**
-     * 单例初始化
-     * @return
+     * 初始化Jenkins服务连接（双重检查锁单例模式）
+     * <p>
+     * 使用双重检查锁定（Double-Check Locking）实现线程安全的单例模式，
+     * 从配置文件中读取Jenkins服务器地址、用户名和密码进行连接。
+     * </p>
+     *
+     * @return Jenkins服务器实例
      */
     public static JenkinsServer initJenkinsService() {
         try {
@@ -51,8 +71,16 @@ public class JenkinsUtils {
     }
 
     /**
-     * 触发编译
-     * @param repoUrl 代码仓库地址
+     * 触发Jenkins编译构建任务
+     * <p>
+     * 向Jenkins服务器发送构建请求，传递GitHub仓库地址、仓库名称和编译构建ID等参数。
+     * 构建请求发送成功后，返回Jenkins构建编号等信息。
+     * </p>
+     *
+     * @param repoUrl 代码仓库URL地址
+     * @param repoName 代码仓库名称
+     * @param compileBuildId 编译构建ID
+     * @return Jenkins启动编译结果对象，包含构建编号和请求状态
      */
     public static JenkinsStartCompileBean triggerCompile(String repoUrl, String repoName, int compileBuildId) {
         JenkinsServer jenkinsServer = initJenkinsService();
@@ -77,9 +105,14 @@ public class JenkinsUtils {
     }
 
     /**
-     * 获得这个job某个构建的状态
-     * @param buildNumber
-     * @return
+     * 根据构建编号查询构建状态
+     * <p>
+     * 通过Jenkins API查询指定构建编号的构建结果状态。
+     * 如果查询失败或构建结果为null，则返回FAILURE状态。
+     * </p>
+     *
+     * @param buildNumber Jenkins构建编号
+     * @return 构建结果状态（SUCCESS/FAILURE/UNSTABLE等）
      */
     public static BuildResult getBuildStatusByNumber(int buildNumber) {
         JenkinsServer jenkinsServer = initJenkinsService();

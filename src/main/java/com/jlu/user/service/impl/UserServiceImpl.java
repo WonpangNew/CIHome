@@ -10,7 +10,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * Created by niuwanpeng on 17/3/10.
+ * 用户服务实现类
+ * <p>
+ * 提供用户管理相关的业务逻辑实现，包括用户的保存、查询等功能。
+ * </p>
+ *
+ * @author niuwanpeng
+ * @since 2017-03-10
  */
 @Service
 public class UserServiceImpl implements IUserService {
@@ -18,14 +24,26 @@ public class UserServiceImpl implements IUserService {
     @Autowired
     IUserDao userDao;
 
+    /**
+     * 保存用户信息
+     * <p>
+     * 将用户对象持久化到数据库中。
+     * </p>
+     *
+     * @param ciHomeUser 用户实体对象
+     */
     public void saveUser(CiHomeUser ciHomeUser) {
         userDao.save(ciHomeUser);
     }
 
     /**
-     * 通过用户民获得密码
-     * @param username
-     * @return
+     * 通过用户名获取用户信息
+     * <p>
+     * 根据用户名查询数据库，返回完整的用户信息对象。
+     * </p>
+     *
+     * @param username 用户名
+     * @return 用户实体对象，不存在则返回null
      */
     public CiHomeUser getUserByName(String username) {
         ConditionAndSet conditionAndSet = new ConditionAndSet();

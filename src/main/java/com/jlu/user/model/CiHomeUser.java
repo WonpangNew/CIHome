@@ -4,31 +4,54 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * Created by niuwanpeng on 17/3/10.
+ * CIHome用户信息实体类
+ * <p>
+ * 对应数据库表CIHOME_USER，用于存储用户的基本信息和GitHub集成凭证。
+ * 用户通过此实体进行身份认证和GitHub API调用授权。
+ * </p>
  *
- *  用户信息实体类
+ * @author niuwanpeng
+ * @since 2017-03-10
  */
 @Entity
 @Table(name = "CIHOME_USER")
 public class CiHomeUser {
 
+    /**
+     * 用户ID，主键，自增
+     */
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    /**
+     * 用户名，用于登录系统
+     */
     @Column(name = "USERNAME")
     private String username;
 
+    /**
+     * 用户密码
+     */
     @Column(name = "PASSWORD")
     private String password;
 
+    /**
+     * 用户邮箱地址
+     */
     @Column(name = "USER_EMAIL")
     private String userEmail;
 
+    /**
+     * GitHub访问令牌，用于调用GitHub API
+     */
     @Column(name = "GITHUB_TOKEN")
     private String gitHubToken;
 
+    /**
+     * 用户创建时间
+     */
     @Column(name = "CREATE_TIME")
     private String createTime;
 

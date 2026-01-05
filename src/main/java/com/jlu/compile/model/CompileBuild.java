@@ -6,61 +6,115 @@ import com.jlu.compile.bean.BuildStatus;
 import javax.persistence.*;
 
 /**
- * Created by niuwanpeng on 17/4/15.
+ * 编译构建记录实体类
+ * <p>
+ * 对应数据库表CIHOME_COMPILE_BUILD，用于记录每次代码编译构建的详细信息。
+ * 包含构建状态、Jenkins构建信息、代码提交信息、构建产物路径等。
+ * 是CI/CD流水线中的核心数据模型。
+ * </p>
  *
- * 编译记录
+ * @author niuwanpeng
+ * @since 2017-04-15
  */
 @Entity
 @Table(name = "CIHOME_COMPILE_BUILD")
 public class CompileBuild {
 
+    /**
+     * 构建记录ID，主键，自增
+     */
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    /**
+     * 关联的模块ID
+     */
     @Column(name = "MODULE_ID")
     private int moduleId;
 
+    /**
+     * 关联的流水线构建ID
+     */
     @Column(name = "PIPELINE_BUILD_ID")
     private int pipelineBuildId;
 
+    /**
+     * 构建的分支名称
+     */
     @Column(name = "BRANCH_NAME")
     private String branchName;
 
+    /**
+     * 分支类型（主干分支/功能分支等）
+     */
     @Column(name = "BRANCH_TYPE")
     private BranchType branchType;
 
+    /**
+     * 构建状态（构建中/成功/失败等）
+     */
     @Column(name = "BUILD_STATUS")
     private BuildStatus buildStatus;
 
+    /**
+     * 构建产物存储路径
+     */
     @Column(name = "PRODUCT_PATH")
     private String productPath;
 
+    /**
+     * Jenkins构建日志URL地址
+     */
     @Column(name = "BUILD_LOG_URL")
     private String buildLogUrl;
 
+    /**
+     * 触发构建的用户名
+     */
     @Column(name = "TRIGGER_USER")
     private String trigger;
 
+    /**
+     * 本次构建包含的代码提交信息
+     */
     @Column(name = "COMMITS")
     private String commits;
 
+    /**
+     * 构建创建时间
+     */
     @Column(name = "CREATE_TIME")
     private String createTime;
 
+    /**
+     * 构建结束时间
+     */
     @Column(name = "END_TIME")
     private String endTime;
 
+    /**
+     * 触发构建用户的邮箱地址
+     */
     @Column(name = "TRIGGER_EMAIL")
     private String triggerEmail;
 
+    /**
+     * Jenkins构建编号
+     */
     @Column(name = "JENKINS_BUILD_NUMBER")
     private int jenkinsBuildNumber;
 
+    /**
+     * Jenkins构建ID
+     */
     @Column(name = "JENKINS_BUILD_ID")
     private String jenkinsBuildId;
 
+    /**
+     * 代码版本号（Git提交SHA）
+     */
     @Column(name = "REVISION")
     private String revision;
 
